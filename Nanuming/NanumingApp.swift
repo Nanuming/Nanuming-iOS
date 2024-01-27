@@ -11,7 +11,7 @@ import SwiftUI
 struct NanumingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EntryView()
         }
     }
 }
