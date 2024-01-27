@@ -12,21 +12,26 @@ var screenHeight = UIScreen.main.bounds.size.height
 
 struct EntryView: View {
     var body: some View {
-        VStack {
-            Image("Logo")
-                .frame(width: screenWidth*0.8,height: screenWidth*0.8)
-            RoundedRectangle(cornerRadius: 5)
-                .frame(width: screenWidth*0.85, height: 50)
-                .foregroundColor(.white)
-                .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
-                .overlay(
-                    HStack {
-                        Image("google_logo")
-                            .frame(width: 30, height: 30)
-                        Text("Sign in with Google")
-                            .font(.system(size: 17, weight: .semibold))
-                    }
-                )
+        NavigationStack {
+            VStack {
+                Image("Logo")
+                    .frame(width: screenWidth*0.8,height: screenWidth*0.8)
+                Button(action: {}) {
+                    RoundedRectangle(cornerRadius: 5)
+                        .frame(width: screenWidth*0.85, height: 50)
+                        .foregroundColor(.white)
+                        .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
+                        .overlay(
+                            HStack {
+                                Image("google_logo")
+                                    .frame(width: 30, height: 30)
+                                Text("Sign in with Google")
+                                    .foregroundStyle(Color.textBlack)
+                                    .font(.system(size: 17, weight: .semibold))
+                            }
+                        )
+                }
+            }
         }
     }
 }
