@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2338DB042B64FE59009243AC /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB032B64FE59009243AC /* TabBarView.swift */; };
+		2338DB062B6564B4009243AC /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB052B6564B4009243AC /* EntryView.swift */; };
 		23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57A02B610B300013D6A5 /* NanumingApp.swift */; };
-		23AC57A32B610B300013D6A5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57A22B610B300013D6A5 /* ContentView.swift */; };
 		23AC57A52B610B320013D6A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23AC57A42B610B320013D6A5 /* Assets.xcassets */; };
 		23AC57A82B610B320013D6A5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23AC57A72B610B320013D6A5 /* Preview Assets.xcassets */; };
 		23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57B02B610B7C0013D6A5 /* PostDetailView.swift */; };
@@ -21,9 +21,9 @@
 
 /* Begin PBXFileReference section */
 		2338DB032B64FE59009243AC /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		2338DB052B6564B4009243AC /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		23AC579D2B610B300013D6A5 /* Nanuming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nanuming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AC57A02B610B300013D6A5 /* NanumingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanumingApp.swift; sourceTree = "<group>"; };
-		23AC57A22B610B300013D6A5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		23AC57A42B610B320013D6A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23AC57A72B610B320013D6A5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		23AC57B02B610B7C0013D6A5 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
@@ -83,10 +83,10 @@
 			isa = PBXGroup;
 			children = (
 				23AC57AF2B610B630013D6A5 /* Post */,
-				23AC57A22B610B300013D6A5 /* ContentView.swift */,
 				23AC57B42B610B9F0013D6A5 /* MapView.swift */,
 				23AC57B62B610BB90013D6A5 /* MyPageView.swift */,
 				2338DB032B64FE59009243AC /* TabBarView.swift */,
+				2338DB052B6564B4009243AC /* EntryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -175,10 +175,10 @@
 				23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */,
 				2338DB042B64FE59009243AC /* TabBarView.swift in Sources */,
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
-				23AC57A32B610B300013D6A5 /* ContentView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
 				23AC57B72B610BB90013D6A5 /* MyPageView.swift in Sources */,
 				23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */,
+				2338DB062B6564B4009243AC /* EntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
