@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2338DB042B64FE59009243AC /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB032B64FE59009243AC /* TabBarView.swift */; };
 		23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57A02B610B300013D6A5 /* NanumingApp.swift */; };
 		23AC57A32B610B300013D6A5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57A22B610B300013D6A5 /* ContentView.swift */; };
 		23AC57A52B610B320013D6A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23AC57A42B610B320013D6A5 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2338DB032B64FE59009243AC /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		23AC579D2B610B300013D6A5 /* Nanuming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nanuming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AC57A02B610B300013D6A5 /* NanumingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanumingApp.swift; sourceTree = "<group>"; };
 		23AC57A22B610B300013D6A5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				23AC57A22B610B300013D6A5 /* ContentView.swift */,
 				23AC57B42B610B9F0013D6A5 /* MapView.swift */,
 				23AC57B62B610BB90013D6A5 /* MyPageView.swift */,
+				2338DB032B64FE59009243AC /* TabBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 			files = (
 				23AC57B32B610B8C0013D6A5 /* CreatePostView.swift in Sources */,
 				23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */,
+				2338DB042B64FE59009243AC /* TabBarView.swift in Sources */,
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
 				23AC57A32B610B300013D6A5 /* ContentView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
