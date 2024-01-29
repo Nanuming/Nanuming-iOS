@@ -16,7 +16,7 @@ struct EntryView: View {
             VStack {
                 Image("Logo")
                     .resizable()
-                    .frame(width: screenWidth*0.8,height: screenWidth*0.75)
+                    .frame(width: screenWidth*0.7,height: screenWidth*0.65)
                 Button(action: {}) {
                     RoundedRectangle(cornerRadius: 5)
                         .frame(width: screenWidth*0.85, height: 50)
