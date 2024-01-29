@@ -26,6 +26,8 @@
 /* Begin PBXFileReference section */
 		2338DB032B64FE59009243AC /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		2338DB052B6564B4009243AC /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
+		23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		23A9A92F2B67B239004BC5D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		23AC579D2B610B300013D6A5 /* Nanuming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nanuming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AC57A02B610B300013D6A5 /* NanumingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanumingApp.swift; sourceTree = "<group>"; };
 		23AC57A42B610B320013D6A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,10 +73,12 @@
 		23AC579F2B610B300013D6A5 /* Nanuming */ = {
 			isa = PBXGroup;
 			children = (
+				23A9A92F2B67B239004BC5D3 /* Info.plist */,
 				23AC57AE2B610B520013D6A5 /* View */,
 				23AC57A02B610B300013D6A5 /* NanumingApp.swift */,
 				23AC57A42B610B320013D6A5 /* Assets.xcassets */,
 				23AC57A62B610B320013D6A5 /* Preview Content */,
+				23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */,
 			);
 			path = Nanuming;
 			sourceTree = "<group>";
@@ -323,6 +327,7 @@
 		};
 		23AC57AC2B610B320013D6A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -332,6 +337,7 @@
 				DEVELOPMENT_TEAM = 54A24WU799;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Nanuming/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -353,6 +359,7 @@
 		};
 		23AC57AD2B610B320013D6A5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -362,6 +369,7 @@
 				DEVELOPMENT_TEAM = 54A24WU799;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Nanuming/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
