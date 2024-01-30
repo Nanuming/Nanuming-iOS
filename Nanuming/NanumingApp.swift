@@ -6,6 +6,18 @@
 //
 
 import SwiftUI
+import GoogleMaps
+
+let googleMapApiKey = Bundle.main.infoDictionary?["GOOGLE_MAP_API_KEY"] ?? "No google map api key"
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        GMSServices.provideAPIKey(googleMapApiKey as! String)
+        
+        return true
+    }
+}
 
 @main
 struct NanumingApp: App {
