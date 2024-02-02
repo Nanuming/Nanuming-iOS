@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230F899A2B6D060E0007575E /* PostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230F89992B6D060E0007575E /* PostListCell.swift */; };
+		230F899D2B6D07930007575E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230F899C2B6D07930007575E /* Post.swift */; };
 		2338DB042B64FE59009243AC /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB032B64FE59009243AC /* TabBarView.swift */; };
 		2338DB062B6564B4009243AC /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB052B6564B4009243AC /* EntryView.swift */; };
 		23A9A9272B67ACB1004BC5D3 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A9262B67ACB1004BC5D3 /* GoogleMaps */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		230F89992B6D060E0007575E /* PostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostListCell.swift; path = Post/PostListCell.swift; sourceTree = "<group>"; };
+		230F899C2B6D07930007575E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		2338DB032B64FE59009243AC /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		2338DB052B6564B4009243AC /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -54,6 +58,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		230F899B2B6D07800007575E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				230F899C2B6D07930007575E /* Post.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		23AC57942B610B300013D6A5 = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +85,7 @@
 		23AC579F2B610B300013D6A5 /* Nanuming */ = {
 			isa = PBXGroup;
 			children = (
+				230F899B2B6D07800007575E /* Model */,
 				23A9A92F2B67B239004BC5D3 /* Info.plist */,
 				23AC57AE2B610B520013D6A5 /* View */,
 				23AC57A02B610B300013D6A5 /* NanumingApp.swift */,
@@ -99,6 +112,7 @@
 				23AC57B62B610BB90013D6A5 /* MyPageView.swift */,
 				2338DB032B64FE59009243AC /* TabBarView.swift */,
 				2338DB052B6564B4009243AC /* EntryView.swift */,
+				230F89992B6D060E0007575E /* PostListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -198,8 +212,10 @@
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
 				23AC57B72B610BB90013D6A5 /* MyPageView.swift in Sources */,
+				230F899A2B6D060E0007575E /* PostListCell.swift in Sources */,
 				23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */,
 				2338DB062B6564B4009243AC /* EntryView.swift in Sources */,
+				230F899D2B6D07930007575E /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
