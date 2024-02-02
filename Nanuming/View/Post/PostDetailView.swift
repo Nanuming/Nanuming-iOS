@@ -12,7 +12,7 @@ struct PostDetailView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack {
+            VStack(spacing: 0) {
                 // 이미지
                 TabView {
                     // TODO: url을 사용하기 위해서는 변경 작업 필요
@@ -25,6 +25,22 @@ struct PostDetailView: View {
                 .tabViewStyle(PageTabViewStyle())
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
                 .frame(width: screenWidth, height: screenWidth)
+                
+                // 게시자 정보
+                HStack(spacing: 5) {
+                    Text(post.publisher)
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.textBlack)
+                    Text("님")
+                        .font(.system(size: 16, weight: .medium))
+                    Spacer()
+                    Text(post.createdDate)
+                        .font(.system(size: 14, weight: .medium))
+                }
+                .foregroundColor(.gray200)
+                .frame(height: 50)
+                .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
+                .background(.gray50)
             }
         }
     }
