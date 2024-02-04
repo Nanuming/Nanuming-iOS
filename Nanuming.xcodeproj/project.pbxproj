@@ -23,6 +23,7 @@
 		23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57B42B610B9F0013D6A5 /* MapView.swift */; };
 		23AC57B72B610BB90013D6A5 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57B62B610BB90013D6A5 /* MyPageView.swift */; };
 		23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57B82B610BDA0013D6A5 /* PostListView.swift */; };
+		23DDF8542B6FAE6B0062F2F1 /* PostImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		23AC57B42B610B9F0013D6A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		23AC57B62B610BB90013D6A5 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		23AC57B82B610BDA0013D6A5 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		23AC579F2B610B300013D6A5 /* Nanuming */ = {
 			isa = PBXGroup;
 			children = (
+				23DDF8522B6FAE4C0062F2F1 /* Utils */,
 				230F899B2B6D07800007575E /* Model */,
 				23A9A92F2B67B239004BC5D3 /* Info.plist */,
 				23AC57AE2B610B520013D6A5 /* View */,
@@ -125,6 +128,14 @@
 				23AC57B82B610BDA0013D6A5 /* PostListView.swift */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		23DDF8522B6FAE4C0062F2F1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 			files = (
 				23AC57B32B610B8C0013D6A5 /* CreatePostView.swift in Sources */,
 				23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */,
+				23DDF8542B6FAE6B0062F2F1 /* PostImagePicker.swift in Sources */,
 				2338DB042B64FE59009243AC /* TabBarView.swift in Sources */,
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
@@ -359,7 +371,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -391,7 +403,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
