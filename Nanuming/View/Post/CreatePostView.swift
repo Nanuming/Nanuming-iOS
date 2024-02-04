@@ -8,8 +8,26 @@
 import SwiftUI
 
 struct CreatePostView: View {
+    @State var title: String = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            VStack(alignment: .leading) {
+                Text("제목")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.textBlack)
+                ZStack(alignment: .bottom) {
+                    TextField("제목", text: $title)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.textBlack)
+                        .frame(height: 30)
+                    Rectangle()
+                        .frame(height: 0.75)
+                }
+                .foregroundColor(.gray100)
+                .frame(width: screenWidth*0.85)
+            }
+        }
     }
 }
 
