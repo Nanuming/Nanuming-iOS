@@ -19,7 +19,7 @@ struct PostDetailView: View {
                         TabView {
                             // TODO: url을 사용하기 위해서는 변경 작업 필요
                             ForEach(post.image, id: \.self) { url in
-                                Image(url)
+                                Image(url ?? "")
                                     .resizable()
                                     .background(.gray100)
                             }
@@ -31,14 +31,14 @@ struct PostDetailView: View {
                         // 게시 정보
                         HStack(spacing: 5) {
                             // 게시자
-                            Text(post.publisher)
+                            Text(post.publisher ?? "")
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundColor(.textBlack)
                             Text("님")
                                 .font(.system(size: 16, weight: .medium))
                             Spacer()
                             // 생성일자
-                            Text(post.createdDate)
+                            Text(post.createdDate ?? "")
                                 .font(.system(size: 14, weight: .medium))
                         }
                         .foregroundColor(.gray200)
@@ -49,12 +49,12 @@ struct PostDetailView: View {
                         // 게시물 상세
                         VStack(alignment: .leading, spacing: 15) {
                             // 타이틀
-                            Text(post.title)
+                            Text(post.title ?? "")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.textBlack)
                             HStack(spacing: 10) {
                                 // 카테고리
-                                Text("#" + post.category)
+                                Text("#" + (post.category ?? ""))
                                     .foregroundColor(.white)
                                     .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                                     .background(.greenSelected)
@@ -66,14 +66,14 @@ struct PostDetailView: View {
                                     HStack(spacing: 3) {
                                         Image("post_cell_map")
                                             .frame(width: 17, height: 17)
-                                        Text(post.location)
+                                        Text(post.location ?? "")
                                             .foregroundColor(.gray300)
                                     }
                                 }
                             }
                             Divider()
                             // 내용
-                            Text(post.contents)
+                            Text(post.contents ?? "")
                                 .foregroundColor(.textBlack)
                                 .lineSpacing(5)
                         }
