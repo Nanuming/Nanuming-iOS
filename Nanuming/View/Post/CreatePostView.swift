@@ -10,6 +10,7 @@ import SwiftUI
 struct CreatePostView: View {
     @State var title: String = ""
     @State var contents: String = ""
+    var postImage = PostImagePicker(post: .constant(Post()))
     
     var body: some View {
         NavigationView {
@@ -33,11 +34,11 @@ struct CreatePostView: View {
                 // 카테고리
                 
                 // 사진
-                VStack {
+                VStack(alignment: .leading) {
                     Text("사진")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.textBlack)
-                    
+                    postImage
                 }
                 
                 // 장소
@@ -49,8 +50,10 @@ struct CreatePostView: View {
                         // 장소 검색 화면으로 이동
                     } label: {
                         ZStack(alignment: .bottomLeading) {
-                            Text("장소 검색하기")
+                            TextField("장소 검색하기", text: $title)
                                 .font(.system(size: 16, weight: .medium))
+                                .multilineTextAlignment(.leading)
+                                .disabled(true)
                                 .frame(height: 30)
                             Rectangle()
                                 .frame(height: 0.75)
