@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreatePostView: View {
     @State var title: String = ""
+    @State var contents: String = ""
     
     var body: some View {
         NavigationView {
@@ -59,6 +60,19 @@ struct CreatePostView: View {
                 }
                 
                 // 설명
+                VStack(alignment: .leading) {
+                    Text("설명")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.textBlack)
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(.gray100)
+                        .frame(height: 150)
+                        .overlay(alignment: .top, content: {
+                            TextField("물품에 대한 자세한 설명을 적어주세요!", text: $contents, axis: .vertical)
+                                .font(.system(size: 16, weight: .medium))
+                                .padding()
+                        })
+                }
             }
             .frame(width: screenWidth*0.85)
         }
