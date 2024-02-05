@@ -27,8 +27,8 @@ struct CreatePostView: View {
                             .frame(height: 0.75)
                     }
                     .foregroundColor(.gray100)
-                    .frame(width: screenWidth*0.85)
                 }
+                
                 // 카테고리
                 
                 // 사진
@@ -38,10 +38,29 @@ struct CreatePostView: View {
                         .foregroundColor(.textBlack)
                     
                 }
+                
                 // 장소
+                VStack(alignment: .leading) {
+                    Text("장소")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.textBlack)
+                    Button {
+                        // 장소 검색 화면으로 이동
+                    } label: {
+                        ZStack(alignment: .bottomLeading) {
+                            Text("장소 검색하기")
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(height: 30)
+                            Rectangle()
+                                .frame(height: 0.75)
+                        }
+                        .foregroundColor(.gray100)
+                    }
+                }
                 
                 // 설명
             }
+            .frame(width: screenWidth*0.85)
         }
     }
 }
