@@ -75,6 +75,21 @@ struct CreatePostView: View {
                 }
             }
             .frame(width: screenWidth*0.85)
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button {
+                        // 창 닫기
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .foregroundColor(.textBlack)
+                    .frame(width: 30, height: 30)
+                }
+                ToolbarItemGroup(placement: .principal) {
+                   Text("게시물 등록")
+                        .font(.system(size: 16, weight: .semibold))
+                }
+            }
         }
     }
 }
