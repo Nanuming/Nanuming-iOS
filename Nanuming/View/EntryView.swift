@@ -28,8 +28,9 @@ struct EntryView: View {
                     scheme: .light,
                     style: .wide,
                     action: {
-                        googleLogine()
+                        googleLogin()
                     })
+                .frame(width: 300, height: 60, alignment: .center)
             }
             VStack {
                 Image("Logo")
@@ -50,20 +51,26 @@ struct EntryView: View {
                             }
                         )
                 }
-                GoogleSignInButton(action: signInWithGoogle)
                 
             }
         }
+        .navigationDestination(isPresented: $isLogined, destination: {
+            MapView()
+        })
     }
+    
     func googleLogin() {
-        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as ? UIWindowScene)?.windows.first?.rootViewController else { return }
-        GIDSignIn.sharedInstance.signIn(withPresenting: <#T##UIViewController#>)
+//        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as ? UIWindowScene).windows.first?.rootViewController else { return }
+//        GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) {
+//            GIDSignInResult, error in
+//            
+//        }
     }
 
-      func getRootViewController() -> UIViewController {
-        // Function to get the root view controller of the app
-        return UIApplication.shared.windows.first!.rootViewController!
-      }
+//      func getRootViewController() -> UIViewController {
+//        // Function to get the root view controller of the app
+//        return UIApplication.shared.windows.first!.rootViewController!
+//      }
     
 }
 private struct ViewControllerRepresentable: UIViewControllerRepresentable {
@@ -76,5 +83,5 @@ private struct ViewControllerRepresentable: UIViewControllerRepresentable {
   func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }
 #Preview {
-    EntryView()
+    EntryView(userData: UserData(url: nil, name: "", email: ""))
 }

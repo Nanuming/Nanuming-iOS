@@ -24,7 +24,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct NanumingApp: App {
     var body: some Scene {
         WindowGroup {
-            EntryView()
+            EntryView(userData: UserData(url: nil, name: "", email: ""))
                 .onOpenURL { url in
                           GIDSignIn.sharedInstance.handle(url)
                         }
