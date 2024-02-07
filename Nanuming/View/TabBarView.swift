@@ -13,7 +13,7 @@ struct TabBarView: View {
             // 탭 뷰
             TabView {
                 // 홈 탭 (지도&게시물 리스트)
-                MapView()
+                HomeView()
                     .tabItem({
                         Label("홈", systemImage: "house")
                     })
