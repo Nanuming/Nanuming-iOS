@@ -6,13 +6,32 @@
 //
 
 import SwiftUI
+import GoogleSignInSwift
+import GoogleSignIn
 
 var screenWidth = UIScreen.main.bounds.size.width
 var screenHeight = UIScreen.main.bounds.size.height
 
 struct EntryView: View {
+    @State private var isLogined = false
+    @State private var userData :UserData
+    @State private var alert = false
+    
+    public init(isLogined: Bool = false, userData: UserData) {
+        _isLogined = State(initialValue:  isLogined)
+        _userData = State(initialValue:  userData)
+    }
     var body: some View {
         NavigationStack {
+            ZStack {
+                GoogleSignInButton(
+                    scheme: .light,
+                    style: .wide,
+                    action: {
+                        googleLogin()
+                    })
+                .frame(width: 300, height: 60, alignment: .center)
+            }
             VStack {
                 Image("Logo")
                     .resizable()
@@ -32,11 +51,37 @@ struct EntryView: View {
                             }
                         )
                 }
+                
             }
         }
+        .navigationDestination(isPresented: $isLogined, destination: {
+            MapView()
+        })
     }
-}
+    
+    func googleLogin() {
+//        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as ? UIWindowScene).windows.first?.rootViewController else { return }
+//        GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) {
+//            GIDSignInResult, error in
+//            
+//        }
+    }
 
+//      func getRootViewController() -> UIViewController {
+//        // Function to get the root view controller of the app
+//        return UIApplication.shared.windows.first!.rootViewController!
+//      }
+    
+}
+private struct ViewControllerRepresentable: UIViewControllerRepresentable {
+  let viewController = UIViewController()
+
+  func makeUIViewController(context: Context) -> some UIViewController {
+    return viewController
+  }
+
+  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+}
 #Preview {
-    EntryView()
+    EntryView(userData: UserData(url: nil, name: "", email: ""))
 }
