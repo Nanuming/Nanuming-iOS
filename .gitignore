@@ -100,5 +100,4 @@ iOSInjectionProject/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-*.plist
 *.xcconfig
