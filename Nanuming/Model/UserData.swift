@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserData {
-    let url:URL?
+    let url: URL?
     let name: String
     let email: String
     
