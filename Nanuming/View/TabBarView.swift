@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Binding var userData : UserData
     var body: some View {
         VStack {
             // 탭 뷰
@@ -28,5 +30,5 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView()
+    TabBarView(userData: .constant(UserData(url: nil, name: "이름", email: "이메일")))
 }
