@@ -9,60 +9,47 @@ import SwiftUI
 
 struct JoinView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var isSignUpSuccessful = false
+    @State private var message = ""
+    @State private var shouldNavigate = false
     @Binding var userData : UserData
     @State private var nickName: String = ""
     var body: some View {
+
+        VStack {
+        }
+        .padding(60)
         VStack (alignment: .leading) {
             Text("닉네임을 입력해주세요")
                 .font(.system(size: 23, weight: .semibold))
-            TextField("닉네임 입력", text: $nickName)
-                            .padding()
+            customTextfield(placeholder: "닉네임 입력", insertText: $nickName)
+            Spacer()
         }
+        .navigationTitle("회원 가입")
+        .foregroundStyle(Color.textBlack)
+        .font(.system(size: 14, weight: .semibold))
+        .navigationBarTitleDisplayMode(.inline)
         .padding()
         
         VStack {
             Button(action: {
                 userData.nickname = nickName
-                // 서버의 로그인 API 엔드포인트 URL
                 
-                guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.appapi/auth/register") else {
-                        print("Invalid URL")
-                        return
-                    }
-                
-                    // HTTP 요청을 구성
-                var request = URLRequest(url: url)
-                request.httpMethod = "POST"
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                    
-                    // 전송할 데이터를 JSON 형식으로 인코딩
-                let body: [String: Any] = ["idToken": userData.IDToken, "nickname": userData.nickname]
-                request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-                    
-                    // URLSession을 사용하여 HTTP POST 요청 실행
-                let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                        // 네트워크 요청 완료 후 처리
-                    if let error = error {
-                            print("Request error:", error)
-                            return
-                    }
-                        
-                    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                        print("Unexpected response status code")
-                        return
-                    }
-                        
-                    if let data = data, let responseData = String(data: data, encoding: .utf8) {
-                        print("Server response:", responseData)
+                let requestData = ["idToken": userData.IDToken, "nickname": userData.nickname]
+                signUp(requestData: requestData) { success, message in
+                    self.isSignUpSuccessful = success
+                    self.message = message
+                    if success {
+                        self.shouldNavigate = true
+                    } else {
+                        print(message)
                     }
                 }
-                    
-                    // 네트워크 요청 시작
-                task.resume()
                 
             }) {
                 RoundedRectangle(cornerRadius: 5)
-                    .frame(width: screenWidth*0.85, height: 50)
+                    .frame(width: screenWidth * 0.85, height: 50)
+                    .backgroundStyle(.greenMain)
                     .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
                     .overlay() {
                         Text("회원가입하기")
@@ -70,7 +57,63 @@ struct JoinView: View {
                             .font(.system(size: 17, weight: .semibold))
                     }
             }
+            .navigationDestination(isPresented: $shouldNavigate) {
+                TabBarView()
+            }
+//            .navigationBarBackButtonHidden(true)
+//            .navigationBarHidden(true)
         }
+        .padding()
+        
+    }
+    
+    func signUp(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.app/api/auth/register") else {
+            completion(false, "Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {
+            completion(false, "Invalid request data")
+            return
+        }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let data = data, error == nil else {
+                completion(false, "Network request failed")
+                return
+            }
+            if let dataString = String(data: data, encoding: .utf8) {
+                print("Response: \(dataString)")
+            }
+            do {
+                let response = try JSONDecoder().decode(ApiResponse.self, from: data)
+                if response.success {
+                    completion(true, "Signup successful")
+                } else {
+                    completion(false, response.message)
+                }
+            } catch {
+                completion(false, "Failed to decode response")
+            }
+        }.resume()
+    }
+    
+    @ViewBuilder
+    func customTextfield(placeholder: String, insertText: Binding<String>) -> some View {
+        VStack() {
+            
+            TextField(placeholder, text: insertText)
+            
+            Rectangle()
+                .frame(width: screenWidth * 0.85, height: 1)
+                .foregroundColor(.gray200)
+        }
+        .padding()
     }
 }
 

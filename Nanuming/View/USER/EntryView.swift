@@ -13,13 +13,27 @@ var screenWidth = UIScreen.main.bounds.size.width
 var screenHeight = UIScreen.main.bounds.size.height
 
 struct EntryView: View {
+    
     @State private var isLogined = false
     @State private var userData :UserData
     @State private var isAlert = false
+    @State private var message = ""
+//    @State private var isJoined = true
+    @State private var nextView: Int = 1
     
     public init(isLogined: Bool = false, userData: UserData) {
         _isLogined = State(initialValue:  isLogined)
         _userData = State(initialValue:  userData)
+        // 네비게이션 바의 스타일을 변경합니다.
+        let appearance = UINavigationBarAppearance()
+        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.textBlack] // 버튼 색상 변경
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white // 네비게이션 바 배경색
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.textBlack] // 타이틀 색상
+
+        // 이 설정을 default와 scrollEdge 스타일에 적용합니다.
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     var body: some View {
         NavigationStack {
@@ -33,27 +47,30 @@ struct EntryView: View {
                         style: .wide,
                         action: {
                             googleLogin()
+                            let requestData = ["idToken": userData.IDToken]
+                            signIn(requestData: requestData) { success, message in
+                                self.isLogined = success
+                                self.message = message
+                                if success {
+                                    nextView = 1
+                                } else {
+                                    nextView = 2
+                                    print(message)
+                                }
+                            }
                         })
                     .frame(width: screenWidth*0.85, height: 50, alignment: .center)
                 }
-                .navigationDestination(isPresented: $isLogined, destination: {
-                    JoinView(userData: $userData)
-                })
-                //                Button(action: {}) {
-                //                    RoundedRectangle(cornerRadius: 5)
-                //                        .frame(width: screenWidth*0.85, height: 50)
-                //                        .foregroundColor(.white)
-                //                        .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
-                //                        .overlay(
-                //                            HStack {
-                //                                Image("google_logo")
-                //                                    .frame(width: 30, height: 30)
-                //                                Text("Sign in with Google")
-                //                                    .foregroundStyle(Color.textBlack)
-                //                                    .font(.system(size: 17, weight: .semibold))
-                //                            }
-                //                        )
-                //                }
+//                .navigationDestination(isPresented: $isJoined, tag: $nextView ,  destination: {
+//                    JoinView(userData: $userData)
+//                })
+                .fullScreenCover(isPresented: $isLogined) {
+                    if nextView == 1 {
+                        TabBarView()
+                    } else {
+                        JoinView(userData: $userData)
+                    }
+                }
                 
             }
         }
@@ -70,6 +87,41 @@ struct EntryView: View {
         } message: {
             Text("please try again.")
         }
+    }
+    func signIn(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.app/api/auth/login") else {
+            completion(false, "Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {
+            completion(false, "Invalid request data")
+            return
+        }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let data = data, error == nil else {
+                completion(false, "Network request failed")
+                return
+            }
+            if let dataString = String(data: data, encoding: .utf8) {
+                print("Response: \(dataString)")
+            }
+            do {
+                let response = try JSONDecoder().decode(ApiResponse.self, from: data)
+                if response.success {
+                    completion(true, "Login successful")
+                } else {
+                    completion(false, response.message)
+                }
+            } catch {
+                completion(false, "Failed to decode response")
+            }
+        }.resume()
     }
     func checkState() {
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
@@ -88,26 +140,6 @@ struct EntryView: View {
             }
         }
     }
-//    func decodeIDToken(idToken: GIDToken) -> String? {
-//        let token = String(describing: idToken)
-//        print("token \(token)")
-//        let segments =  token.components(separatedBy: ".")
-//        guard segments.count > 1 else { return nil }
-//        
-//        var base64String = segments[1]
-//        // Base64 인코딩된 문자열의 길이가 4의 배수가 되도록 "=" 문자로 패딩
-//        let requiredLength = 4 * ((base64String.count + 3) / 4)
-//        let paddingLength = requiredLength - base64String.count
-//        if paddingLength > 0 {
-//            base64String += String(repeating: "=", count: paddingLength)
-//        }
-//        
-//        guard let data = Data(base64Encoded: base64String) else { return nil }
-//        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else { return nil }
-//        
-//        // 'sub' 필드 추출
-//        return json["sub"] as? String
-//    }
     func googleLogin() {
         guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController.self else { return }
                 GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) {
