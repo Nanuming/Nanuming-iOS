@@ -20,13 +20,12 @@ struct GoogleMapView: UIViewRepresentable {
     @ObservedObject var mapVM: MapViewModel
     
     func makeUIView(context: Context) -> GMSMapView {
-        mapVM.requestLocationAuthorization()
         
         let mapView = GMSMapView()
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         
-        let camera = GMSCameraPosition.camera(withLatitude: 37.5665, longitude: 126.9780, zoom: 12)
+        let camera = GMSCameraPosition.camera(withLatitude: mapVM.userLocation.latitude, longitude: mapVM.userLocation.longitude, zoom: 12)
         mapView.camera = camera
         
         return mapView
