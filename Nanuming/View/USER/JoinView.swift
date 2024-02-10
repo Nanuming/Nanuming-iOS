@@ -68,7 +68,7 @@ struct JoinView: View {
     }
     
     func signUp(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.app/api/auth/register") else {
+        guard let url = URL(string: "") else {
             completion(false, "Invalid URL")
             return
         }

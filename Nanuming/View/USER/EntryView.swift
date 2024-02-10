@@ -18,20 +18,16 @@ struct EntryView: View {
     @State private var userData :UserData
     @State private var isAlert = false
     @State private var message = ""
-//    @State private var isJoined = true
     @State private var nextView: Int = 1
     
     public init(isLogined: Bool = false, userData: UserData) {
         _isLogined = State(initialValue:  isLogined)
         _userData = State(initialValue:  userData)
-        // 네비게이션 바의 스타일을 변경합니다.
         let appearance = UINavigationBarAppearance()
-        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.textBlack] // 버튼 색상 변경
+        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.textBlack]
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white // 네비게이션 바 배경색
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.textBlack] // 타이틀 색상
-
-        // 이 설정을 default와 scrollEdge 스타일에 적용합니다.
+        appearance.backgroundColor = .white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.textBlack] 
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -61,9 +57,6 @@ struct EntryView: View {
                         })
                     .frame(width: screenWidth*0.85, height: 50, alignment: .center)
                 }
-//                .navigationDestination(isPresented: $isJoined, tag: $nextView ,  destination: {
-//                    JoinView(userData: $userData)
-//                })
                 .fullScreenCover(isPresented: $isLogined) {
                     if nextView == 1 {
                         TabBarView()
@@ -89,7 +82,7 @@ struct EntryView: View {
         }
     }
     func signIn(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.app/api/auth/login") else {
+        guard let url = URL(string: "") else {
             completion(false, "Invalid URL")
             return
         }
@@ -156,9 +149,8 @@ struct EntryView: View {
                         return
                     }
                     let data = UserData(email: profile.email, IDToken: idToken.tokenString, picture: profile.imageURL(withDimension: 180))
-//                    print("GIDToken: \(data.IDToken)")
-                    userData = data // userData의 상태를 업데이트합니다.
-                    isLogined = true // 로그인 상태를 업데이트합니다. 해당 변수를 올바르게 관리해야 합니다.
+                    userData = data
+                    isLogined = true
                     
         
                 }
