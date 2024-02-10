@@ -9,19 +9,14 @@ import SwiftUI
 import GoogleMaps
 import GoogleSignIn
 
-let googleMapApiKey = Bundle.main.infoDictionary?["GOOGLE_MAP_API_KEY"] ?? "No google map api key"
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        GMSServices.provideAPIKey(googleMapApiKey as! String)
-        
-        return true
-    }
-}
-
-
 @main
 struct NanumingApp: App {
+    
+    init() {
+        let googleMapApiKey = Bundle.main.infoDictionary?["GOOGLE_MAP_API_KEY"] as? String ?? "No google map api key"
+        GMSServices.provideAPIKey(googleMapApiKey)
+    }
+    
     var body: some Scene {
         WindowGroup {
             EntryView(userData: UserData(url: nil, name: "", email: ""))
@@ -33,7 +28,6 @@ struct NanumingApp: App {
                         // Check if `user` exists; otherwise, do something with `error`
                     }
                 }
-            
         }
     }
 

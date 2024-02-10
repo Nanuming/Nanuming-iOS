@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>사용자의 위치를 추적하고 근처 게시물 정보를 불러오기 위해 권한이 필요합니다.</string>
+	<key>GOOGLE_MAP_API_KEY</key>
+	<string>${GOOGLE_MAP_API_KEY}</string>
+	<key>GIDClientID</key>
+	<string>${GOOGLE_CLIENT_ID}</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>${GOOGLE_DOT_REVERSE_CLIENT_ID}</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDServerClientID</key>
+	<string>${GOOGLE_SERVER_CLIENT_ID}</string>
+</dict>
+</plist>

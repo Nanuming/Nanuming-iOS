@@ -38,7 +38,8 @@ struct HomeView: View {
                         .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
                 )
             }
-            .padding(.horizontal, 20)
+            .padding(20)
+            MapView(mapVM: MapViewModel())
         }
     }
 }
