@@ -30,5 +30,5 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView(userData: .constant(UserData(url: nil, name: "이름", email: "이메일")))
+    TabBarView(userData: .constant(UserData(email: "", IDToken: "", picture: nil)))
 }
