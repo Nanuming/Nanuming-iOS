@@ -73,22 +73,41 @@ struct HomeView: View {
                 .frame(width: screenWidth, height: 13)
                 .foregroundColor(.gray50)
             
-            // post list
-            ScrollView {
-                VStack {
-                    // modal로 띄우기 
-                    Button {
-                        isPresented = true
-                    } label: {
-                        PostListCell(post: $post)
+            ZStack(alignment: .bottomTrailing) {
+                // post list
+                ScrollView {
+                    VStack {
+                        // modal로 띄우기
+                        Button {
+                            isPresented = true
+                        } label: {
+                            PostListCell(post: $post)
+                        }
+                        .fullScreenCover(isPresented: $isPresented) {
+                            PostDetailView(post: $post)
+                        }
+                        
+                        PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
+                        PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
                     }
-                    .fullScreenCover(isPresented: $isPresented) {
-                        PostDetailView(post: $post)
-                    }
-                    
-                    PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
-                    PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
                 }
+                
+                // 게시물 생성 + 버튼 
+                Button {
+                    // 게시물 생성 페이지로 이동
+                } label: {
+                    Image(systemName: "plus")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .background(
+                            Circle()
+                                .frame(width: 60, height: 60)
+                                .foregroundColor(.white)
+                                .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+                        )
+                }
+                .frame(width: 60, height: 60)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 10))
             }
         }
         .padding(20)
