@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct JoinView: View {
-    @Environment(\.dismiss) private var dismiss
     @State private var isSignUpSuccessful = false
     @State private var message = ""
     @State private var shouldNavigate = false
@@ -36,11 +35,13 @@ struct JoinView: View {
                 userData.nickname = nickName
                 
                 let requestData = ["idToken": userData.IDToken, "nickname": userData.nickname]
+                print("requestData\(requestData)")
                 signUp(requestData: requestData) { success, message in
                     self.isSignUpSuccessful = success
                     self.message = message
                     if success {
                         self.shouldNavigate = true
+                        print("join success: \(success)")
                     } else {
                         print(message)
                     }
@@ -57,11 +58,9 @@ struct JoinView: View {
                             .font(.system(size: 17, weight: .semibold))
                     }
             }
-            .navigationDestination(isPresented: $shouldNavigate) {
+            .fullScreenCover(isPresented: $shouldNavigate) {
                 TabBarView()
             }
-//            .navigationBarBackButtonHidden(true)
-//            .navigationBarHidden(true)
         }
         .padding()
         
@@ -93,12 +92,12 @@ struct JoinView: View {
             do {
                 let response = try JSONDecoder().decode(ApiResponse.self, from: data)
                 if response.success {
-                    completion(true, "Signup successful")
+                    completion(true, "Login successful")
                 } else {
                     completion(false, response.message)
                 }
             } catch {
-                completion(false, "Failed to decode response")
+                completion(false, "Failed to decode response: \(error.localizedDescription)")
             }
         }.resume()
     }

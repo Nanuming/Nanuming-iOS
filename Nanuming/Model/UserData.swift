@@ -26,15 +26,15 @@ struct ApiResponse: Codable {
     var success: Bool
     var status: Int
     var message: String
-    var data: MemberData
+    var data: MemberData?
 }
 struct MemberData: Codable {
     var memberId: Int
     var providerId: String
     var nickname: String
-    var token: TokenData
+    var token: TokenData?
 }
 struct TokenData: Codable {
-    var accessToken: String
-    var refreshToken: String
+    var accessToken: String?
+    var refreshToken: String?
 }
