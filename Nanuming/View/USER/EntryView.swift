@@ -86,19 +86,20 @@ struct EntryView: View {
         .fullScreenCover(isPresented: $isSignInSuccessful) {
             if nextView == 1 {
                 TabBarView()
-                    .onAppear {
-                        print("TabBarView: \(nextView)")
-                    }
             } else if nextView == 2 {
                 JoinView(userData: $userData)
-                    .onAppear {
-                        print("JoinView: \(nextView)")
-                    }
+            }
+        }
+        .onChange(of: nextView, initial: false) { newValue, _ in
+            if newValue == 1 {
+                print("tabBarView")
+            } else if newValue == 2 {
+                print("JoinView")
             }
         }
     }
     func signIn(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.app/api/auth/login") else {
+        guard let url = URL(string: "") else {
             completion(false, "Invalid URL")
             return
         }
