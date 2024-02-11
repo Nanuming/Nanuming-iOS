@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @State var searchText: String = ""
     @State var post: Post
-    @State private var isPresented = false
+    @State private var isPresentedPostDetail = false
+    @State private var isPresentedCreatePost = false
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
@@ -79,11 +80,11 @@ struct HomeView: View {
                     VStack {
                         // modal로 띄우기
                         Button {
-                            isPresented = true
+                            isPresentedPostDetail = true
                         } label: {
                             PostListCell(post: $post)
                         }
-                        .fullScreenCover(isPresented: $isPresented) {
+                        .fullScreenCover(isPresented: $isPresentedPostDetail) {
                             PostDetailView(post: $post)
                         }
                         
@@ -92,9 +93,9 @@ struct HomeView: View {
                     }
                 }
                 
-                // 게시물 생성 + 버튼 
+                // 게시물 생성 + 버튼
                 Button {
-                    // 게시물 생성 페이지로 이동
+                    isPresentedCreatePost = true
                 } label: {
                     Image(systemName: "plus")
                         .resizable()
@@ -108,6 +109,9 @@ struct HomeView: View {
                 }
                 .frame(width: 60, height: 60)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 10))
+                .fullScreenCover(isPresented: $isPresentedCreatePost) {
+                    CreatePostView()
+                }
             }
         }
         .padding(20)
