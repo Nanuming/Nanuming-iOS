@@ -19,6 +19,7 @@ struct EntryView: View {
     @State private var isAlert = false
     @State private var message = ""
     @State private var nextView: Int = 1
+    @State private var isSignInSuccessful = false
     
     public init(isLogined: Bool = false, userData: UserData) {
         _isLogined = State(initialValue:  isLogined)
@@ -27,49 +28,51 @@ struct EntryView: View {
         appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.textBlack]
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.textBlack] 
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.textBlack]
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     var body: some View {
-        NavigationStack {
-            VStack {
-                Image("Logo")
-                    .resizable()
-                    .frame(width: screenWidth * 0.7,height: screenWidth * 0.65)
-                ZStack {
-                    GoogleSignInButton(
-                        scheme: .light,
-                        style: .wide,
-                        action: {
-                            googleLogin()
-                            let requestData = ["idToken": userData.IDToken]
-                            signIn(requestData: requestData) { success, message in
-                                self.isLogined = success
-                                self.message = message
-                                if success {
-                                    nextView = 1
-                                } else {
-                                    nextView = 2
-                                    print(message)
+        VStack {
+            Image("Logo")
+                .resizable()
+                .frame(width: screenWidth * 0.7,height: screenWidth * 0.65)
+            ZStack {
+                GoogleSignInButton(
+                    scheme: .light,
+                    style: .wide,
+                    action: {
+                        googleLogin { success in
+                            if success {
+                                let requestData = ["idToken": self.userData.IDToken]
+                                //                                    print("idToken: \(self.userData.IDToken)")
+                                signIn(requestData: requestData) { success, message in
+                                    self.message = message
+                                    if success {
+                                        nextView = 1
+                                        print("nextView 1: \(nextView)")
+                                        isSignInSuccessful = success
+                                        print("success: \(success), message: \(message)")
+                                    } else {
+                                        nextView = 2
+                                        print("nextView 2: \(nextView)")
+                                        isSignInSuccessful = true
+                                        print("success: \(success), message: \(message)")
+                                    }
                                 }
+                            } else {
+                                self.isAlert = true
                             }
-                        })
-                    .frame(width: screenWidth*0.85, height: 50, alignment: .center)
-                }
-                .fullScreenCover(isPresented: $isLogined) {
-                    if nextView == 1 {
-                        TabBarView()
-                    } else {
-                        JoinView(userData: $userData)
+                        }
                     }
-                }
+                )
                 
+                .frame(width: screenWidth*0.85, height: 50, alignment: .center)
             }
         }
         .onAppear(perform: {
             // login 상태 체크
-            checkState()
+            //            checkState()
         })
         .alert(LocalizedStringKey("Failed Login"), isPresented: $isAlert) {
             Button(action: {
@@ -80,9 +83,22 @@ struct EntryView: View {
         } message: {
             Text("please try again.")
         }
+        .fullScreenCover(isPresented: $isSignInSuccessful) {
+            if nextView == 1 {
+                TabBarView()
+                    .onAppear {
+                        print("TabBarView: \(nextView)")
+                    }
+            } else if nextView == 2 {
+                JoinView(userData: $userData)
+                    .onAppear {
+                        print("JoinView: \(nextView)")
+                    }
+            }
+        }
     }
     func signIn(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "") else {
+        guard let url = URL(string: "https://nanuming-server-zbhphligbq-du.a.run.app/api/auth/login") else {
             completion(false, "Invalid URL")
             return
         }
@@ -112,7 +128,7 @@ struct EntryView: View {
                     completion(false, response.message)
                 }
             } catch {
-                completion(false, "Failed to decode response")
+                completion(false, "Failed to decode response: \(error.localizedDescription)")
             }
         }.resume()
     }
@@ -123,38 +139,42 @@ struct EntryView: View {
             } else {
                 guard let profile = user?.profile else { return }
                 guard let idToken = user?.idToken else {
-                        print("ID 토큰을 얻을 수 없습니다.")
-                        return
-                    }
+                    print("ID 토큰을 얻을 수 없습니다.")
+                    return
+                }
                 let data = UserData(email: profile.email, IDToken: idToken.tokenString, picture: profile.imageURL(withDimension: 180))
                 userData = data
                 isLogined = true
-                print(isLogined)
+                print("checkState: \(isLogined)")
+                print("userData: \(data)")
             }
         }
     }
-    func googleLogin() {
-        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController.self else { return }
-                GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) {
-                    user, error in guard let result = user else {
-                        if let signInError = error {
-                            print("Login error: \(signInError.localizedDescription)")
-                            isAlert = true
-                        }
-                        return
-                    }
-                    guard let profile = result.user.profile else { return }
-                    guard let idToken = result.user.idToken else {
-                        print("ID 토큰을 얻을 수 없습니다.")
-                        return
-                    }
-                    let data = UserData(email: profile.email, IDToken: idToken.tokenString, picture: profile.imageURL(withDimension: 180))
-                    userData = data
-                    isLogined = true
-                    
-        
-                }
+    func googleLogin(completion: @escaping (Bool) -> Void) {
+        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController.self else {
+            completion(false)
+            return
+        }
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) { user, error in
+            if let error = error {
+                print("Login error: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            guard let user = user, let profile = user.user.profile, let idToken = user.user.idToken else {
+                print("ID 토큰을 얻을 수 없습니다.")
+                completion(false)
+                return
+            }
+            
+            let data = UserData(email: profile.email, IDToken: idToken.tokenString, picture: profile.imageURL(withDimension: 180))
+            self.userData = data
+            self.isLogined = true
+            completion(true)
+        }
     }
+    
     #Preview {
         EntryView(userData: UserData(email: "", IDToken: "", picture: nil))
     }
