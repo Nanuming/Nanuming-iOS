@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PostDetailView: View {
     @Binding var post: Post
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
@@ -26,7 +27,7 @@ struct PostDetailView: View {
                         }
                         .tabViewStyle(PageTabViewStyle())
                         .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
-                        .frame(width: screenWidth, height: screenWidth*0.85)
+                        .frame(width: screenWidth, height: screenWidth * 0.85)
 
                         // 게시 정보
                         HStack(spacing: 5) {
@@ -98,12 +99,12 @@ struct PostDetailView: View {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         // 뒤로가기
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "chevron.backward.circle.fill")
                     }
                     .foregroundColor(.gray300)
                     .frame(width: 30, height: 30)
-                    
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button {
