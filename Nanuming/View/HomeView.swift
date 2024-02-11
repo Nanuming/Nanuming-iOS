@@ -39,7 +39,14 @@ struct HomeView: View {
                 )
             }
             .padding(20)
-            MapView(mapVM: MapViewModel())
+            
+            // post list
+            ScrollView {
+                VStack {
+                    PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
+                    PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
+                }
+            }
         }
     }
 }
