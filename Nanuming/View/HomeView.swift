@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @State var searchText: String = ""
+    @State var post: Post
+    @State private var isPresented = false
     
     var body: some View {
         VStack {
@@ -43,6 +45,16 @@ struct HomeView: View {
             // post list
             ScrollView {
                 VStack {
+                    // modal로 띄우기 
+                    Button {
+                        isPresented = true
+                    } label: {
+                        PostListCell(post: $post)
+                    }
+                    .fullScreenCover(isPresented: $isPresented) {
+                        PostDetailView(post: $post)
+                    }
+                    
                     PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
                     PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
                 }
@@ -52,5 +64,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(post: Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false))
 }
