@@ -66,7 +66,7 @@ struct HomeView: View {
                         }
                     }
                 }
-                .padding(.vertical, 5)
+                .padding(5)
             }
             
             Rectangle()
