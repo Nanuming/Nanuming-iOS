@@ -31,6 +31,7 @@ struct PostListCell: View {
                         // 타이틀
                         Text(post.title ?? "")
                             .font(.system(size: 17, weight: .bold))
+                            .foregroundColor(.textBlack)
                         // 찜 수
                         Text(String(post.likeNum ?? 0)+"명이 찜하고 있어요")
                             .font(.system(size: 12, weight: .medium))

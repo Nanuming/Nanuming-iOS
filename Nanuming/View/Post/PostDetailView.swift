@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PostDetailView: View {
     @Binding var post: Post
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
@@ -98,6 +99,7 @@ struct PostDetailView: View {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         // 뒤로가기
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "chevron.backward.circle.fill")
                     }
