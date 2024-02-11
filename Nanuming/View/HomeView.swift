@@ -12,8 +12,11 @@ struct HomeView: View {
     @State var post: Post
     @State private var isPresented = false
     
+    let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
+    @State var selectedCategoryId: Int = 0
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             HStack(spacing: 15) {
                 // 리스트 이동 버튼
                 VStack {
@@ -40,7 +43,35 @@ struct HomeView: View {
                         .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
                 )
             }
-            .padding(20)
+            .frame(height: 45)
+            
+            // 카테고리 필터
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(0..<category.count) { idx in
+                        Button {
+                            selectedCategoryId = idx
+                        } label: {
+                            Text(category[idx])
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(selectedCategoryId == idx ? .white : .greenMain)
+                                .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                                .background(selectedCategoryId == idx ? .greenMain : .white)
+                                .cornerRadius(14)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(.greenMain, lineWidth: 1)
+                                )
+                                
+                        }
+                    }
+                }
+                .padding(.vertical, 5)
+            }
+            
+            Rectangle()
+                .frame(width: screenWidth, height: 13)
+                .foregroundColor(.gray50)
             
             // post list
             ScrollView {
@@ -60,6 +91,7 @@ struct HomeView: View {
                 }
             }
         }
+        .padding(20)
     }
 }
 

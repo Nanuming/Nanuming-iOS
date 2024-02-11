@@ -27,7 +27,7 @@ struct PostDetailView: View {
                         }
                         .tabViewStyle(PageTabViewStyle())
                         .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
-                        .frame(width: screenWidth, height: screenWidth*0.85)
+                        .frame(width: screenWidth, height: screenWidth * 0.85)
 
                         // 게시 정보
                         HStack(spacing: 5) {
@@ -105,7 +105,6 @@ struct PostDetailView: View {
                     }
                     .foregroundColor(.gray300)
                     .frame(width: 30, height: 30)
-                    
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button {
