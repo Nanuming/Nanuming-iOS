@@ -6,15 +6,35 @@
 //
 
 import Foundation
+import GoogleSignIn
 
 struct UserData {
-    let url:URL?
-    let name: String
-    let email: String
+    var email: String
+    var nickname: String
+    var IDToken: String
+    var picture: URL?
     
-    init(url: URL?, name: String, email: String) {
-        self.url = url
-        self.name = name
+    init(email: String, IDToken: String, picture: URL?) {
         self.email = email
+        self.nickname = ""
+        self.IDToken = IDToken
+        self.picture = picture
+        
     }
+}
+struct ApiResponse: Codable {
+    var success: Bool
+    var status: Int
+    var message: String
+    var data: MemberData
+}
+struct MemberData: Codable {
+    var memberId: Int
+    var providerId: String
+    var nickname: String
+    var token: TokenData
+}
+struct TokenData: Codable {
+    var accessToken: String
+    var refreshToken: String
 }
