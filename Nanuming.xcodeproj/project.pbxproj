@@ -32,6 +32,7 @@
 		885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5362B7373820062AD2F /* GoogleSignIn */; };
 		885AC5392B7373820062AD2F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5382B7373820062AD2F /* GoogleSignInSwift */; };
 		885AC53D2B777B3A0062AD2F /* JoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC53C2B777B3A0062AD2F /* JoinView.swift */; };
+		885AC5402B7A222A0062AD2F /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImagePicker.swift; sourceTree = "<group>"; };
 		23E1A5032B735E1800C59696 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		885AC53C2B777B3A0062AD2F /* JoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinView.swift; sourceTree = "<group>"; };
+		885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				232AFD7D2B79F97000A04B64 /* BaseResponse.swift */,
+				885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */,
 				232AFD7F2B79FA7800A04B64 /* AuthService.swift */,
 			);
 			path = Service;
@@ -282,6 +285,7 @@
 				2338DB062B6564B4009243AC /* EntryView.swift in Sources */,
 				232AFD802B79FA7800A04B64 /* AuthService.swift in Sources */,
 				885AC53D2B777B3A0062AD2F /* JoinView.swift in Sources */,
+				885AC5402B7A222A0062AD2F /* BluetoothManager.swift in Sources */,
 				230F899D2B6D07930007575E /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
