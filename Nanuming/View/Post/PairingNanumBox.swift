@@ -12,6 +12,7 @@ struct PairingNanumBox: View {
     var body: some View {
         NavigationStack {
             VStack {
+                //고유번호 입력
                 Text("고유 번호를 입력해주세요.")
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundColor(.textBlack)
@@ -25,7 +26,22 @@ struct PairingNanumBox: View {
                         .padding()
                     })
                     .padding()
-                
+                // 페어링 버튼
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: screenWidth * 0.85, height: 43)
+                    .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
+                    .foregroundColor(.greenMain)
+                    .overlay(content: {
+                        Button(action: {
+                            print("identifying number: \(identifyingNumber)")
+                        }, label: {
+                            Text("확인")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                        })
+                    })
+                    .padding()
+                    .offset(y: screenHeight * 0.27)
             }
             
         }
