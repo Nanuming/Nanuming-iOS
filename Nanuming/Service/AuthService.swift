@@ -37,6 +37,7 @@ class AuthService {
             do {
                 let response = try JSONDecoder().decode(BaseResponse<MemberData>.self, from: data)
                 if response.success {
+                    print("idToken: \(requestData.values)")
                     completion(true, "Login successful")
                 } else {
                     completion(false, response.message)
