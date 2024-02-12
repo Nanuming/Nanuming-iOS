@@ -19,15 +19,9 @@ struct UserData {
         self.nickname = ""
         self.IDToken = IDToken
         self.picture = picture
-        
     }
 }
-struct ApiResponse: Codable {
-    var success: Bool
-    var status: Int
-    var message: String
-    var data: MemberData?
-}
+
 struct MemberData: Codable {
     var memberId: Int
     var providerId: String

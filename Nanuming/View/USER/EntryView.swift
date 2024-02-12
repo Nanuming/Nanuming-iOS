@@ -46,7 +46,7 @@ struct EntryView: View {
                             if success {
                                 let requestData = ["idToken": self.userData.IDToken]
                                 //                                    print("idToken: \(self.userData.IDToken)")
-                                signIn(requestData: requestData) { success, message in
+                                AuthService().signIn(requestData: requestData) { success, message in
                                     self.message = message
                                     if success {
                                         nextView = 1
@@ -98,41 +98,7 @@ struct EntryView: View {
             }
         }
     }
-    func signIn(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "") else {
-            completion(false, "Invalid URL")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {
-            completion(false, "Invalid request data")
-            return
-        }
-        request.httpBody = httpBody
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            
-            guard let data = data, error == nil else {
-                completion(false, "Network request failed")
-                return
-            }
-            if let dataString = String(data: data, encoding: .utf8) {
-                print("Response: \(dataString)")
-            }
-            do {
-                let response = try JSONDecoder().decode(ApiResponse.self, from: data)
-                if response.success {
-                    completion(true, "Login successful")
-                } else {
-                    completion(false, response.message)
-                }
-            } catch {
-                completion(false, "Failed to decode response: \(error.localizedDescription)")
-            }
-        }.resume()
-    }
+    
     func checkState() {
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if error != nil || user == nil {
