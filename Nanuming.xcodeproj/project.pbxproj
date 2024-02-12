@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		230F899A2B6D060E0007575E /* PostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230F89992B6D060E0007575E /* PostListCell.swift */; };
 		230F899D2B6D07930007575E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230F899C2B6D07930007575E /* Post.swift */; };
+		232AFD7E2B79F97000A04B64 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232AFD7D2B79F97000A04B64 /* BaseResponse.swift */; };
 		2338DB042B64FE59009243AC /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB032B64FE59009243AC /* TabBarView.swift */; };
 		2338DB062B6564B4009243AC /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB052B6564B4009243AC /* EntryView.swift */; };
 		2342BC052B73761D008E0799 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC042B73761D008E0799 /* UserData.swift */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		230F89992B6D060E0007575E /* PostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostListCell.swift; path = Post/PostListCell.swift; sourceTree = "<group>"; };
 		230F899C2B6D07930007575E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		232AFD7D2B79F97000A04B64 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		2338DB032B64FE59009243AC /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		2338DB052B6564B4009243AC /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		2342BC042B73761D008E0799 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -81,6 +83,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		232AFD7C2B79F93200A04B64 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				232AFD7D2B79F97000A04B64 /* BaseResponse.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		2342BC082B73E88B008E0799 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +118,7 @@
 		23AC579F2B610B300013D6A5 /* Nanuming */ = {
 			isa = PBXGroup;
 			children = (
+				232AFD7C2B79F93200A04B64 /* Service */,
 				2342BC082B73E88B008E0799 /* ViewModel */,
 				23DDF8522B6FAE4C0062F2F1 /* Utils */,
 				230F899B2B6D07800007575E /* Model */,
@@ -259,6 +270,7 @@
 				2338DB042B64FE59009243AC /* TabBarView.swift in Sources */,
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
+				232AFD7E2B79F97000A04B64 /* BaseResponse.swift in Sources */,
 				23AC57B72B610BB90013D6A5 /* MyPageView.swift in Sources */,
 				230F899A2B6D060E0007575E /* PostListCell.swift in Sources */,
 				23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */,
