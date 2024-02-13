@@ -15,6 +15,7 @@
 		2338DB062B6564B4009243AC /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB052B6564B4009243AC /* EntryView.swift */; };
 		2342BC052B73761D008E0799 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC042B73761D008E0799 /* UserData.swift */; };
 		2342BC0A2B73E89E008E0799 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC092B73E89E008E0799 /* MapViewModel.swift */; };
+		23A0FC2B2B7B498700D5DEA7 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */; };
 		23A9A9272B67ACB1004BC5D3 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A9262B67ACB1004BC5D3 /* GoogleMaps */; };
 		23A9A9292B67ACB1004BC5D3 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A9282B67ACB1004BC5D3 /* GoogleMapsBase */; };
 		23A9A92B2B67ACB1004BC5D3 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A92A2B67ACB1004BC5D3 /* GoogleMapsCore */; };
@@ -67,6 +68,7 @@
 				885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */,
 				23A9A9272B67ACB1004BC5D3 /* GoogleMaps in Frameworks */,
 				23A9A92B2B67ACB1004BC5D3 /* GoogleMapsCore in Frameworks */,
+				23A0FC2B2B7B498700D5DEA7 /* KeychainSwift in Frameworks */,
 				885AC5392B7373820062AD2F /* GoogleSignInSwift in Frameworks */,
 				23A9A92D2B67ACB1004BC5D3 /* GoogleMapsM4B in Frameworks */,
 				23A9A9292B67ACB1004BC5D3 /* GoogleMapsBase in Frameworks */,
@@ -207,6 +209,7 @@
 				23A9A92C2B67ACB1004BC5D3 /* GoogleMapsM4B */,
 				885AC5362B7373820062AD2F /* GoogleSignIn */,
 				885AC5382B7373820062AD2F /* GoogleSignInSwift */,
+				23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */,
 			);
 			productName = Nanuming;
 			productReference = 23AC579D2B610B300013D6A5 /* Nanuming.app */;
@@ -239,6 +242,7 @@
 			packageReferences = (
 				23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 				885AC5352B7373820062AD2F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 23AC579E2B610B300013D6A5 /* Products */;
 			projectDirPath = "";
@@ -496,6 +500,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 21.0.0;
+			};
+		};
 		23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
@@ -515,6 +527,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
 		23A9A9262B67ACB1004BC5D3 /* GoogleMaps */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
