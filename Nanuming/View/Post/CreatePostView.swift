@@ -43,27 +43,6 @@ struct CreatePostView: View {
                             postImage
                         }
                         
-                        // 장소
-                        VStack(alignment: .leading) {
-                            Text("장소")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(.textBlack)
-                            Button {
-                                // 장소 검색 화면으로 이동
-                            } label: {
-                                ZStack(alignment: .bottomLeading) {
-                                    TextField("장소 검색하기", text: $title)
-                                        .font(.system(size: 16, weight: .medium))
-                                        .multilineTextAlignment(.leading)
-                                        .disabled(true)
-                                        .frame(height: 30)
-                                    Rectangle()
-                                        .frame(height: 0.75)
-                                }
-                                .foregroundColor(.gray100)
-                            }
-                        }
-                        
                         // 설명
                         VStack(alignment: .leading) {
                             Text("설명")
