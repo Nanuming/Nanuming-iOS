@@ -19,7 +19,7 @@ struct NanumingApp: App {
     
     var body: some Scene {
         WindowGroup {
-            EntryView(userData: UserData(email: "", IDToken: "", picture: nil))
+            EntryView()
                 .onOpenURL { url in
                           GIDSignIn.sharedInstance.handle(url)
                         }
