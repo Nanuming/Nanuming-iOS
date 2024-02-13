@@ -11,6 +11,7 @@ struct CreatePostView: View {
     @State var title: String = ""
     @State var contents: String = ""
     var postImage = PostImagePicker(post: .constant(Post()))
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
@@ -77,6 +78,7 @@ struct CreatePostView: View {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         // 창 닫기
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "xmark")
                     }
