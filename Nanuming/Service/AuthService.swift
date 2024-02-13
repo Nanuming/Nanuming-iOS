@@ -13,7 +13,6 @@ import KeychainSwift
 class AuthService {
     let keychain = KeychainSwift()
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nill baseUrl")"
-    
     var entryView = EntryView()
     
     // 로그인 
@@ -87,6 +86,8 @@ class AuthService {
             do {
                 let response = try JSONDecoder().decode(BaseResponse<MemberData>.self, from: data)
                 if response.success {
+                    self.keychain.set((response.data?.token?.accessToken)!, forKey: "accessToken")
+                    self.keychain.set((response.data?.token?.refreshToken)!, forKey: "refreshToken")
                     completion(true, "Login successful")
                 } else {
                     completion(false, response.message)

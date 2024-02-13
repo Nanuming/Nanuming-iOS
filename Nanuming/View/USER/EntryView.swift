@@ -69,7 +69,7 @@ struct EntryView: View {
         }
         .onAppear(perform: {
             // login 상태 체크
-            //            checkState()
+//            checkState()
         })
         .alert(LocalizedStringKey("Failed Login"), isPresented: $isAlert) {
             Button(action: {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PostDetailView: View {
+    var itemId: Int = 1
     @Binding var post: Post
     @Environment(\.presentationMode) var presentationMode
 
