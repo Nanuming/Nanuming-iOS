@@ -8,19 +8,19 @@
 import Foundation
 import GoogleSignIn
 
-struct UserData {
-    var email: String
-    var nickname: String
-    var IDToken: String
-    var picture: URL?
-    
-    init(email: String, IDToken: String, picture: URL?) {
-        self.email = email
-        self.nickname = ""
-        self.IDToken = IDToken
-        self.picture = picture
-    }
-}
+//struct UserData {
+//    var email: String
+//    var nickname: String
+//    var IDToken: String
+//    var picture: URL?
+//    
+//    init(email: String, IDToken: String, picture: URL?) {
+//        self.email = email
+//        self.nickname = ""
+//        self.IDToken = IDToken
+//        self.picture = picture
+//    }
+//}
 
 struct MemberData: Codable {
     var memberId: Int

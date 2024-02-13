@@ -11,7 +11,6 @@ struct JoinView: View {
     @State private var isSignUpSuccessful = false
     @State private var message = ""
     @State private var shouldNavigate = false
-    @Binding var userData : UserData
     @State private var nickName: String = ""
     var body: some View {
 
@@ -32,11 +31,8 @@ struct JoinView: View {
         
         VStack {
             Button(action: {
-                userData.nickname = nickName
-                
-                let requestData = ["idToken": userData.IDToken, "nickname": userData.nickname]
-                print("requestData\(requestData)")
-                AuthService().signUp(requestData: requestData) { success, message in
+                // 회원가입 API
+                AuthService().signUp(nickname: nickName) { success, message in
                     self.isSignUpSuccessful = success
                     self.message = message
                     if success {
@@ -81,5 +77,5 @@ struct JoinView: View {
 }
 
 #Preview {
-    JoinView(userData: .constant(UserData(email: "", IDToken: "", picture: nil)))
+    JoinView()
 }
