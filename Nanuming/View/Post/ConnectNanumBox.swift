@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct PairingNanumBox: View {
+    
+    @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -26,6 +29,15 @@ struct PairingNanumBox: View {
                         .padding()
                     })
                     .padding()
+                List(bluetoothManager.discoveredDevices, id: \.identifier) { device in
+                            Text(device.name ?? "Unknown")
+                        }
+                        .onAppear {
+                            bluetoothManager.startScanning()
+                        }
+                        .onDisappear {
+                            bluetoothManager.stopScanning()
+                        }
                 // 페어링 버튼
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: screenWidth * 0.85, height: 43)
@@ -41,7 +53,7 @@ struct PairingNanumBox: View {
                         })
                     })
                     .padding()
-                    .offset(y: screenHeight * 0.27)
+//                    .offset(y: screenHeight * 0.27)
             }
             
         }
