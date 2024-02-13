@@ -11,6 +11,7 @@ struct CreatePostView: View {
     @State var title: String = ""
     @State var contents: String = ""
     var postImage = PostImagePicker(post: .constant(Post()))
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
@@ -41,27 +42,6 @@ struct CreatePostView: View {
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.textBlack)
                             postImage
-                        }
-                        
-                        // 장소
-                        VStack(alignment: .leading) {
-                            Text("장소")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(.textBlack)
-                            Button {
-                                // 장소 검색 화면으로 이동
-                            } label: {
-                                ZStack(alignment: .bottomLeading) {
-                                    TextField("장소 검색하기", text: $title)
-                                        .font(.system(size: 16, weight: .medium))
-                                        .multilineTextAlignment(.leading)
-                                        .disabled(true)
-                                        .frame(height: 30)
-                                    Rectangle()
-                                        .frame(height: 0.75)
-                                }
-                                .foregroundColor(.gray100)
-                            }
                         }
                         
                         // 설명
@@ -98,6 +78,7 @@ struct CreatePostView: View {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         // 창 닫기
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "xmark")
                     }
