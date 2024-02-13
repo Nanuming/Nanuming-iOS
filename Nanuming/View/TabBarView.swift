@@ -18,7 +18,8 @@ struct TabBarView: View {
                         Label("홈", systemImage: "house")
                     })
                 // my 탭
-                MyPageView()
+//                MyPageView()
+                ConnectNanumBox()
                     .tabItem({
                         Label("My", systemImage: "person.circle")
                     })

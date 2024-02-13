@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct PairingNanumBox: View {
-    
+struct ConnectNanumBox: View {
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
     
@@ -45,7 +44,19 @@ struct PairingNanumBox: View {
                     .foregroundColor(.greenMain)
                     .overlay(content: {
                         Button(action: {
+                            let lockerNum = ["lockerId":identifyingNumber]
+                            bluetoothManager.itemId = "12"
+                            print("url: \(lockerNum)")
                             print("identifying number: \(identifyingNumber)")
+                            print("Scan: \(bluetoothManager.centralManager.isScanning)")
+                            bluetoothManager.centralManagerDidUpdateState(bluetoothManager.centralManager)
+                            bluetoothManager.RequestBluetooth(requestData: lockerNum) { success, message in
+                                if success {
+                                    print("success: \(success), message: \(message)")
+                                } else {
+                                    print("success: \(success), message: \(message)")
+                                }
+                            }
                         }, label: {
                             Text("확인")
                                 .font(.system(size: 16, weight: .bold))
@@ -61,5 +72,5 @@ struct PairingNanumBox: View {
 }
 
 #Preview {
-    PairingNanumBox()
+    ConnectNanumBox()
 }

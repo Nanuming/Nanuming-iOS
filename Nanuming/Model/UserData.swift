@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GoogleSignIn
 
 struct UserData {
     var email: String
