@@ -12,7 +12,7 @@ import KeychainSwift
 
 class AuthService {
     let keychain = KeychainSwift()
-    let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nill baseUrl")"
+    let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     var entryView = EntryView()
     
     // 로그인 
@@ -22,7 +22,7 @@ class AuthService {
             return
         }
         
-        let requestData = ["idToken": keychain.get("idToken") ?? "nill idToken"]
+        let requestData = ["idToken": keychain.get("idToken") ?? "nil idToken"]
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

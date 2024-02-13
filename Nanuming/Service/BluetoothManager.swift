@@ -9,7 +9,7 @@ import CoreBluetooth
 import Foundation
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate {
-    let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nill baseUrl")"
+    let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     var centralManager: CBCentralManager!
     @Published var discoveredDevices: [CBPeripheral] = []
 
