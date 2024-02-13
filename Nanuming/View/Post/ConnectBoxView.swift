@@ -10,7 +10,7 @@ import SwiftUI
 struct ConnectNanumBox: View {
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
-    
+    var itemId: String = ""
     var body: some View {
         NavigationStack {
             VStack {
@@ -45,12 +45,11 @@ struct ConnectNanumBox: View {
                     .overlay(content: {
                         Button(action: {
                             let lockerNum = ["lockerId":identifyingNumber]
-                            bluetoothManager.itemId = "12"
                             print("url: \(lockerNum)")
                             print("identifying number: \(identifyingNumber)")
                             print("Scan: \(bluetoothManager.centralManager.isScanning)")
                             bluetoothManager.centralManagerDidUpdateState(bluetoothManager.centralManager)
-                            bluetoothManager.RequestBluetooth(requestData: lockerNum) { success, message in
+                            bluetoothManager.RequestBluetooth(requestData: lockerNum, itemId: itemId) { success, message in
                                 if success {
                                     print("success: \(success), message: \(message)")
                                 } else {
