@@ -10,7 +10,6 @@ import Foundation
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nill baseUrl")"
-    var itemId: String?
     var centralManager: CBCentralManager!
     @Published var discoveredDevices: [CBPeripheral] = []
 
@@ -45,14 +44,14 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     func stopScanning() {
         centralManager.stopScan()
     }
-    func RequestBluetooth(requestData: [String: Any], completion: @escaping (Bool, String) -> Void) {
-//        \(String(describing: itemId))
-        guard let url = URL(string: "\(baseUrl)/api/item/1/assign") else {
+    func RequestBluetooth(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/api/item/\(String(describing: itemId))/assign") else {
             completion(false, "Invalid URL")
             return
         }
-        
+        let jwtToken = "token123"
         var request = URLRequest(url: url)
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {

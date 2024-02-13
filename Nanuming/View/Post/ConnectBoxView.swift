@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct ConnectNanumBox: View {
+struct ConnectBoxView: View {
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
-    var itemId: String = ""
+    var itemId: String = "1"
     var body: some View {
         NavigationStack {
             VStack {
@@ -71,5 +71,5 @@ struct ConnectNanumBox: View {
 }
 
 #Preview {
-    ConnectNanumBox()
+    ConnectBoxView()
 }
