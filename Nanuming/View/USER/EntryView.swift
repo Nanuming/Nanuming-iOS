@@ -43,6 +43,7 @@ struct EntryView: View {
                         AuthService().googleLogin { success in
                             if success {
                                 // 로그인 API
+//                                printt("\(keychain.)")
                                 AuthService().signIn() { success, message in
                                     self.message = message
                                     if success {
@@ -69,7 +70,18 @@ struct EntryView: View {
         }
         .onAppear(perform: {
             // login 상태 체크
-//            checkState()
+            
+            AuthService().checkState() { isLoggedIn in
+                if isLoggedIn {
+                    print("User is logged in.")
+                    isSignInSuccessful = isLoggedIn
+                } else {
+                    print("User is not logged in.")
+                    isSignInSuccessful = isLoggedIn
+                }
+            }
+            
+
         })
         .alert(LocalizedStringKey("Failed Login"), isPresented: $isAlert) {
             Button(action: {

@@ -23,6 +23,7 @@ class AuthService {
         }
         
         let requestData = ["idToken": keychain.get("idToken") ?? "nil idToken"]
+        print("\(requestData)")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -135,22 +136,29 @@ class AuthService {
         }
     }
     
-//    func checkState() {
-//        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-//            if error != nil || user == nil {
-//                print("Not sign in")
-//            } else {
-//                guard let profile = user?.profile else { return }
-//                guard let idToken = user?.idToken else {
-//                    print("ID 토큰을 얻을 수 없습니다.")
-//                    return
-//                }
-//                let data = UserData(email: profile.email, IDToken: idToken.tokenString, picture: profile.imageURL(withDimension: 180))
-//                userData = data
-//                isLogined = true
-//                print("checkState: \(isLogined)")
-//                print("userData: \(data)")
-//            }
-//        }
-//    }
+    func checkState(completion: @escaping (Bool) -> Void) {
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Not signed in: \(error.localizedDescription)")
+                    completion(false)
+                    return
+                }
+                
+                guard let user = user, let idToken = user.idToken else {
+                    print("Cannot retrieve user profile or ID token.")
+                    completion(false)
+                    return
+                }
+                
+                // 키체인에 ID 토큰 갱신
+                self.keychain.set(idToken.tokenString, forKey: "idToken")
+                
+                print("User is signed in with ID token: \(idToken)")
+                completion(true)
+            }
+        }
+
+    }
+
 }
