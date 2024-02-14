@@ -44,6 +44,10 @@ class AuthService {
             do {
                 let response = try JSONDecoder().decode(BaseResponse<MemberData>.self, from: data)
                 if response.success {
+                    // 앱 자체에 저장
+                    UserDefaults.standard.set(response.data?.memberId, forKey: "userId")
+                    UserDefaults.standard.set(response.data?.nickname, forKey: "userNickname")
+                    
                     completion(true, "Login successful")
                 } else {
                     completion(false, response.message)
