@@ -10,8 +10,8 @@ import SwiftUI
 struct CreatePostView: View {
     @State var title: String = ""
     @State var contents: String = ""
-    var postImage = PostImagePicker(post: .constant(Post()))
     @Environment(\.presentationMode) var presentationMode
+    @State var postImageDatas: [Data?] = []
     
     var body: some View {
         NavigationView {
@@ -41,7 +41,7 @@ struct CreatePostView: View {
                             Text("사진")
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.textBlack)
-                            postImage
+                            PostImagePicker(post: .constant(Post()), postImageDatas: $postImageDatas)
                         }
                         
                         // 설명
@@ -63,6 +63,12 @@ struct CreatePostView: View {
                 }
                 Button {
                     // 게시물 예비 등록
+                    PostService().writePost(title: title, description: contents, imageList: postImageDatas) { id in
+                        print("write post sucess/ postId: ", id)
+                        
+                        // 창 닫기
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: screenWidth * 0.9, height: 50)
