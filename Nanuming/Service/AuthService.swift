@@ -130,35 +130,8 @@ class AuthService {
                 let urlString = imageUrl.absoluteString
                 keychain.set(urlString, forKey: "profileImage")
             }
-            
-            entryView.isLogined = true
             completion(true)
         }
-    }
-    
-    func checkState(completion: @escaping (Bool) -> Void) {
-        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    print("Not signed in: \(error.localizedDescription)")
-                    completion(false)
-                    return
-                }
-                
-                guard let user = user, let idToken = user.idToken else {
-                    print("Cannot retrieve user profile or ID token.")
-                    completion(false)
-                    return
-                }
-                
-                // 키체인에 ID 토큰 갱신
-                self.keychain.set(idToken.tokenString, forKey: "idToken")
-                
-                print("User is signed in with ID token: \(idToken)")
-                completion(true)
-            }
-        }
-
     }
 
 }

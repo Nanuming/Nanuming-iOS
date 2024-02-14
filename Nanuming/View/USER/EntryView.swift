@@ -14,14 +14,12 @@ var screenHeight = UIScreen.main.bounds.size.height
 
 struct EntryView: View {
     
-    @State var isLogined = false
     @State private var isAlert = false
     @State private var message = ""
     @State private var nextView: Int = 1
     @State private var isSignInSuccessful = false
     
-    public init(isLogined: Bool = false) {
-        _isLogined = State(initialValue:  isLogined)
+    public init() {
         let appearance = UINavigationBarAppearance()
         appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.textBlack]
         appearance.configureWithOpaqueBackground()
@@ -68,21 +66,21 @@ struct EntryView: View {
                 .frame(width: screenWidth*0.85, height: 50, alignment: .center)
             }
         }
-        .onAppear(perform: {
-            // login 상태 체크
-            
-            AuthService().checkState() { isLoggedIn in
-                if isLoggedIn {
-                    print("User is logged in.")
-                    isSignInSuccessful = isLoggedIn
-                } else {
-                    print("User is not logged in.")
-                    isSignInSuccessful = isLoggedIn
-                }
-            }
-            
-
-        })
+//        .onAppear(perform: {
+//            // login 상태 체크
+//            
+//            AuthService().checkState() { isLoggedIn in
+//                if isLoggedIn {
+//                    print("User is logged in.")
+//                    isSignInSuccessful = isLoggedIn
+//                } else {
+//                    print("User is not logged in.")
+//                    isSignInSuccessful = isLoggedIn
+//                }
+//            }
+//            
+//
+//        })
         .alert(LocalizedStringKey("Failed Login"), isPresented: $isAlert) {
             Button(action: {
                 isAlert = false
