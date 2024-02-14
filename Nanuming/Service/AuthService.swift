@@ -23,7 +23,7 @@ class AuthService {
         }
         
         let requestData = ["idToken": keychain.get("idToken") ?? "nil idToken"]
-        
+        print("\(requestData)")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -130,28 +130,8 @@ class AuthService {
                 let urlString = imageUrl.absoluteString
                 keychain.set(urlString, forKey: "profileImage")
             }
-            
-            entryView.isLogined = true
             completion(true)
         }
     }
-    
-//    func checkState() {
-//        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-//            if error != nil || user == nil {
-//                print("Not sign in")
-//            } else {
-//                guard let profile = user?.profile else { return }
-//                guard let idToken = user?.idToken else {
-//                    print("ID 토큰을 얻을 수 없습니다.")
-//                    return
-//                }
-//                let data = UserData(email: profile.email, IDToken: idToken.tokenString, picture: profile.imageURL(withDimension: 180))
-//                userData = data
-//                isLogined = true
-//                print("checkState: \(isLogined)")
-//                print("userData: \(data)")
-//            }
-//        }
-//    }
+
 }
