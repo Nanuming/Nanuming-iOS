@@ -83,7 +83,7 @@ struct CreatePostView: View {
                         )
                 }
                 .fullScreenCover(isPresented: $showPostDetailModal) {
-                    PostDetailView(itemId: itemId, post: .constant(Post()))
+                    PostDetailView(itemId: itemId)
                 }
             }
             .frame(width: screenWidth*0.85)

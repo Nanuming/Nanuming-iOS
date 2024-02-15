@@ -9,8 +9,9 @@ import SwiftUI
 
 struct PostDetailView: View {
     var itemId: Int?
-    @Binding var post: Post
-    var viewModel = PostDetailViewModel()
+    @StateObject var postDetail = PostDetailViewModel()
+    @State private var showingConnectBoxView = false
+//    var post: Post
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         NavigationView {
@@ -20,7 +21,7 @@ struct PostDetailView: View {
                         // 이미지
                         TabView {
                             
-                            ForEach(post.image, id: \.self) { url in
+                            ForEach(postDetail.postContent?.image ?? [""], id: \.self) { url in
                                 Image(url ?? "")
                                     .resizable()
                                     .background(.gray100)
@@ -33,14 +34,14 @@ struct PostDetailView: View {
                         // 게시 정보
                         HStack(spacing: 5) {
                             // 게시자
-                            Text(post.publisher ?? "")
+                            Text(postDetail.postContent?.publisher ?? "")
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundColor(.textBlack)
                             Text("님")
                                 .font(.system(size: 16, weight: .medium))
                             Spacer()
                             // 생성일자
-                            Text(post.createdDate ?? "")
+                            Text(postDetail.postContent?.createdDate ?? "")
                                 .font(.system(size: 14, weight: .medium))
                         }
                         .foregroundColor(.gray200)
@@ -51,12 +52,12 @@ struct PostDetailView: View {
                         // 게시물 상세
                         VStack(alignment: .leading, spacing: 15) {
                             // 타이틀
-                            Text(post.title ?? "")
+                            Text(postDetail.postContent?.title ?? "")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.textBlack)
                             HStack(spacing: 10) {
                                 // 카테고리
-                                Text("#" + (post.category ?? ""))
+                                Text("#" + (postDetail.postContent?.category ?? ""))
                                     .foregroundColor(.white)
                                     .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                                     .background(.greenSelected)
@@ -68,14 +69,14 @@ struct PostDetailView: View {
                                     HStack(spacing: 3) {
                                         Image("post_cell_map")
                                             .frame(width: 17, height: 17)
-                                        Text(post.location ?? "")
+                                        Text(postDetail.postContent?.location ?? "")
                                             .foregroundColor(.gray300)
                                     }
                                 }
                             }
                             Divider()
                             // 내용
-                            Text(post.contents ?? "")
+                            Text(postDetail.postContent?.contents ?? "")
                                 .foregroundColor(.textBlack)
                                 .lineSpacing(5)
                         }
@@ -86,14 +87,20 @@ struct PostDetailView: View {
                 }
                 Button {
                     // 게시물 생성 페이지로 이동
+                    showingConnectBoxView = true
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
-                        .frame(width: screenWidth * 0.9, height: 50)
-                        .overlay(
-                            Text("나눔받기")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white)
-                        )
+                           .frame(width: screenWidth * 0.9, height: 50)
+                           .foregroundColor(.blue) // 예시 색상 추가
+                           .overlay(
+                               Text(postDetail.postDetail?.owner ?? false ? "나눔하기" : "나눔받기")
+                                   .font(.system(size: 16, weight: .bold))
+                                   .foregroundColor(.white)
+                           )
+                }
+                .fullScreenCover(isPresented: $showingConnectBoxView) {
+                    // ConnectBoxView로 이동하면서 필요한 데이터를 전달합니다.
+                    ConnectBoxView(itemId: "\(String(describing: itemId))")
                 }
             }
             .toolbar {
@@ -119,19 +126,11 @@ struct PostDetailView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.fetchPostDetail(itemId: "someItemId") { post in
-                if let post = post {
-                    print("post: \(post)")
-//                    post = post
-                    
-                } else {
-                    // 오류 처리
-                }
-            }
+            postDetail.fetchPostDetail(itemId: String(itemId ?? 0))
         })
     }
 }
 
 #Preview {
-    PostDetailView(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "google_logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔나눔나눔\n상태 good이에요", isMyPost: false)))
+    PostDetailView()
 }

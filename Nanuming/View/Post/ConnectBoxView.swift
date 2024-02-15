@@ -12,7 +12,7 @@ struct ConnectBoxView: View {
     
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
-    var itemId: String = "1"
+    var itemId: String
     var body: some View {
         NavigationStack {
             VStack {
@@ -69,5 +69,5 @@ struct ConnectBoxView: View {
 }
 
 #Preview {
-    ConnectBoxView()
+    ConnectBoxView(itemId: "1")
 }

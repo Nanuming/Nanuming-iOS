@@ -10,33 +10,36 @@ import SwiftUI
 
 class PostDetailViewModel: ObservableObject {
     @Published var postDetail: PostDetail?
-    let postService = PostService()
-    var postContent: Post?
+    @Published var postContent: Post? 
 
-    func fetchPostDetail(itemId: String, completion: @escaping (Post?) -> Void) {
+    let postService = PostService()
+    
+    func fetchPostDetail(itemId: String) {
         postService.showDetail(itemId: itemId) { [weak self] success, message in
             DispatchQueue.main.async {
                 if success {
+                    guard let detail = self?.postDetail else { return }
+                    
                     let post = Post(
-                        publisher: UserDefaults.standard.string(forKey: "userNickname"),
-                        createdDate: self?.postDetail?.createAt,
-                        title: "abcd",
-                        image: self?.postDetail?.itemImageUrlList ?? [],
-                        category: self?.postDetail?.category,
-                        location: self?.postDetail?.location,
-                        contents: self?.postDetail?.description,
-                        likeNum: 1,
-                        isMyPost: self?.postDetail?.owner ?? false
+                        publisher: detail.nickname,  // UserDefaults에서 가져오는 대신 PostDetail의 nickname 사용
+                        createdDate: detail.createAt,
+                        title: "루피 인형 나눔합니다",  // 예시로 고정된 값 사용
+                        image: detail.itemImageUrlList,
+                        category: detail.category,
+                        location: detail.location,
+                        contents: detail.description,
+                        likeNum: 0,  // 예시로 고정된 값 사용
+                        isMyPost: detail.owner
                     )
-                    completion(post)
+                    self?.postContent = post // 할당
                 } else {
                     print(message)
-                    completion(nil)
+                    self?.postContent = nil
                 }
             }
         }
     }
-
 }
+
 
 
