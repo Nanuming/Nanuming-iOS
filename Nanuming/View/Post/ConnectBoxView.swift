@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import CoreBluetooth
 
 struct ConnectBoxView: View {
+    
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
     var itemId: String = "1"

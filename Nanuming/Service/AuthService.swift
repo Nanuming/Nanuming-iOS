@@ -38,9 +38,6 @@ class AuthService {
                 completion(false, "Network request failed")
                 return
             }
-            if let dataString = String(data: data, encoding: .utf8) {
-                print("Response: \(dataString)")
-            }
             do {
                 let response = try JSONDecoder().decode(BaseResponse<MemberData>.self, from: data)
                 if response.success {

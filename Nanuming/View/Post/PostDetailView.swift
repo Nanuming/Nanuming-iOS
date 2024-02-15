@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct PostDetailView: View {
-    var itemId: Int = 1
+    var itemId: Int?
     @Binding var post: Post
+    var viewModel = PostDetailViewModel()
     @Environment(\.presentationMode) var presentationMode
-
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
@@ -19,7 +19,7 @@ struct PostDetailView: View {
                     VStack(spacing: 0) {
                         // 이미지
                         TabView {
-                            // TODO: url을 사용하기 위해서는 변경 작업 필요
+                            
                             ForEach(post.image, id: \.self) { url in
                                 Image(url ?? "")
                                     .resizable()
@@ -118,6 +118,17 @@ struct PostDetailView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            viewModel.fetchPostDetail(itemId: "someItemId") { post in
+                if let post = post {
+                    print("post: \(post)")
+//                    post = post
+                    
+                } else {
+                    // 오류 처리
+                }
+            }
+        })
     }
 }
 

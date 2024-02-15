@@ -22,3 +22,15 @@ struct Post {
 struct PostId: Codable {
     var id: Int
 }
+
+struct PostDetail: Codable {
+    var itemId: String?
+    var itemImageUrlList: [String?]
+    var category: String?
+    var nickname: String?
+    var location: String?
+    var description: String?
+    var createAt: String?
+    var updateAt: String?
+    var owner: Bool?
+}
