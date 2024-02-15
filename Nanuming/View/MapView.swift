@@ -26,7 +26,7 @@ struct GoogleMapView: UIViewRepresentable {
         mapView.settings.myLocationButton = true
         mapView.delegate = mapVM
         
-        let camera = GMSCameraPosition.camera(withLatitude: mapVM.userLocation.latitude, longitude: mapVM.userLocation.longitude, zoom: 12)
+        let camera = GMSCameraPosition.camera(withLatitude: mapVM.userLocation.latitude, longitude: mapVM.userLocation.longitude, zoom: 15)
         mapView.camera = camera
         
         return mapView

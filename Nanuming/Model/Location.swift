@@ -7,12 +7,17 @@
 
 import Foundation
 
+struct Location {
+    let latitude: Double
+    let longitude: Double
+}
+
 // DTO
 struct PostListByLocation: Codable {
     let locationId: Int
     let latitude: Double
     let longitude: Double
-    let itemOutlineDtoList: PostCell
+    let itemOutlineDtoList: [PostCell]
 }
 
 struct PostCell: Codable {
@@ -21,4 +26,8 @@ struct PostCell: Codable {
     let title: String
     let locationName: String
     let categoryName: String
+}
+
+struct LocationWithItemOutline: Codable {
+    let locationWithItemOutline: [PostListByLocation]
 }
