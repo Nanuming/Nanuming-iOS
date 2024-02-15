@@ -15,7 +15,8 @@ struct HomeView: View {
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
     @State var relocateButtonTapped = false
-    @State var postList: [PostListByLocation] = []
+    @State var placeList: [PlaceLocation] = []
+    @State var postList: [PostCellByLocation] = []
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
@@ -138,8 +139,8 @@ struct HomeView: View {
     
     func getPostAPI() {
         LocationService().getPostList(mapVM.userLocation.latitude, mapVM.userLocation.longitude, mapVM.deltaLocation.latitude, mapVM.deltaLocation.longitude) { postListByLocation in
-            self.postList = postListByLocation.locationWithItemOutline
-            print("xy", self.postList)
+            self.placeList = postListByLocation.locationInfoDtoList
+            self.postList = postListByLocation.itemOutlineDtoList
         }
     }
     

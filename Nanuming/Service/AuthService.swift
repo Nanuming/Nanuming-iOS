@@ -23,7 +23,7 @@ class AuthService {
         }
         
         let requestData = ["idToken": keychain.get("idToken") ?? "nil idToken"]
-        print("\(requestData)")
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
