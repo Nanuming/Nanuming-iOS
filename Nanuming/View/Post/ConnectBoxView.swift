@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import CoreBluetooth
 
 struct ConnectBoxView: View {
+    
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
-    var itemId: String = "1"
+    var itemId: String
     var body: some View {
         NavigationStack {
             VStack {
@@ -28,15 +30,6 @@ struct ConnectBoxView: View {
                         .padding()
                     })
                     .padding()
-                List(bluetoothManager.discoveredDevices, id: \.identifier) { device in
-                            Text(device.name ?? "Unknown")
-                        }
-                        .onAppear {
-                            bluetoothManager.startScanning()
-                        }
-                        .onDisappear {
-                            bluetoothManager.stopScanning()
-                        }
                 // 페어링 버튼
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: screenWidth * 0.85, height: 43)
@@ -45,13 +38,15 @@ struct ConnectBoxView: View {
                     .overlay(content: {
                         Button(action: {
                             let lockerNum = ["lockerId":identifyingNumber]
-                            print("url: \(lockerNum)")
                             print("identifying number: \(identifyingNumber)")
                             print("Scan: \(bluetoothManager.centralManager.isScanning)")
                             bluetoothManager.centralManagerDidUpdateState(bluetoothManager.centralManager)
                             bluetoothManager.RequestBluetooth(requestData: lockerNum, itemId: itemId) { success, message in
                                 if success {
+                                    self.bluetoothManager.startScanning()
                                     print("success: \(success), message: \(message)")
+                                    // TODO: 상자로부터 수신한 데이터 처리 필요
+                                    print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
                                 } else {
                                     print("success: \(success), message: \(message)")
                                 }
@@ -63,7 +58,10 @@ struct ConnectBoxView: View {
                         })
                     })
                     .padding()
-//                    .offset(y: screenHeight * 0.27)
+                    .offset(y: screenHeight * 0.27)
+            }
+            .onDisappear {
+                bluetoothManager.stopScanning()
             }
             
         }
@@ -71,5 +69,5 @@ struct ConnectBoxView: View {
 }
 
 #Preview {
-    ConnectBoxView()
+    ConnectBoxView(itemId: "1")
 }

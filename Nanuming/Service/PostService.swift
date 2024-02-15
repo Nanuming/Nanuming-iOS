@@ -55,4 +55,41 @@ class PostService {
                 }
             }
     }
+    func showDetail(itemId: String, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/api/item/\(itemId)") else {
+            completion(false, "Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    completion(false, "Network request failed: \(error?.localizedDescription ?? "Unknown error")")
+                }
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(BaseResponse<PostDetail>.self, from: data)
+                DispatchQueue.main.async {
+                    if response.success, let postDetail = response.data {
+                        completion(true, "Data fetch successful")
+                        PostDetailViewModel().postDetail = postDetail 
+                    } else {
+                        completion(false, response.message)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false, "Failed to decode response: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
+
 }
