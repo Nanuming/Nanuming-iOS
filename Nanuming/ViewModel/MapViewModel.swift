@@ -59,9 +59,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         
         // 위, 경도 델타 값
         let deltaLatitude = northEast.latitude-latitude
-        let deltaLongtitude = northEast.longitude-longitude
+        let deltaLongitude = northEast.longitude-longitude
         
-        print("위경도 델타 값: ", deltaLatitude, deltaLongtitude)
+        print("위경도 델타 값: ", deltaLatitude, deltaLongitude)
         
         // 위도(latitude)와 경도(longitude)를 사용하여 원하는 작업을 수행합니다.
         // 예: 위치 기반 서비스 호출, 데이터 업데이트 등
