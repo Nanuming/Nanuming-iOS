@@ -12,6 +12,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     var centralManager: CBCentralManager!
     @Published var discoveredDevices: [CBPeripheral] = []
+    @Published var receivedDataString: String? = nil
 
     override init() {
         super.init()
@@ -88,15 +89,16 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         }
         
         if let data = characteristic.value {
-            // 데이터를 처리합니다. 예를 들어, String으로 변환
             let dataString = String(data: data, encoding: .utf8)
             print("Received data: \(dataString ?? "nil")")
+            DispatchQueue.main.async {
+                        self.receivedDataString = dataString
+                    }
         }
     }
 
 
     func startScanning() {
-//        let services: [CBUUID] = [CBUUID(string: "nanuming UUID")]
         //bluetooth on
         func startScanning() {
             guard centralManager.state == .poweredOn, !centralManager.isScanning else { return }
