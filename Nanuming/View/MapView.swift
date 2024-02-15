@@ -33,6 +33,6 @@ struct GoogleMapView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: GMSMapView, context: Context) {
-        print("update")
+//        print("update")
     }
 }

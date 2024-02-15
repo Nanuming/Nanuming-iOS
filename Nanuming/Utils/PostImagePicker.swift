@@ -15,7 +15,7 @@ struct imageWrapper: Identifiable {
 
 struct PostImagePicker: View {
     @Binding var post: Post
-    @State var postImageDatas: [Data?] = []
+    @Binding var postImageDatas: [Data?]
     @State var selectedPhotos: [PhotosPickerItem] = []
 
     var postImage: [imageWrapper] {
@@ -88,8 +88,4 @@ struct PostImagePicker: View {
             }
         }
     }
-}
-
-#Preview {
-    PostImagePicker(post: .constant(Post()))
 }

@@ -10,8 +10,10 @@ import SwiftUI
 struct CreatePostView: View {
     @State var title: String = ""
     @State var contents: String = ""
-    var postImage = PostImagePicker(post: .constant(Post()))
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentation
+    @State var postImageDatas: [Data?] = []
+    @State private var showPostDetailModal = false
+    @State private var itemId: Int = 0
     
     var body: some View {
         NavigationView {
@@ -41,7 +43,7 @@ struct CreatePostView: View {
                             Text("사진")
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.textBlack)
-                            postImage
+                            PostImagePicker(post: .constant(Post()), postImageDatas: $postImageDatas)
                         }
                         
                         // 설명
@@ -63,6 +65,14 @@ struct CreatePostView: View {
                 }
                 Button {
                     // 게시물 예비 등록
+                    PostService().writePost(title: title, description: contents, imageList: postImageDatas) { id in
+                        print("write post sucess/ postId: ", id)
+                        self.itemId = id
+                        
+                        // 창 닫기
+//                        presentation.wrappedValue.isPresented
+                        showPostDetailModal = true
+                    }
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: screenWidth * 0.9, height: 50)
@@ -72,13 +82,16 @@ struct CreatePostView: View {
                                 .foregroundColor(.white)
                         )
                 }
+                .fullScreenCover(isPresented: $showPostDetailModal) {
+                    PostDetailView(itemId: itemId, post: .constant(Post()))
+                }
             }
             .frame(width: screenWidth*0.85)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         // 창 닫기
-                        presentationMode.wrappedValue.dismiss()
+                        presentation.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "xmark")
                     }
