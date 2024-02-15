@@ -30,15 +30,6 @@ struct ConnectBoxView: View {
                         .padding()
                     })
                     .padding()
-                List(bluetoothManager.discoveredDevices, id: \.identifier) { device in
-                            Text(device.name ?? "Unknown")
-                        }
-                        .onAppear {
-                            bluetoothManager.startScanning()
-                        }
-                        .onDisappear {
-                            bluetoothManager.stopScanning()
-                        }
                 // 페어링 버튼
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: screenWidth * 0.85, height: 43)
@@ -53,6 +44,7 @@ struct ConnectBoxView: View {
                             bluetoothManager.centralManagerDidUpdateState(bluetoothManager.centralManager)
                             bluetoothManager.RequestBluetooth(requestData: lockerNum, itemId: itemId) { success, message in
                                 if success {
+                                    self.bluetoothManager.startScanning()
                                     print("success: \(success), message: \(message)")
                                 } else {
                                     print("success: \(success), message: \(message)")
@@ -66,6 +58,9 @@ struct ConnectBoxView: View {
                     })
                     .padding()
 //                    .offset(y: screenHeight * 0.27)
+            }
+            .onDisappear {
+                bluetoothManager.stopScanning()
             }
             
         }
