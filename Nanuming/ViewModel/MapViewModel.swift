@@ -12,7 +12,7 @@ import SwiftUI
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMapViewDelegate {
     var locationManager = CLLocationManager()
     @Published var userLocation: CLLocationCoordinate2D = .init(latitude: 37.566535, longitude: 126.9779692)
-    @Published var deltaLocation: Location = Location(latitude: 0.001, longitude: 0.001)
+    @Published var deltaLocation: Location = .init(latitude: 0.001, longitude: 0.001)
     
     override init() {
         super.init()
@@ -81,5 +81,10 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         }
     }
     
+    // 마커 클릭 시 동작 처리
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        
+        return true
+    }
     
 }
