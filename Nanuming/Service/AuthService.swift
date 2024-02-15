@@ -49,6 +49,8 @@ class AuthService {
                     UserDefaults.standard.set(response.data?.nickname, forKey: "userNickname")
                     self.keychain.set((response.data?.token?.accessToken)!, forKey: "accessToken")
                     self.keychain.set((response.data?.token?.refreshToken)!, forKey: "refreshToken")
+                  
+                    print("idToken: ", self.keychain.get("idToken") ?? "idToken nil")
                     
                     completion(true, "Login successful")
                 } else {
