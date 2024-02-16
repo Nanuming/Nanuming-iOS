@@ -12,7 +12,7 @@ import SwiftUI
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMapViewDelegate {
     var locationManager = CLLocationManager()
     @Published var userLocation: CLLocationCoordinate2D = .init(latitude: 37.566535, longitude: 126.9779692)
-    @Published var deltaLocation: Location = .init(latitude: 0.001, longitude: 0.001)
+    @Published var deltaLocation: Location = .init(latitude: 0.01, longitude: 0.01)
     @Published var isPresentedPlace: Bool = false
     @Published var locationId: Int = 0
     @Published var postList: [PostCellByLocation] = []
@@ -67,6 +67,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
 //        print("위경도 델타 값: ", deltaLatitude, deltaLongitude)
         
         deltaLocation = Location(latitude: deltaLatitude, longitude: deltaLongitude)
+        userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
         // 위도(latitude)와 경도(longitude)를 사용하여 원하는 작업을 수행합니다.
         // 예: 위치 기반 서비스 호출, 데이터 업데이트 등

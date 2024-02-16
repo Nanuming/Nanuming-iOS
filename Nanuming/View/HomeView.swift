@@ -148,7 +148,6 @@ struct HomeView: View {
         LocationService().getPostList(mapVM.userLocation.latitude, mapVM.userLocation.longitude, mapVM.deltaLocation.latitude, mapVM.deltaLocation.longitude) { postListByLocation in
             self.placeList = postListByLocation.locationInfoDtoList
             self.postList = postListByLocation.itemOutlineDtoList
-//            print("api success placeList : ", self.placeList)
         }
     }
     
