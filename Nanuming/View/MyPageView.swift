@@ -15,7 +15,7 @@ struct MyPageView: View {
                     .resizable()
                     .foregroundColor(.gray200)
                     .frame(width: 35, height: 35)
-                Text("닉네임")
+                Text(UserDefaults.standard.string(forKey: "userNickname") ?? "")
                     .foregroundColor(.textBlack)
                     .font(.system(size: 22, weight: .semibold))
                 Spacer()
