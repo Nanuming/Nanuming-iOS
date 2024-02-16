@@ -75,7 +75,7 @@ struct HomeView: View {
                         }
                         Spacer()
                         if mapVM.isPresentedPlace {
-                            placeInfoView()
+                            placeInfoView(placeName: "")
                                 .padding(.bottom, 80)
                         }
                     }
@@ -110,7 +110,6 @@ struct HomeView: View {
                                     PostDetailView(itemId: postcell.itemId)
                                 }
                             }
-                            
                         }
                     }
                     
@@ -140,7 +139,6 @@ struct HomeView: View {
             perform: {
                 getPostAPI()
             }
-            
         )
     }
     
@@ -177,17 +175,15 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    func placeInfoView() -> some View {
+    func placeInfoView(placeName: String) -> some View {
         HStack(spacing: 10) {
             VStack {
-                Text("병아리어린이집")
+                Text(placeName)
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.textBlack)
             }
             Spacer()
-            Button {
-                
-            } label: {
+            Button {} label: {
                 Image(systemName: "chevron.right")
                     .resizable()
                     .frame(width: 13, height: 20)
@@ -195,7 +191,7 @@ struct HomeView: View {
             }
         }
         .padding()
-        .frame(width: screenWidth*0.85, height: 120)
+        .frame(width: screenWidth * 0.85, height: 120)
         .background(.white)
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)

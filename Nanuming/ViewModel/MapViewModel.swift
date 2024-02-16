@@ -15,6 +15,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
     @Published var deltaLocation: Location = .init(latitude: 0.001, longitude: 0.001)
     @Published var isPresentedPlace: Bool = false
     @Published var locationId: Int = 0
+    @Published var postList: [PostCellByLocation] = []
     
     override init() {
         super.init()
@@ -87,6 +88,10 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         print("click locationId: ", marker.title ?? "no")
         isPresentedPlace = true
         locationId = Int(marker.title ?? "0") ?? 0
+        
+        LocationService().getPlacePostList(locationId) { postListByLocation in
+            self.postList = postListByLocation.itemOutlineDtoList
+        }
         
         return true
     }
