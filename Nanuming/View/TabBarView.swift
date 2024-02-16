@@ -19,7 +19,8 @@ struct TabBarView: View {
                     })
                 // my 탭
 //                MyPageView()
-                ConnectBoxView(itemId: "1")
+//                ConnectBoxView(itemId: "1")
+                PhotoAuthView()
                     .tabItem({
                         Label("My", systemImage: "person.circle")
                     })

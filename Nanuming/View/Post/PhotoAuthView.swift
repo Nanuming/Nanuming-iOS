@@ -8,7 +8,6 @@
 import SwiftUI
 import UIKit
 
-// UIImagePickerController를 SwiftUI에서 사용하기 위한 래퍼 뷰
 struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.presentationMode) var presentationMode
@@ -43,7 +42,6 @@ struct ImagePickerView: UIViewControllerRepresentable {
     }
 }
 
-// 사진 촬영 및 재촬영, 확인 버튼을 포함하는 SwiftUI 뷰
 struct PhotoAuthView: View {
     @State private var image: UIImage?
        @State private var showingImagePicker = false
@@ -69,6 +67,7 @@ struct PhotoAuthView: View {
                    HStack {
                        Button(action: {
                            self.showingImagePicker = true
+                           self.isConfirmed = true
                        }) {
                            RoundedRectangle(cornerRadius: 10)
                                .stroke()
@@ -84,14 +83,24 @@ struct PhotoAuthView: View {
                        }
 
                        Button(action: {
-                           self.isConfirmed = true
-                           // TODO: API 연결 필요
+                           PostService().uploadImage(image!, itemId: 1) { result in
+                                           DispatchQueue.main.async {
+                                               switch result {
+                                               case .success:
+                                                   print("업로드 성공")
+                                               case .failure(let error):
+                                                   print("업로드 실패")
+                                                   print(error.localizedDescription)
+                                               }
+                                           }
+                                       }
+                           
                        }) {
                            Text("확인")
                                .foregroundColor(.white)
                                .frame(minWidth: 0, maxWidth: .infinity)
                                .padding()
-                               .background(isConfirmed ? Color.green : Color.gray)
+                               .background(isConfirmed ? .greenMain : Color.gray)
                                .cornerRadius(10)
                        }.disabled(image == nil)
                    }
