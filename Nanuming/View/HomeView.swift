@@ -14,7 +14,7 @@ struct HomeView: View {
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
     @State var relocateButtonTapped = false
-    @State var placeList: [PlaceLocation] = []
+    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.785834, longitude: -122.406417), PlaceLocation(locationId: 2, latitude: 37.775614, longitude: -122.406417)]
     @State var postList: [PostCellByLocation] = [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")]
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
@@ -58,7 +58,7 @@ struct HomeView: View {
             // map
             if isMapButtonClicked {
                 ZStack(alignment: .top) {
-                    MapView(mapVM: mapVM)
+                    MapView(mapVM: mapVM, placeList: placeList)
                     VStack(spacing: 5) {
                         categoryFilter()
                             .padding(.top, 5)

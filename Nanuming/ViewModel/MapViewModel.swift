@@ -62,13 +62,13 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         let deltaLatitude = northEast.latitude-latitude
         let deltaLongitude = northEast.longitude-longitude
         
-        print("위경도 델타 값: ", deltaLatitude, deltaLongitude)
+//        print("위경도 델타 값: ", deltaLatitude, deltaLongitude)
         
         deltaLocation = Location(latitude: deltaLatitude, longitude: deltaLongitude)
         
         // 위도(latitude)와 경도(longitude)를 사용하여 원하는 작업을 수행합니다.
         // 예: 위치 기반 서비스 호출, 데이터 업데이트 등
-        print("지도 위,경도 ", latitude, longitude)
+//        print("지도 위,경도 ", latitude, longitude)
     }
     
     // 줌 변경 시 호출되는 메서드
