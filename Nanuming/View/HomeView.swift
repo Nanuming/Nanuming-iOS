@@ -58,7 +58,7 @@ struct HomeView: View {
             // map
             if isMapButtonClicked {
                 ZStack(alignment: .top) {
-                    MapView(mapVM: mapVM, placeList: placeList)
+                    MapView(mapVM: mapVM, placeList: $placeList)
                     VStack(spacing: 5) {
                         categoryFilter()
                             .padding(.top, 5)
@@ -112,6 +112,7 @@ struct HomeView: View {
                                 }
                             }
                         }
+                        .frame(width: screenWidth)
                     }
                     
                     // 게시물 생성 + 버튼
@@ -147,6 +148,7 @@ struct HomeView: View {
         LocationService().getPostList(mapVM.userLocation.latitude, mapVM.userLocation.longitude, mapVM.deltaLocation.latitude, mapVM.deltaLocation.longitude) { postListByLocation in
             self.placeList = postListByLocation.locationInfoDtoList
             self.postList = postListByLocation.itemOutlineDtoList
+//            print("api success placeList : ", self.placeList)
         }
     }
     
