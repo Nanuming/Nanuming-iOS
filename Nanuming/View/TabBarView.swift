@@ -18,8 +18,8 @@ struct TabBarView: View {
                         Label("홈", systemImage: "house")
                     })
                 // my 탭
-                MyPageView()
-//                ConnectBoxView()
+//                MyPageView()
+                ConnectBoxView(itemId: "1")
                     .tabItem({
                         Label("My", systemImage: "person.circle")
                     })

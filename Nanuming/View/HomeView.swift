@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
     @State var relocateButtonTapped = false
+    @State var itemId: Int? = 0
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
@@ -97,7 +98,7 @@ struct HomeView: View {
                                 PostListCell(post: $post)
                             }
                             .fullScreenCover(isPresented: $isPresentedPostDetail) {
-                                PostDetailView()
+                                PostDetailView(itemId: $itemId)
                             }
                             
                             PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))

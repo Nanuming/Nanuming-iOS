@@ -56,12 +56,13 @@ class PostService {
             }
     }
     func showDetail(itemId: String, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/api/item/\(itemId)") else {
+        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
             completion(false, "Invalid URL")
             return
         }
-        
+        let jwtToken = keychain.get("accessToken") ?? ""
         var request = URLRequest(url: url)
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         

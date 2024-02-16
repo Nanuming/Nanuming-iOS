@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct PostDetailView: View {
-    var itemId: Int?
+    @Binding var itemId: Int?
     @StateObject var postDetail = PostDetailViewModel()
     @State private var showingConnectBoxView = false
-//    var post: Post
+    @State private var selection: Int? = nil
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         NavigationView {
@@ -93,14 +93,14 @@ struct PostDetailView: View {
                            .frame(width: screenWidth * 0.9, height: 50)
                            .foregroundColor(.blue) // 예시 색상 추가
                            .overlay(
-                               Text(postDetail.postDetail?.owner ?? false ? "나눔하기" : "나눔받기")
+                               Text(postDetail.postDetail?.owner ?? false ? "보관함 번호 입력하기" : "나눔받기")
                                    .font(.system(size: 16, weight: .bold))
                                    .foregroundColor(.white)
                            )
                 }
-                .fullScreenCover(isPresented: $showingConnectBoxView) {
+                .sheet(isPresented: $showingConnectBoxView) {
                     // ConnectBoxView로 이동하면서 필요한 데이터를 전달합니다.
-                    ConnectBoxView(itemId: "\(String(describing: itemId))")
+                    ConnectBoxView(owner: postDetail.postDetail?.owner, itemId: "\(String(describing: itemId))")
                 }
             }
             .toolbar {
@@ -123,14 +123,18 @@ struct PostDetailView: View {
                     .foregroundColor(.gray300)
                     .frame(width: 30, height: 30)
                 }
+                
             }
+            
         }
         .onAppear(perform: {
+            print("\(String(describing: itemId))")
             postDetail.fetchPostDetail(itemId: String(itemId ?? 0))
         })
+
     }
 }
 
 #Preview {
-    PostDetailView()
+    PostDetailView(itemId: .constant(1))
 }

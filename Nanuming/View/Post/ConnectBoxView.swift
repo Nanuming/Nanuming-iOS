@@ -12,6 +12,7 @@ struct ConnectBoxView: View {
     
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
+    var owner: Bool? = true
     var itemId: String
     var body: some View {
         NavigationStack {
@@ -30,6 +31,7 @@ struct ConnectBoxView: View {
                         .padding()
                     })
                     .padding()
+                
                 // 페어링 버튼
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: screenWidth * 0.85, height: 43)
@@ -41,14 +43,28 @@ struct ConnectBoxView: View {
                             print("identifying number: \(identifyingNumber)")
                             print("Scan: \(bluetoothManager.centralManager.isScanning)")
                             bluetoothManager.centralManagerDidUpdateState(bluetoothManager.centralManager)
-                            bluetoothManager.RequestBluetooth(requestData: lockerNum, itemId: itemId) { success, message in
-                                if success {
-                                    self.bluetoothManager.startScanning()
-                                    print("success: \(success), message: \(message)")
-                                    // TODO: 상자로부터 수신한 데이터 처리 필요
-                                    print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
-                                } else {
-                                    print("success: \(success), message: \(message)")
+                            if owner! {
+                                bluetoothManager.RequestNanumer(requestData: lockerNum, itemId: itemId) { success, message in
+                                    if success {
+                                        self.bluetoothManager.startScanning()
+                                        print("success: \(success), message: \(message)")
+                                        // TODO: 상자로부터 수신한 데이터 처리 필요
+                                        print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
+                                    } else {
+                                        print("success: \(success), message: \(message)")
+                                    }
+                                }
+                            }
+                            else {
+                                bluetoothManager.RequestNanumee(requestData: lockerNum, itemId: itemId) { success, message in
+                                    if success {
+                                        self.bluetoothManager.startScanning()
+                                        print("success: \(success), message: \(message)")
+                                        // TODO: 상자로부터 수신한 데이터 처리 필요
+                                        print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
+                                    } else {
+                                        print("success: \(success), message: \(message)")
+                                    }
                                 }
                             }
                         }, label: {

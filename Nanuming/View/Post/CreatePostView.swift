@@ -13,7 +13,7 @@ struct CreatePostView: View {
     @Environment(\.presentationMode) var presentation
     @State var postImageDatas: [Data?] = []
     @State private var showPostDetailModal = false
-    @State private var itemId: Int = 0
+    @State private var itemId: Int? = 0
     
     var body: some View {
         NavigationView {
@@ -68,7 +68,7 @@ struct CreatePostView: View {
                     PostService().writePost(title: title, description: contents, imageList: postImageDatas) { id in
                         print("write post sucess/ postId: ", id)
                         self.itemId = id
-                        
+//                        print("itemId in createPostView: \(self.itemId)")
                         // 창 닫기
 //                        presentation.wrappedValue.isPresented
                         showPostDetailModal = true
@@ -82,8 +82,8 @@ struct CreatePostView: View {
                                 .foregroundColor(.white)
                         )
                 }
-                .fullScreenCover(isPresented: $showPostDetailModal) {
-                    PostDetailView(itemId: itemId)
+                .sheet(isPresented: $showPostDetailModal) {
+                    PostDetailView(itemId: $itemId)
                 }
             }
             .frame(width: screenWidth*0.85)

@@ -7,8 +7,10 @@
 
 import CoreBluetooth
 import Foundation
+import KeychainSwift
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    let keychain = KeychainSwift()
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     var centralManager: CBCentralManager!
     @Published var discoveredDevices: [CBPeripheral] = []
@@ -28,8 +30,19 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             print("power off")
         }
     }
-    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        if let error = error {
+            print("Failed to send 'open' command: \(error.localizedDescription)")
+        } else {
+            // 메시지 전송 성공 로그 출력
+            print("'open' command successfully sent to nanuming device.")
+        }
+    }
+
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+                print("Discovered device: \(deviceName)")
+            }
         if !discoveredDevices.contains(where: { $0.identifier == peripheral.identifier }) {
             DispatchQueue.main.async {
                 self.discoveredDevices.append(peripheral)
@@ -38,10 +51,12 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         
         if let nanumingDevice = discoveredDevices.first(where: { $0.name == "nanuming" }) {
             // 스캔 중지하고 나누밍 상자이름을 가진 디바이스와 연결
+            print("나누밍 상자와 연결 성공")
             central.stopScan()
             central.connect(nanumingDevice, options: nil)
+        } else {
+            print("연결 안됨")
         }
-        
     }
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected to peripheral: \(peripheral)")
@@ -72,6 +87,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             if characteristic.properties.contains(.write) || characteristic.properties.contains(.writeWithoutResponse) {
                 let commandString = "open"
                 if let commandData = commandString.data(using: .utf8) {
+                    print("Sending 'open' command to nanuming device...")
                     peripheral.writeValue(commandData, for: characteristic, type: .withResponse)
                 }
             }
@@ -110,12 +126,48 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func stopScanning() {
         centralManager.stopScan()
     }
-    func RequestBluetooth(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/api/item/\(String(describing: itemId))/assign") else {
+    func RequestNanumer(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/item/\(String(describing: itemId))/assign") else {
             completion(false, "Invalid URL")
             return
         }
-        let jwtToken = "token123"
+        let jwtToken = keychain.get("accessToken") ?? ""
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {
+            completion(false, "Invalid request data")
+            return
+        }
+        request.httpBody = httpBody
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let data = data, error == nil else {
+                completion(false, "Network request failed")
+                return
+            }
+            if let dataString = String(data: data, encoding: .utf8) {
+                print("Response: \(dataString)")
+            }
+            do {
+                let response = try JSONDecoder().decode(BaseResponse<Item>.self, from: data)
+                if response.success {
+                    completion(true, "open")
+                } else {
+                    completion(false, response.message)
+                }
+            } catch {
+                completion(false, "Failed to decode response: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
+    func RequestNanumee(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/locker") else {
+            completion(false, "Invalid URL")
+            return
+        }
+        let jwtToken = keychain.get("accessToken") ?? ""
         var request = URLRequest(url: url)
         request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
