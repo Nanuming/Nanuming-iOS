@@ -63,7 +63,7 @@ struct HomeView: View {
                             .padding(.top, 5)
                         Button {
                             // 재검색
-                            
+                            getPostAPI()
                         } label: {
                             Text("이 지역 검색")
                                 .padding(EdgeInsets(top: 7, leading: 12, bottom: 7, trailing: 12))
