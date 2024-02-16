@@ -99,7 +99,7 @@ struct HomeView: View {
                         VStack {
                             ForEach(postList, id: \.itemId) { postcell in
                                 
-                                let post = Post(title: postcell.title, category: postcell.categoryName, location: postcell.locationName)
+                                let post = Post(title: postcell.title, image: [postcell.mainItemImageUrl], category: postcell.categoryName, location: postcell.locationName)
                                 
                                 // modal로 띄우기
                                 Button {
