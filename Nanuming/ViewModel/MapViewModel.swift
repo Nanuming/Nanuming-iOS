@@ -91,4 +91,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         return true
     }
     
+    // 마커가 아닌 지도 클릭 시 동작 처리
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        isPresentedPlace = false
+    }
+    
 }
