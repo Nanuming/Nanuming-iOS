@@ -45,12 +45,10 @@ struct EntryView: View {
                                     self.message = message
                                     if success {
                                         nextView = 1
-                                        print("nextView 1: \(nextView)")
-                                        isSignInSuccessful = success
+                                        isSignInSuccessful = true
                                         print("success: \(success), message: \(message)")
                                     } else {
                                         nextView = 2
-                                        print("nextView 2: \(nextView)")
                                         isSignInSuccessful = true
                                         print("success: \(success), message: \(message)")
                                     }
