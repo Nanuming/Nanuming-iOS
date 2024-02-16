@@ -92,5 +92,58 @@ class PostService {
             }
         }.resume()
     }
-
+    func uploadImage(_ image: UIImage, itemId: Int, completion: @escaping (Result<Bool, Error>) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 1) else {
+            completion(.failure(UploadError.imageConversionFailed))
+            return
+        }
+        guard let url = URL(string: "\(baseUrl)/item/\(itemId)/confirm") else {
+            completion(.failure(UploadError.invalidURL))
+            return
+        }
+        let jwtToken = keychain.get("accessToken") ?? ""
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        let boundary = "Boundary-\(UUID().uuidString)"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var body = Data()
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"confirmImage\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
+        body.append(imageData)
+        body.append("\r\n".data(using: .utf8)!)
+        
+        
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        request.httpBody = body
+        
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(.failure(UploadError.serverError))
+                return
+            }
+            
+            completion(.success(true))
+        }.resume()
+    }
+    enum UploadError: Error {
+        case imageConversionFailed
+        case invalidURL
+        case serverError
+    }
+    
+}
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
+        }
+    }
 }
