@@ -18,6 +18,7 @@ struct HomeView: View {
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
+    @State var isPresentedPlacePostListModal = false
     
     var body: some View {
         VStack(spacing: 10) {
@@ -75,7 +76,7 @@ struct HomeView: View {
                         }
                         Spacer()
                         if mapVM.isPresentedPlace {
-                            placeInfoView(placeName: "")
+                            placeInfoView(placeName: "어린이집", postList: mapVM.postList)
                                 .padding(.bottom, 80)
                         }
                     }
@@ -175,7 +176,7 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    func placeInfoView(placeName: String) -> some View {
+    func placeInfoView(placeName: String, postList: [PostCellByLocation]) -> some View {
         HStack(spacing: 10) {
             VStack {
                 Text(placeName)
@@ -183,11 +184,16 @@ struct HomeView: View {
                     .foregroundColor(.textBlack)
             }
             Spacer()
-            Button {} label: {
+            Button {
+                isPresentedPlacePostListModal = true
+            } label: {
                 Image(systemName: "chevron.right")
                     .resizable()
                     .frame(width: 13, height: 20)
                     .foregroundColor(.textBlack)
+            }
+            .fullScreenCover(isPresented: $isPresentedPlacePostListModal) {
+                PostListView(placeName: placeName, postList: postList)
             }
         }
         .padding()

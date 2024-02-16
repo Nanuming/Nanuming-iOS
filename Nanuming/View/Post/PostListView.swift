@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct PostListView: View {
+    @State var placeName: String
     @State var postList: [PostCellByLocation]
     @State private var isPresentedLocationPostList = false
+    @Environment(\.presentationMode) var presentation
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -30,10 +33,10 @@ struct PostListView: View {
                     }
                 }
             }
-            .navigationBarTitle("\(postList[0].locationName)에 있는 물품", displayMode: .inline)
+            .navigationBarTitle("\(placeName)에 있는 물품", displayMode: .inline)
             .navigationBarItems(
                 leading: Button(action: {
-                    
+                    presentation.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "chevron.backward")
                         .foregroundColor(.textBlack)
@@ -45,5 +48,5 @@ struct PostListView: View {
 }
 
 #Preview {
-    PostListView(postList: [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "광진 어린이집", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")])
+    PostListView(placeName: "ㅌㅌ", postList: [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "광진 어린이집", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")])
 }

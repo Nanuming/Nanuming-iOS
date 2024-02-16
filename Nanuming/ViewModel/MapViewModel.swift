@@ -89,6 +89,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         isPresentedPlace = true
         locationId = Int(marker.title ?? "0") ?? 0
         
+        // 특정 거점 물품 보기 api
         LocationService().getPlacePostList(locationId) { postListByLocation in
             self.postList = postListByLocation.itemOutlineDtoList
         }
