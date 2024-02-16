@@ -41,23 +41,22 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-                print("Discovered device: \(deviceName)")
+            print("Discovered device: \(deviceName)")
+            if deviceName == "?" { // 디바이스 이름 확인
+                print("나누밍 상자와 연결 시도")
+                central.stopScan()
+                central.connect(peripheral, options: nil) // 바로 연결 시도
+                return // 추가 디바이스 검색 방지
             }
+        }
+        
         if !discoveredDevices.contains(where: { $0.identifier == peripheral.identifier }) {
             DispatchQueue.main.async {
                 self.discoveredDevices.append(peripheral)
             }
         }
-        
-        if let nanumingDevice = discoveredDevices.first(where: { $0.name == "nanuming" }) {
-            // 스캔 중지하고 나누밍 상자이름을 가진 디바이스와 연결
-            print("나누밍 상자와 연결 성공")
-            central.stopScan()
-            central.connect(nanumingDevice, options: nil)
-        } else {
-            print("연결 안됨")
-        }
     }
+
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected to peripheral: \(peripheral)")
         //모든 특성 탐색 후에 데이터 전송 가능
