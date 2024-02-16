@@ -13,12 +13,12 @@ struct HomeView: View {
     @State var searchText: String = ""
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
-    @State var relocateButtonTapped = false
-    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.785834, longitude: -122.406417), PlaceLocation(locationId: 2, latitude: 37.775614, longitude: -122.406417)]
+    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.566535, longitude: 126.967969), PlaceLocation(locationId: 2, latitude: 37.566535, longitude: 126.977969)]
     @State var postList: [PostCellByLocation] = [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")]
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
+    @State var isPresentedPlacePostListModal = false
     
     var body: some View {
         VStack(spacing: 10) {
@@ -58,13 +58,13 @@ struct HomeView: View {
             // map
             if isMapButtonClicked {
                 ZStack(alignment: .top) {
-                    MapView(mapVM: mapVM, placeList: placeList)
+                    MapView(mapVM: mapVM, placeList: $placeList)
                     VStack(spacing: 5) {
                         categoryFilter()
                             .padding(.top, 5)
                         Button {
                             // 재검색
-                            self.relocateButtonTapped.toggle()
+                            getPostAPI()
                         } label: {
                             Text("이 지역 검색")
                                 .padding(EdgeInsets(top: 7, leading: 12, bottom: 7, trailing: 12))
@@ -73,6 +73,11 @@ struct HomeView: View {
                                 .background(.white)
                                 .cornerRadius(14)
                                 .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
+                        }
+                        Spacer()
+                        if mapVM.isPresentedPlace {
+                            placeInfoView(placeName: "어린이집", postList: mapVM.postList)
+                                .padding(.bottom, 80)
                         }
                     }
                 }
@@ -106,8 +111,8 @@ struct HomeView: View {
                                     PostDetailView(itemId: postcell.itemId)
                                 }
                             }
-                            
                         }
+                        .frame(width: screenWidth)
                     }
                     
                     // 게시물 생성 + 버튼
@@ -136,7 +141,6 @@ struct HomeView: View {
             perform: {
                 getPostAPI()
             }
-            
         )
     }
     
@@ -171,8 +175,36 @@ struct HomeView: View {
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
         }
     }
+    
+    @ViewBuilder
+    func placeInfoView(placeName: String, postList: [PostCellByLocation]) -> some View {
+        HStack(spacing: 10) {
+            VStack {
+                Text(placeName)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.textBlack)
+            }
+            Spacer()
+            Button {
+                isPresentedPlacePostListModal = true
+            } label: {
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .frame(width: 13, height: 20)
+                    .foregroundColor(.textBlack)
+            }
+            .fullScreenCover(isPresented: $isPresentedPlacePostListModal) {
+                PostListView(placeName: placeName, postList: postList)
+            }
+        }
+        .padding()
+        .frame(width: screenWidth * 0.85, height: 120)
+        .background(.white)
+        .cornerRadius(10)
+        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+    }
 }
 
- #Preview {
-    HomeView()
- }
+// #Preview {
+//     HomeView(isPresentedPlace: .constant(false))
+// }

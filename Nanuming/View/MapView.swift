@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MapView: View {
     @ObservedObject var mapVM: MapViewModel
-    @State var placeList: [PlaceLocation]
+    @Binding var placeList: [PlaceLocation]
     
     var body: some View {
         GoogleMapView(mapVM: mapVM, placeList: $placeList)
@@ -36,8 +36,9 @@ struct GoogleMapView: UIViewRepresentable {
         return mapView
     }
 
-    func updateUIView(_ uiView: GMSMapView, context: Context) {
+    func updateUIView(_ mapView: GMSMapView, context: Context) {
 //        print("update")
+        showMarkers(on: mapView)
     }
     
     func showMarkers(on mapView: GMSMapView) {

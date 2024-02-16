@@ -12,11 +12,13 @@ import SwiftUI
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMapViewDelegate {
     var locationManager = CLLocationManager()
     @Published var userLocation: CLLocationCoordinate2D = .init(latitude: 37.566535, longitude: 126.9779692)
-    @Published var deltaLocation: Location = .init(latitude: 0.001, longitude: 0.001)
+    @Published var deltaLocation: Location = .init(latitude: 0.01, longitude: 0.01)
+    @Published var isPresentedPlace: Bool = false
+    @Published var locationId: Int = 0
+    @Published var postList: [PostCellByLocation] = []
     
     override init() {
         super.init()
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // 배터리에 맞게 권장되는 최적의 정확도
         locationManager.startUpdatingLocation() // 위치 업데이트
@@ -65,6 +67,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
 //        print("위경도 델타 값: ", deltaLatitude, deltaLongitude)
         
         deltaLocation = Location(latitude: deltaLatitude, longitude: deltaLongitude)
+        userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
         // 위도(latitude)와 경도(longitude)를 사용하여 원하는 작업을 수행합니다.
         // 예: 위치 기반 서비스 호출, 데이터 업데이트 등
@@ -83,8 +86,21 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
     
     // 마커 클릭 시 동작 처리
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("click locationId: ", marker.title ?? "no")
+        isPresentedPlace = true
+        locationId = Int(marker.title ?? "0") ?? 0
+        
+        // 특정 거점 물품 보기 api
+        LocationService().getPlacePostList(locationId) { postListByLocation in
+            self.postList = postListByLocation.itemOutlineDtoList
+        }
         
         return true
+    }
+    
+    // 마커가 아닌 지도 클릭 시 동작 처리
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        isPresentedPlace = false
     }
     
 }

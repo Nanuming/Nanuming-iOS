@@ -5,6 +5,7 @@
 //  Created by 가은 on 1/24/24.
 //
 
+import Photos
 import SwiftUI
 
 struct CreatePostView: View {
@@ -73,7 +74,7 @@ struct CreatePostView: View {
                 }
                 Button {
                     // 게시물 예비 등록
-                    PostService().writePost(title: title, categoryId: categoryId+1, description: contents, imageList: postImageDatas) { id in
+                    PostService().writePost(title: title, categoryId: categoryId + 1, description: contents, imageList: postImageDatas) { id in
                         print("write post sucess/ postId: ", id)
                         self.itemId = id
                         
@@ -94,7 +95,7 @@ struct CreatePostView: View {
                     PostDetailView(itemId: itemId)
                 }
             }
-            .frame(width: screenWidth*0.85)
+            .frame(width: screenWidth * 0.85)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
@@ -107,11 +108,16 @@ struct CreatePostView: View {
                     .frame(width: 30, height: 30)
                 }
                 ToolbarItemGroup(placement: .principal) {
-                   Text("게시물 등록")
+                    Text("게시물 등록")
                         .font(.system(size: 16, weight: .semibold))
                 }
             }
         }
+        .onAppear(
+            perform: {
+                checkAlbumPermission()
+            }
+        )
     }
     
     @ViewBuilder
@@ -136,6 +142,26 @@ struct CreatePostView: View {
                 }
             }
             .padding(EdgeInsets(top: 5, leading: 1, bottom: 5, trailing: 1))
+        }
+    }
+    
+    func checkAlbumPermission() {
+        PHPhotoLibrary.requestAuthorization() { status in
+            switch status {
+            case .authorized:
+                // 권한이 허용된 경우 처리할 로직
+                break
+            case .denied, .restricted:
+                // 권한이 거부되거나 제한된 경우 처리할 로직
+                break
+            case .notDetermined:
+                // 아직 권한을 결정하지 않은 경우
+                break
+            case .limited:
+                break
+            @unknown default:
+                break
+            }
         }
     }
 }
