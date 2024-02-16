@@ -14,6 +14,8 @@ struct CreatePostView: View {
     @State var postImageDatas: [Data?] = []
     @State private var showPostDetailModal = false
     @State private var itemId: Int = 0
+    let category: [String] = ["장난감", "도서", "의류", "육아용품", "기타"]
+    @State var categoryId: Int = 0
     
     var body: some View {
         NavigationView {
@@ -37,6 +39,12 @@ struct CreatePostView: View {
                         }
                         
                         // 카테고리
+                        VStack(alignment: .leading) {
+                            Text("카테고리")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(.textBlack)
+                            categoryFilter()
+                        }
                         
                         // 사진
                         VStack(alignment: .leading) {
@@ -103,6 +111,31 @@ struct CreatePostView: View {
                         .font(.system(size: 16, weight: .semibold))
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    func categoryFilter() -> some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(0 ..< category.count) { idx in
+                    Button {
+                        categoryId = idx
+                    } label: {
+                        Text(category[idx])
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(categoryId == idx ? .white : .gray200)
+                            .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            .background(categoryId == idx ? .greenMain : .white)
+                            .cornerRadius(14)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(categoryId == idx ? .clear : .gray200, lineWidth: 1)
+                            )
+                    }
+                }
+            }
+            .padding(EdgeInsets(top: 5, leading: 1, bottom: 5, trailing: 1))
         }
     }
 }
