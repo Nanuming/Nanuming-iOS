@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var mapVM: MapViewModel = .init()
     @State private var isMapButtonClicked = false
     @State var searchText: String = ""
     @State var post: Post
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
     @State var relocateButtonTapped = false
+    @State var placeList: [PlaceLocation] = []
+    @State var postList: [PostCellByLocation] = []
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
@@ -56,7 +59,7 @@ struct HomeView: View {
             // map
             if isMapButtonClicked {
                 ZStack(alignment: .top) {
-                    MapView(mapVM: MapViewModel())
+                    MapView(mapVM: mapVM)
                     VStack(spacing: 5) {
                         categoryFilter()
                             .padding(.top, 5)
@@ -126,7 +129,19 @@ struct HomeView: View {
                 }
             }
         }
-        
+        .onAppear(
+            perform: {
+                getPostAPI()
+            }
+            
+        )
+    }
+    
+    func getPostAPI() {
+        LocationService().getPostList(mapVM.userLocation.latitude, mapVM.userLocation.longitude, mapVM.deltaLocation.latitude, mapVM.deltaLocation.longitude) { postListByLocation in
+            self.placeList = postListByLocation.locationInfoDtoList
+            self.postList = postListByLocation.itemOutlineDtoList
+        }
     }
     
     @ViewBuilder
@@ -155,6 +170,6 @@ struct HomeView: View {
     }
 }
 
-#Preview {
+ #Preview {
     HomeView(post: Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false))
-}
+ }

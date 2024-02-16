@@ -41,7 +41,6 @@ struct EntryView: View {
                         AuthService().googleLogin { success in
                             if success {
                                 // 로그인 API
-//                                printt("\(keychain.)")
                                 AuthService().signIn() { success, message in
                                     self.message = message
                                     if success {
