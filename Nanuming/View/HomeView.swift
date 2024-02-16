@@ -19,6 +19,8 @@ struct HomeView: View {
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
+//    @State var isPresentedPlace: Bool = false
+//    @State var locationId: Int = 0
     
     var body: some View {
         VStack(spacing: 10) {
@@ -75,8 +77,10 @@ struct HomeView: View {
                                 .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
                         }
                         Spacer()
-                        placeInfoView()
-                            .padding(.bottom, 80)
+                        if mapVM.isPresentedPlace {
+                            placeInfoView()
+                                .padding(.bottom, 80)
+                        }
                     }
                 }
             }
@@ -201,6 +205,6 @@ struct HomeView: View {
     }
 }
 
- #Preview {
-    HomeView()
- }
+// #Preview {
+//     HomeView(isPresentedPlace: .constant(false))
+// }

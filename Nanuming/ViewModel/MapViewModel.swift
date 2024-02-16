@@ -13,10 +13,11 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
     var locationManager = CLLocationManager()
     @Published var userLocation: CLLocationCoordinate2D = .init(latitude: 37.566535, longitude: 126.9779692)
     @Published var deltaLocation: Location = .init(latitude: 0.001, longitude: 0.001)
+    @Published var isPresentedPlace: Bool = false
+    @Published var locationId: Int = 0
     
     override init() {
         super.init()
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // 배터리에 맞게 권장되는 최적의 정확도
         locationManager.startUpdatingLocation() // 위치 업데이트
@@ -83,6 +84,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
     
     // 마커 클릭 시 동작 처리
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("click locationId: ", marker.title ?? "no")
+        isPresentedPlace = true
+        locationId = Int(marker.title ?? "0") ?? 0
         
         return true
     }
