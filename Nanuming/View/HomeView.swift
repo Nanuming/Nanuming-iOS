@@ -14,7 +14,7 @@ struct HomeView: View {
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
     @State var relocateButtonTapped = false
-    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.785834, longitude: -122.406417), PlaceLocation(locationId: 2, latitude: 37.775614, longitude: -122.406417)]
+    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.566535, longitude: 126.967969), PlaceLocation(locationId: 2, latitude: 37.566535, longitude: 126.977969)]
     @State var postList: [PostCellByLocation] = [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")]
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
@@ -74,6 +74,9 @@ struct HomeView: View {
                                 .cornerRadius(14)
                                 .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
                         }
+                        Spacer()
+                        placeInfoView()
+                            .padding(.bottom, 80)
                     }
                 }
             }
@@ -170,6 +173,31 @@ struct HomeView: View {
             }
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
         }
+    }
+    
+    @ViewBuilder
+    func placeInfoView() -> some View {
+        HStack(spacing: 10) {
+            VStack {
+                Text("병아리어린이집")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.textBlack)
+            }
+            Spacer()
+            Button {
+                
+            } label: {
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .frame(width: 13, height: 20)
+                    .foregroundColor(.textBlack)
+            }
+        }
+        .padding()
+        .frame(width: screenWidth*0.85, height: 120)
+        .background(.white)
+        .cornerRadius(10)
+        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
     }
 }
 
