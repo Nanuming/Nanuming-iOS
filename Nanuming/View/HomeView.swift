@@ -13,14 +13,11 @@ struct HomeView: View {
     @State var searchText: String = ""
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
-    @State var relocateButtonTapped = false
     @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.566535, longitude: 126.967969), PlaceLocation(locationId: 2, latitude: 37.566535, longitude: 126.977969)]
     @State var postList: [PostCellByLocation] = [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")]
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
-//    @State var isPresentedPlace: Bool = false
-//    @State var locationId: Int = 0
     
     var body: some View {
         VStack(spacing: 10) {
@@ -66,7 +63,7 @@ struct HomeView: View {
                             .padding(.top, 5)
                         Button {
                             // 재검색
-                            self.relocateButtonTapped.toggle()
+                            
                         } label: {
                             Text("이 지역 검색")
                                 .padding(EdgeInsets(top: 7, leading: 12, bottom: 7, trailing: 12))
