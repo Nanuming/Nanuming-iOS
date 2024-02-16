@@ -11,12 +11,11 @@ struct HomeView: View {
     @ObservedObject var mapVM: MapViewModel = .init()
     @State private var isMapButtonClicked = false
     @State var searchText: String = ""
-    @State var post: Post
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
     @State var relocateButtonTapped = false
-    @State var placeList: [PlaceLocation] = []
-    @State var postList: [PostCellByLocation] = []
+    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.785834, longitude: -122.406417), PlaceLocation(locationId: 2, latitude: 37.775614, longitude: -122.406417)]
+    @State var postList: [PostCellByLocation] = [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")]
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
@@ -59,7 +58,7 @@ struct HomeView: View {
             // map
             if isMapButtonClicked {
                 ZStack(alignment: .top) {
-                    MapView(mapVM: mapVM)
+                    MapView(mapVM: mapVM, placeList: placeList)
                     VStack(spacing: 5) {
                         categoryFilter()
                             .padding(.top, 5)
@@ -93,17 +92,21 @@ struct HomeView: View {
                     // post list
                     ScrollView {
                         VStack {
-                            // modal로 띄우기
-                            Button {
-                                isPresentedPostDetail = true
-                            } label: {
-                                PostListCell(post: $post)
-                            }
-                            .fullScreenCover(isPresented: $isPresentedPostDetail) {
-                                PostDetailView()
+                            ForEach(postList, id: \.itemId) { postcell in
+                                
+                                let post = Post(title: postcell.title, category: postcell.categoryName, location: postcell.locationName)
+                                
+                                // modal로 띄우기
+                                Button {
+                                    isPresentedPostDetail = true
+                                } label: {
+                                    PostListCell(post: .constant(post))
+                                }
+                                .fullScreenCover(isPresented: $isPresentedPostDetail) {
+                                    PostDetailView(itemId: postcell.itemId)
+                                }
                             }
                             
-                            PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
                         }
                     }
                     
@@ -171,5 +174,5 @@ struct HomeView: View {
 }
 
  #Preview {
-    HomeView(post: Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false))
+    HomeView()
  }

@@ -33,9 +33,9 @@ struct PostListCell: View {
                             .font(.system(size: 17, weight: .bold))
                             .foregroundColor(.textBlack)
                         // 찜 수
-                        Text(String(post.likeNum ?? 0)+"명이 찜하고 있어요")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.redMain)
+//                        Text(String(post.likeNum ?? 0)+"명이 찜하고 있어요")
+//                            .font(.system(size: 12, weight: .medium))
+//                            .foregroundColor(.redMain)
                     }
                     Spacer()
                     // 위치
