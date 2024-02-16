@@ -43,6 +43,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
 }
 
 struct PhotoAuthView: View {
+    @State var confirmItemImageId: Int? = 0
     @State private var image: UIImage?
        @State private var showingImagePicker = false
        @State private var isConfirmed = false
@@ -83,14 +84,12 @@ struct PhotoAuthView: View {
                        }
 
                        Button(action: {
-                           PostService().uploadImage(image!, itemId: 1) { result in
+                           PostService().uploadImage(image!, itemId: 1) { success, message  in
                                            DispatchQueue.main.async {
-                                               switch result {
-                                               case .success:
-                                                   print("업로드 성공")
-                                               case .failure(let error):
-                                                   print("업로드 실패")
-                                                   print(error.localizedDescription)
+                                               if success {
+                                                   print("success: \(success), message: \(message)")
+                                               } else {
+                                                   print("success: \(success), message: \(message)")
                                                }
                                            }
                                        }

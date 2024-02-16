@@ -92,13 +92,13 @@ class PostService {
             }
         }.resume()
     }
-    func uploadImage(_ image: UIImage, itemId: Int, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func uploadImage(_ image: UIImage, itemId: Int, completion: @escaping (Bool, String) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 1) else {
-            completion(.failure(UploadError.imageConversionFailed))
+            completion(false, "Invalid Image URL")
             return
         }
         guard let url = URL(string: "\(baseUrl)/item/\(itemId)/confirm") else {
-            completion(.failure(UploadError.invalidURL))
+            completion(false, "Invalid URL")
             return
         }
         let jwtToken = keychain.get("accessToken") ?? ""
@@ -117,26 +117,30 @@ class PostService {
         
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body
-        
-        let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    completion(false, "Network request failed: \(error?.localizedDescription ?? "Unknown error")")
+                }
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(.failure(UploadError.serverError))
-                return
+            do {
+                let response = try JSONDecoder().decode(BaseResponse<ImageAuth>.self, from: data)
+                DispatchQueue.main.async {
+                    if response.success, let ImageAuth = response.data {
+                        completion(true, "Data fetch successful")
+                        PhotoAuthView().confirmItemImageId = ImageAuth.confirmItemImageId
+                    } else {
+                        completion(false, response.message)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false, "Failed to decode response: \(error.localizedDescription)")
+                }
             }
-            
-            completion(.success(true))
         }.resume()
-    }
-    enum UploadError: Error {
-        case imageConversionFailed
-        case invalidURL
-        case serverError
     }
     
 }
