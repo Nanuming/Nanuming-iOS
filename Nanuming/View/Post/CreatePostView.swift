@@ -73,7 +73,7 @@ struct CreatePostView: View {
                 }
                 Button {
                     // 게시물 예비 등록
-                    PostService().writePost(title: title, description: contents, imageList: postImageDatas) { id in
+                    PostService().writePost(title: title, categoryId: categoryId+1, description: contents, imageList: postImageDatas) { id in
                         print("write post sucess/ postId: ", id)
                         self.itemId = id
                         
