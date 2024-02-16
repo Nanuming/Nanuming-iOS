@@ -15,6 +15,11 @@
 		2338DB062B6564B4009243AC /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB052B6564B4009243AC /* EntryView.swift */; };
 		2342BC052B73761D008E0799 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC042B73761D008E0799 /* UserData.swift */; };
 		2342BC0A2B73E89E008E0799 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC092B73E89E008E0799 /* MapViewModel.swift */; };
+		23825B332B7DDFF700424313 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23825B322B7DDFF700424313 /* LocationService.swift */; };
+		23825B352B7DE19600424313 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23825B342B7DE19600424313 /* Location.swift */; };
+		2382C87B2B7D05D9007882E0 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2382C87A2B7D05D9007882E0 /* PostService.swift */; };
+		2382C87E2B7D0604007882E0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2382C87D2B7D0604007882E0 /* Alamofire */; };
+		23A0FC2B2B7B498700D5DEA7 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */; };
 		23A9A9272B67ACB1004BC5D3 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A9262B67ACB1004BC5D3 /* GoogleMaps */; };
 		23A9A9292B67ACB1004BC5D3 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A9282B67ACB1004BC5D3 /* GoogleMapsBase */; };
 		23A9A92B2B67ACB1004BC5D3 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 23A9A92A2B67ACB1004BC5D3 /* GoogleMapsCore */; };
@@ -29,13 +34,17 @@
 		23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57B82B610BDA0013D6A5 /* PostListView.swift */; };
 		23DDF8542B6FAE6B0062F2F1 /* PostImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */; };
 		23E1A5042B735E1800C59696 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1A5032B735E1800C59696 /* HomeView.swift */; };
+		8827AE9D2B7D6003004F38F7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */; };
 		885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5362B7373820062AD2F /* GoogleSignIn */; };
 		885AC5392B7373820062AD2F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5382B7373820062AD2F /* GoogleSignInSwift */; };
 		885AC53D2B777B3A0062AD2F /* JoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC53C2B777B3A0062AD2F /* JoinView.swift */; };
+		885AC5402B7A222A0062AD2F /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */; };
+		885AC5422B7A41640062AD2F /* ConnectBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC5412B7A41640062AD2F /* ConnectBoxView.swift */; };
+		885AC5442B7B22AB0062AD2F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC5432B7B22AB0062AD2F /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		230F89992B6D060E0007575E /* PostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostListCell.swift; path = Post/PostListCell.swift; sourceTree = "<group>"; };
+		230F89992B6D060E0007575E /* PostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCell.swift; sourceTree = "<group>"; };
 		230F899C2B6D07930007575E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		232AFD7D2B79F97000A04B64 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		232AFD7F2B79FA7800A04B64 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -43,6 +52,9 @@
 		2338DB052B6564B4009243AC /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		2342BC042B73761D008E0799 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2342BC092B73E89E008E0799 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		23825B322B7DDFF700424313 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		23825B342B7DE19600424313 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		2382C87A2B7D05D9007882E0 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		23A9A92F2B67B239004BC5D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		23AC579D2B610B300013D6A5 /* Nanuming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nanuming.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,7 +68,11 @@
 		23AC57B82B610BDA0013D6A5 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
 		23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImagePicker.swift; sourceTree = "<group>"; };
 		23E1A5032B735E1800C59696 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
 		885AC53C2B777B3A0062AD2F /* JoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinView.swift; sourceTree = "<group>"; };
+		885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		885AC5412B7A41640062AD2F /* ConnectBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectBoxView.swift; sourceTree = "<group>"; };
+		885AC5432B7B22AB0062AD2F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +81,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */,
+				2382C87E2B7D0604007882E0 /* Alamofire in Frameworks */,
 				23A9A9272B67ACB1004BC5D3 /* GoogleMaps in Frameworks */,
 				23A9A92B2B67ACB1004BC5D3 /* GoogleMapsCore in Frameworks */,
+				23A0FC2B2B7B498700D5DEA7 /* KeychainSwift in Frameworks */,
 				885AC5392B7373820062AD2F /* GoogleSignInSwift in Frameworks */,
 				23A9A92D2B67ACB1004BC5D3 /* GoogleMapsM4B in Frameworks */,
 				23A9A9292B67ACB1004BC5D3 /* GoogleMapsBase in Frameworks */,
@@ -81,6 +99,8 @@
 			children = (
 				2342BC042B73761D008E0799 /* UserData.swift */,
 				230F899C2B6D07930007575E /* Post.swift */,
+				885AC5432B7B22AB0062AD2F /* Item.swift */,
+				23825B342B7DE19600424313 /* Location.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -89,7 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				232AFD7D2B79F97000A04B64 /* BaseResponse.swift */,
+				885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */,
 				232AFD7F2B79FA7800A04B64 /* AuthService.swift */,
+				2382C87A2B7D05D9007882E0 /* PostService.swift */,
+				23825B322B7DDFF700424313 /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -98,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				2342BC092B73E89E008E0799 /* MapViewModel.swift */,
+				8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -151,7 +175,6 @@
 				23AC57B42B610B9F0013D6A5 /* MapView.swift */,
 				23AC57B62B610BB90013D6A5 /* MyPageView.swift */,
 				2338DB032B64FE59009243AC /* TabBarView.swift */,
-				230F89992B6D060E0007575E /* PostListCell.swift */,
 				23E1A5032B735E1800C59696 /* HomeView.swift */,
 			);
 			path = View;
@@ -162,6 +185,7 @@
 			children = (
 				23AC57B02B610B7C0013D6A5 /* PostDetailView.swift */,
 				23AC57B22B610B8C0013D6A5 /* CreatePostView.swift */,
+				885AC5412B7A41640062AD2F /* ConnectBoxView.swift */,
 				23AC57B82B610BDA0013D6A5 /* PostListView.swift */,
 			);
 			path = Post;
@@ -170,6 +194,7 @@
 		23DDF8522B6FAE4C0062F2F1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				230F89992B6D060E0007575E /* PostListCell.swift */,
 				23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */,
 			);
 			path = Utils;
@@ -207,6 +232,8 @@
 				23A9A92C2B67ACB1004BC5D3 /* GoogleMapsM4B */,
 				885AC5362B7373820062AD2F /* GoogleSignIn */,
 				885AC5382B7373820062AD2F /* GoogleSignInSwift */,
+				23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */,
+				2382C87D2B7D0604007882E0 /* Alamofire */,
 			);
 			productName = Nanuming;
 			productReference = 23AC579D2B610B300013D6A5 /* Nanuming.app */;
@@ -239,6 +266,8 @@
 			packageReferences = (
 				23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 				885AC5352B7373820062AD2F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				2382C87C2B7D0604007882E0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 23AC579E2B610B300013D6A5 /* Products */;
 			projectDirPath = "";
@@ -266,10 +295,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				885AC5442B7B22AB0062AD2F /* Item.swift in Sources */,
 				2342BC052B73761D008E0799 /* UserData.swift in Sources */,
 				23AC57B32B610B8C0013D6A5 /* CreatePostView.swift in Sources */,
+				885AC5422B7A41640062AD2F /* ConnectBoxView.swift in Sources */,
 				23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */,
+				8827AE9D2B7D6003004F38F7 /* PostDetailViewModel.swift in Sources */,
 				23DDF8542B6FAE6B0062F2F1 /* PostImagePicker.swift in Sources */,
+				23825B332B7DDFF700424313 /* LocationService.swift in Sources */,
 				2338DB042B64FE59009243AC /* TabBarView.swift in Sources */,
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
@@ -277,11 +310,14 @@
 				23AC57B72B610BB90013D6A5 /* MyPageView.swift in Sources */,
 				230F899A2B6D060E0007575E /* PostListCell.swift in Sources */,
 				23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */,
+				23825B352B7DE19600424313 /* Location.swift in Sources */,
 				23E1A5042B735E1800C59696 /* HomeView.swift in Sources */,
 				2342BC0A2B73E89E008E0799 /* MapViewModel.swift in Sources */,
 				2338DB062B6564B4009243AC /* EntryView.swift in Sources */,
+				2382C87B2B7D05D9007882E0 /* PostService.swift in Sources */,
 				232AFD802B79FA7800A04B64 /* AuthService.swift in Sources */,
 				885AC53D2B777B3A0062AD2F /* JoinView.swift in Sources */,
+				885AC5402B7A222A0062AD2F /* BluetoothManager.swift in Sources */,
 				230F899D2B6D07930007575E /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,10 +453,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Nanuming/Preview Content\"";
-				DEVELOPMENT_TEAM = 54A24WU799;
+				DEVELOPMENT_TEAM = 9KR47X6UHQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Nanuming/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 추적하고 근처 게시물 정보를 불러오기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,10 +488,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Nanuming/Preview Content\"";
-				DEVELOPMENT_TEAM = 54A24WU799;
+				DEVELOPMENT_TEAM = 9KR47X6UHQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Nanuming/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 추적하고 근처 게시물 정보를 불러오기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -496,6 +538,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2382C87C2B7D0604007882E0 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
+		23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 21.0.0;
+			};
+		};
 		23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
@@ -515,6 +573,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2382C87D2B7D0604007882E0 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2382C87C2B7D0604007882E0 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
 		23A9A9262B67ACB1004BC5D3 /* GoogleMaps */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
