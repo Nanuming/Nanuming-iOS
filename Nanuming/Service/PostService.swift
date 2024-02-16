@@ -17,7 +17,7 @@ class PostService {
     let userNickname = UserDefaults.standard.string(forKey: "userNickname")
 
     // 게시물 예비 등록
-    func writePost(title: String, description: String, imageList: [Data?], completion: @escaping (_ id: Int) -> Void) {
+    func writePost(title: String, categoryId: Int, description: String, imageList: [Data?], completion: @escaping (_ id: Int) -> Void) {
         let url = "\(baseUrl)/item/add"
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
@@ -26,7 +26,7 @@ class PostService {
         
         let body: [String: Any] = [
             "sharerId": userId,
-            "categoryId": 1, // TODO: 바꿔야함
+            "categoryId": categoryId, 
             "title": title,
             "description": description
         ]
