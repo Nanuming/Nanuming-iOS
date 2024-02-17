@@ -33,5 +33,8 @@ struct PostListByLocation: Codable {
 }
 
 struct PlacePostList: Codable {
+    let locationName: String
+    let emptyLockerCount: Int
+    let occupiedLockerCount: Int
     let itemOutlineDtoList: [PostCellByLocation]
 }

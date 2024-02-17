@@ -76,7 +76,7 @@ struct HomeView: View {
                         }
                         Spacer()
                         if mapVM.isPresentedPlace {
-                            placeInfoView(placeName: "어린이집", postList: mapVM.postList)
+                            placeInfoView(placeName: mapVM.locationName, postNum: mapVM.occupiedLockerCount, emptyLockerNum: mapVM.emptyLockerCount, postList: mapVM.postList)
                                 .padding(.bottom, 80)
                         }
                     }
@@ -177,13 +177,17 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    func placeInfoView(placeName: String, postList: [PostCellByLocation]) -> some View {
+    func placeInfoView(placeName: String, postNum: Int, emptyLockerNum: Int, postList: [PostCellByLocation]) -> some View {
         HStack(spacing: 10) {
-            VStack {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(placeName)
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.textBlack)
+                Spacer()
+                Text("나눔 중인 물품 수 : \(postNum)")
+                Text("빈 보관함 수 : \(emptyLockerNum)")
             }
+            .font(.system(size: 14, weight: .medium))
+            .foregroundColor(.textBlack)
             Spacer()
             Button {
                 isPresentedPlacePostListModal = true
@@ -205,6 +209,6 @@ struct HomeView: View {
     }
 }
 
-// #Preview {
-//     HomeView(isPresentedPlace: .constant(false))
-// }
+ #Preview {
+     HomeView()
+ }
