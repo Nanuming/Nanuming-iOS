@@ -93,7 +93,7 @@ struct CreatePostView: View {
                         )
                 }
                 .sheet(isPresented: $showPostDetailModal) {
-                    PostDetailView(itemId: $itemId)
+                    PostDetailView(itemId: itemId)
                 }
             }
             .frame(width: screenWidth * 0.85)

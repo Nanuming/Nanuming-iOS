@@ -11,7 +11,6 @@
 	<string></string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string></string>
-	<string>앨범에 접근하여 사진을 선택하기 위해 권한이 필요합니다.</string>
 	<key>BASE_URL</key>
 	<string>${BASE_URL}</string>
 	<key>CFBundleURLTypes</key>

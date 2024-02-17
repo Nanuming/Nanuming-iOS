@@ -15,7 +15,7 @@ class PostService {
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     let userId = UserDefaults.standard.integer(forKey: "userId")
     let userNickname = UserDefaults.standard.string(forKey: "userNickname")
-
+    
     // 게시물 예비 등록
     func writePost(title: String, categoryId: Int, description: String, imageList: [Data?], completion: @escaping (_ id: Int) -> Void) {
         let url = "\(baseUrl)/item/add"
@@ -26,11 +26,11 @@ class PostService {
         
         let body: [String: Any] = [
             "sharerId": userId,
-            "categoryId": categoryId, 
+            "categoryId": categoryId,
             "title": title,
             "description": description
         ]
-
+        
         // Multipart Form 데이터 생성
         AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in body {
@@ -44,22 +44,22 @@ class PostService {
                 }
             }
         }, to: url, method: .post, headers: headers)
-            .responseDecodable(of: BaseResponse<PostId>.self) { response in
-                switch response.result {
-                case .success(let response):
-                    guard let result = response.data else { return }
-                    completion(result.id)
-
-                case .failure(let error):
-                    print("DEBUG(write post api) error: \(error)")
-                }
+        .responseDecodable(of: BaseResponse<PostId>.self) { response in
+            switch response.result {
+            case .success(let response):
+                guard let result = response.data else { return }
+                completion(result.id)
+                
+            case .failure(let error):
+                print("DEBUG(write post api) error: \(error)")
             }
+        }
     }
     func showDetail(itemId: String, completion: @escaping (Bool, String) -> Void) {
-//        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
-//            completion(false, "Invalid URL")
-//            return
-//        }
+        //        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
+        //            completion(false, "Invalid URL")
+        //            return
+        //        }
         guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(itemId)") else {
             completion(false, "Invalid URL")
             return
@@ -84,7 +84,7 @@ class PostService {
                 DispatchQueue.main.async {
                     if response.success, let postDetail = response.data {
                         completion(true, "Data fetch successful")
-                        PostDetailViewModel().postDetail = postDetail 
+                        PostDetailViewModel().postDetail = postDetail
                     } else {
                         completion(false, response.message)
                     }
@@ -96,7 +96,7 @@ class PostService {
             }
         }.resume()
     }
-
+    
     func uploadImage(_ image: UIImage, itemId: Int, completion: @escaping (Bool, String) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 1) else {
             completion(false, "Invalid Image URL")
@@ -135,7 +135,7 @@ class PostService {
                 DispatchQueue.main.async {
                     if response.success, let ImageAuth = response.data {
                         completion(true, "Data fetch successful")
-//                        PhotoAuthView().confirmItemImageId = ImageAuth.confirmItemImageId
+                        //                        PhotoAuthView().confirmItemImageId = ImageAuth.confirmItemImageId
                     } else {
                         completion(false, response.message)
                     }
@@ -148,7 +148,7 @@ class PostService {
         }.resume()
     }
     
-}
+    
     // 본인 게시물 조회
     func getMyPost(memberId: Int, status: String, completion: @escaping (_ postListByLocation: MyPostList) -> Void) {
         let query = URLQueryItem(name: "itemStatus", value: status)
