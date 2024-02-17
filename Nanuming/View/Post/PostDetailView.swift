@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostDetailView: View {
-    var itemId: Int
+    @State var itemId: Int
     @StateObject var postDetail = PostDetailViewModel()
     @State private var showingConnectBoxView = false
     @State private var selection: Int? = nil
