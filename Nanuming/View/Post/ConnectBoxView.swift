@@ -50,6 +50,7 @@ struct ConnectBoxView: View {
                             print("identifying number: \(identifyingNumber)")
                             print("Scan: \(bluetoothManager.centralManager.isScanning)")
                             if owner! {
+                                print("nanumee\(String(describing: owner)):\(lockerNum):\(itemId)")
                                 bluetoothManager.RequestNanumer(requestData: lockerNum, itemId: itemId) { success, message in
                                     if success {
                                         self.bluetoothManager.startScanning()
