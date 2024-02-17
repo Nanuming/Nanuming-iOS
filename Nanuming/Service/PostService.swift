@@ -56,12 +56,17 @@ class PostService {
             }
     }
     func showDetail(itemId: String, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/api/item/\(itemId)") else {
+//        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
+//            completion(false, "Invalid URL")
+//            return
+//        }
+        guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(itemId)") else {
             completion(false, "Invalid URL")
             return
         }
-        
+        let jwtToken = keychain.get("accessToken") ?? ""
         var request = URLRequest(url: url)
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -92,6 +97,58 @@ class PostService {
         }.resume()
     }
 
+    func uploadImage(_ image: UIImage, itemId: Int, completion: @escaping (Bool, String) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 1) else {
+            completion(false, "Invalid Image URL")
+            return
+        }
+        guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(itemId)/confirm") else {
+            completion(false, "Invalid URL")
+            return
+        }
+        let jwtToken = keychain.get("accessToken") ?? ""
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        let boundary = "Boundary-\(UUID().uuidString)"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var body = Data()
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"confirmImage\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
+        body.append(imageData)
+        body.append("\r\n".data(using: .utf8)!)
+        
+        
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        request.httpBody = body
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    completion(false, "Network request failed: \(error?.localizedDescription ?? "Unknown error")")
+                }
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(BaseResponse<ImageAuth>.self, from: data)
+                DispatchQueue.main.async {
+                    if response.success, let ImageAuth = response.data {
+                        completion(true, "Data fetch successful")
+//                        PhotoAuthView().confirmItemImageId = ImageAuth.confirmItemImageId
+                    } else {
+                        completion(false, response.message)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false, "Failed to decode response: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
+    
+}
     // 본인 게시물 조회
     func getMyPost(memberId: Int, status: String, completion: @escaping (_ postListByLocation: MyPostList) -> Void) {
         let query = URLQueryItem(name: "itemStatus", value: status)
@@ -114,6 +171,13 @@ class PostService {
             case .failure(let error):
                 print("DEBUG(get my post list api) error: \(error)")
             }
+        }
+    }
+}
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
         }
     }
 }

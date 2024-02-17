@@ -37,6 +37,7 @@
 		23E1A5042B735E1800C59696 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1A5032B735E1800C59696 /* HomeView.swift */; };
 		23F1AFB42B7FF30A00C18CDD /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 23F1AFB32B7FF30A00C18CDD /* URLImage */; };
 		8827AE9D2B7D6003004F38F7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */; };
+		8827AE9F2B7F95DE004F38F7 /* PhotoAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827AE9E2B7F95DE004F38F7 /* PhotoAuthView.swift */; };
 		885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5362B7373820062AD2F /* GoogleSignIn */; };
 		885AC5392B7373820062AD2F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5382B7373820062AD2F /* GoogleSignInSwift */; };
 		885AC53D2B777B3A0062AD2F /* JoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885AC53C2B777B3A0062AD2F /* JoinView.swift */; };
@@ -72,6 +73,7 @@
 		23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImagePicker.swift; sourceTree = "<group>"; };
 		23E1A5032B735E1800C59696 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		8827AE9E2B7F95DE004F38F7 /* PhotoAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAuthView.swift; sourceTree = "<group>"; };
 		885AC53C2B777B3A0062AD2F /* JoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinView.swift; sourceTree = "<group>"; };
 		885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		885AC5412B7A41640062AD2F /* ConnectBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectBoxView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			children = (
 				23AC57B02B610B7C0013D6A5 /* PostDetailView.swift */,
 				23AC57B22B610B8C0013D6A5 /* CreatePostView.swift */,
+				8827AE9E2B7F95DE004F38F7 /* PhotoAuthView.swift */,
 				885AC5412B7A41640062AD2F /* ConnectBoxView.swift */,
 				23AC57B82B610BDA0013D6A5 /* PostListView.swift */,
 			);
@@ -313,6 +316,7 @@
 				885AC5442B7B22AB0062AD2F /* Item.swift in Sources */,
 				2342BC052B73761D008E0799 /* UserData.swift in Sources */,
 				23AC57B32B610B8C0013D6A5 /* CreatePostView.swift in Sources */,
+				8827AE9F2B7F95DE004F38F7 /* PhotoAuthView.swift in Sources */,
 				885AC5422B7A41640062AD2F /* ConnectBoxView.swift in Sources */,
 				23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */,
 				8827AE9D2B7D6003004F38F7 /* PostDetailViewModel.swift in Sources */,

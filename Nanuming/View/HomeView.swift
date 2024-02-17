@@ -97,6 +97,7 @@ struct HomeView: View {
                     // post list
                     ScrollView {
                         VStack {
+
                             ForEach(postList, id: \.itemId) { postcell in
                                 
                                 let post = Post(title: postcell.title, image: [postcell.mainItemImageUrl], category: postcell.categoryName, location: postcell.locationName)

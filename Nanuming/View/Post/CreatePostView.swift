@@ -17,6 +17,7 @@ struct CreatePostView: View {
     @State private var itemId: Int = 0
     let category: [String] = ["장난감", "도서", "의류", "육아용품", "기타"]
     @State var categoryId: Int = 0
+
     
     var body: some View {
         NavigationView {
@@ -77,7 +78,7 @@ struct CreatePostView: View {
                     PostService().writePost(title: title, categoryId: categoryId + 1, description: contents, imageList: postImageDatas) { id in
                         print("write post sucess/ postId: ", id)
                         self.itemId = id
-                        
+//                        print("itemId in createPostView: \(self.itemId)")
                         // 창 닫기
 //                        presentation.wrappedValue.isPresented
                         showPostDetailModal = true
@@ -91,8 +92,8 @@ struct CreatePostView: View {
                                 .foregroundColor(.white)
                         )
                 }
-                .fullScreenCover(isPresented: $showPostDetailModal) {
-                    PostDetailView(itemId: itemId)
+                .sheet(isPresented: $showPostDetailModal) {
+                    PostDetailView(itemId: $itemId)
                 }
             }
             .frame(width: screenWidth * 0.85)

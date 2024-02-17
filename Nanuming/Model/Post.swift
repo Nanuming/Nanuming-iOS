@@ -27,10 +27,14 @@ struct PostDetail: Codable {
     var itemId: String?
     var itemImageUrlList: [String?]
     var category: String?
+    var locationName: String?
     var nickname: String?
-    var location: String?
+    var title: String?
     var description: String?
     var createAt: String?
     var updateAt: String?
     var owner: Bool?
+}
+struct ImageAuth: Codable {
+    var confirmItemImageId: Int
 }
