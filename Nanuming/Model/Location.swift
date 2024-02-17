@@ -35,3 +35,7 @@ struct PostListByLocation: Codable {
 struct PlacePostList: Codable {
     let itemOutlineDtoList: [PostCellByLocation]
 }
+
+struct MyPostList: Codable {
+    let itemOutlineDtoList: [PostCellByLocation]
+}
