@@ -11,6 +11,7 @@ import KeychainSwift
 import SwiftUI
 
 class PostService {
+    var postDetailContent: PostDetail?
     let keychain = KeychainSwift()
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     let userId = UserDefaults.standard.integer(forKey: "userId")
@@ -55,13 +56,9 @@ class PostService {
             }
         }
     }
-    func showDetail(itemId: String, completion: @escaping (Bool, String) -> Void) {
-        //        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
-        //            completion(false, "Invalid URL")
-        //            return
-        //        }
+    func showDetail(itemId: Int, completion: @escaping (Bool, PostDetail?, String) -> Void) {
         guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId)") else {
-            completion(false, "Invalid URL")
+            completion(false, nil, "Invalid URL")
             return
         }
         let jwtToken = keychain.get("accessToken") ?? ""
@@ -74,7 +71,7 @@ class PostService {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 DispatchQueue.main.async {
-                    completion(false, "Network request failed: \(error?.localizedDescription ?? "Unknown error")")
+                    completion(false, nil, "Network request failed: \(error?.localizedDescription ?? "Unknown error")")
                 }
                 return
             }
@@ -82,16 +79,18 @@ class PostService {
             do {
                 let response = try JSONDecoder().decode(BaseResponse<PostDetail>.self, from: data)
                 DispatchQueue.main.async {
-                    if response.success, let postDetail = response.data {
-                        completion(true, "Data fetch successful")
-                        PostDetailViewModel().postDetail = postDetail
+                    if response.success {
+                        self.postDetailContent = response.data
+                        print("\(self.postDetailContent?.itemId)")
+                        completion(true, self.postDetailContent, "Data fetch successful")
+
                     } else {
-                        completion(false, response.message)
+                        completion(false, nil, response.message)
                     }
                 }
             } catch {
                 DispatchQueue.main.async {
-                    completion(false, "Failed to decode response: \(error.localizedDescription)")
+                    completion(false, nil, "Failed to decode response: \(error.localizedDescription)")
                 }
             }
         }.resume()

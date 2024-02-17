@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PostDetailView: View {
     @State var itemId: Int = 0
-    @StateObject var postDetail = PostDetailViewModel()
+//    @StateObject var postDetail = PostDetailViewModel()
+    @State var postDetailContent: PostDetail?
     @State private var showingConnectBoxView = false
     @State private var selection: Int? = nil
     @Environment(\.presentationMode) var presentationMode
@@ -21,7 +22,7 @@ struct PostDetailView: View {
                         // 이미지
                         TabView {
                             
-                            ForEach(postDetail.postContent?.image ?? [""], id: \.self) { url in
+                            ForEach(postDetailContent?.itemImageUrlList ?? [""], id: \.self) { url in
                                 Image(url ?? "")
                                     .resizable()
                                     .background(.gray100)
@@ -34,14 +35,14 @@ struct PostDetailView: View {
                         // 게시 정보
                         HStack(spacing: 5) {
                             // 게시자
-                            Text(postDetail.postContent?.publisher ?? "")
+                            Text(postDetailContent?.nickname ?? "")
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundColor(.textBlack)
                             Text("님")
                                 .font(.system(size: 16, weight: .medium))
                             Spacer()
                             // 생성일자
-                            Text(postDetail.postContent?.createdDate ?? "")
+                            Text(postDetailContent?.updateAt ?? "")
                                 .font(.system(size: 14, weight: .medium))
                         }
                         .foregroundColor(.gray200)
@@ -52,12 +53,12 @@ struct PostDetailView: View {
                         // 게시물 상세
                         VStack(alignment: .leading, spacing: 15) {
                             // 타이틀
-                            Text(postDetail.postContent?.title ?? "")
+                            Text(postDetailContent?.title ?? "")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.textBlack)
                             HStack(spacing: 10) {
                                 // 카테고리
-                                Text("#" + (postDetail.postContent?.category ?? ""))
+                                Text("#" + (postDetailContent?.category ?? ""))
                                     .foregroundColor(.white)
                                     .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                                     .background(.greenSelected)
@@ -69,14 +70,14 @@ struct PostDetailView: View {
                                     HStack(spacing: 3) {
                                         Image("post_cell_map")
                                             .frame(width: 17, height: 17)
-                                        Text(postDetail.postContent?.location ?? "")
+                                        Text(postDetailContent?.locationName ?? "")
                                             .foregroundColor(.gray300)
                                     }
                                 }
                             }
                             Divider()
                             // 내용
-                            Text(postDetail.postContent?.contents ?? "")
+                            Text(postDetailContent?.description ?? "")
                                 .foregroundColor(.textBlack)
                                 .lineSpacing(5)
                         }
@@ -93,14 +94,14 @@ struct PostDetailView: View {
                            .frame(width: screenWidth * 0.9, height: 50)
                            .foregroundColor(.greenMain) // 예시 색상 추가
                            .overlay(
-                               Text(postDetail.postDetail?.owner ?? false ? "보관함 번호 입력하기" : "나눔받기")
+                            Text(postDetailContent?.owner ?? false ? "보관함 번호 입력하기" : "나눔받기")
                                    .font(.system(size: 16, weight: .bold))
                                    .foregroundColor(.white)
                            )
                 }
                 .sheet(isPresented: $showingConnectBoxView) {
                     // ConnectBoxView로 이동하면서 필요한 데이터를 전달합니다.
-                    ConnectBoxView(isConnectedBluetooth: false, owner: postDetail.postDetail?.owner, itemId: itemId)
+                    ConnectBoxView(isConnectedBluetooth: false, owner: postDetailContent?.owner, itemId: itemId)
                 }
             }
             .toolbar {
@@ -128,8 +129,15 @@ struct PostDetailView: View {
             
         }
         .onAppear(perform: {
-            print("postDetail.itemId: \(itemId))")
-            postDetail.fetchPostDetail(itemId:String(describing:itemId))
+            print("postDetail.itemId: \(itemId)")
+            PostService().showDetail(itemId: itemId) { success, data, message in
+            if success {
+                postDetailContent = data
+                print("success: \(success), message: \(message)")
+            } else {
+                print("success: \(success), message: \(message)")
+            }
+        }
         })
 
     }
