@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct PostDetailView: View {
     @State var itemId: Int = 0
@@ -21,11 +22,21 @@ struct PostDetailView: View {
                     VStack(spacing: 0) {
                         // 이미지
                         TabView {
-                            
                             ForEach(postDetailContent?.itemImageUrlList ?? [""], id: \.self) { url in
-                                Image(url ?? "")
-                                    .resizable()
-                                    .background(.gray100)
+                                if let imageURL = URL(string: url ?? "") {
+                                    URLImage(imageURL) { image in
+                                        image
+                                            .resizable()
+                                            .frame(width: screenWidth, height: screenWidth*0.9)
+                                    }
+                                } else {
+                                    // imageURL이 nil인 경우에 대한 처리
+                                    Image("")
+                                        .resizable()
+                                        .background(.gray)
+                                        .frame(width: 120, height: 120)
+                                        .cornerRadius(10)
+                                }
                             }
                         }
                         .tabViewStyle(PageTabViewStyle())

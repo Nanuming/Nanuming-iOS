@@ -24,7 +24,7 @@ struct PostId: Codable {
 }
 
 struct PostDetail: Codable {
-    var itemId: String?
+    var itemId: Int?
     var itemImageUrlList: [String?]
     var category: String?
     var locationName: String?
