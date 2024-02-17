@@ -92,4 +92,28 @@ class PostService {
         }.resume()
     }
 
+    // 본인 게시물 조회
+    func getMyPost(_ memberId: Int, _ status: String, completion: @escaping (_ postListByLocation: PlacePostList) -> Void) {
+        let query = URLQueryItem(name: "itemStatus", value: status)
+        let url = "\(baseUrl)/profile/\(memberId)?\(query)"
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(keychain.get("accessToken") ?? "")"
+        ]
+        // Request 생성
+        let dataRequest = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers)
+        
+        // responseData를 호출하면서 데이터 통신 시작
+        dataRequest.responseDecodable(of: BaseResponse<PlacePostList>.self) { response in
+            switch response.result {
+            case .success(let response): // 성공한 경우에
+                guard let result = response.data else { return }
+                
+                completion(result)
+                
+            case .failure(let error):
+                print("DEBUG(get my post list api) error: \(error)")
+            }
+        }
+    }
 }
