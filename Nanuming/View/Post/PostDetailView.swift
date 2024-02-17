@@ -128,7 +128,7 @@ struct PostDetailView: View {
             
         }
         .onAppear(perform: {
-            print("\(String(describing: itemId))")
+            print("postDetail.itemId: \(String(describing: itemId))")
             postDetail.fetchPostDetail(itemId:String(describing:itemId))
         })
 

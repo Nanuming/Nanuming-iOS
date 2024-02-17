@@ -76,12 +76,14 @@ struct CreatePostView: View {
                 Button {
                     // 게시물 예비 등록
                     PostService().writePost(title: title, categoryId: categoryId + 1, description: contents, imageList: postImageDatas) { id in
-                        print("write post sucess/ postId: ", id)
-                        self.itemId = id
-//                        print("itemId in createPostView: \(self.itemId)")
-                        // 창 닫기
-//                        presentation.wrappedValue.isPresented
-                        showPostDetailModal = true
+                        DispatchQueue.main.async {
+                            print("write post sucess/ postId: ", id)
+                            self.itemId = id
+                            print("itemId in createPostView: \(self.itemId)")
+                            // 창 닫기
+                            //                        presentation.wrappedValue.isPresented
+                            showPostDetailModal = true
+                        }
                     }
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
