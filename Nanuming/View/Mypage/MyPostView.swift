@@ -19,6 +19,7 @@ struct MyPostView: View {
     @State private var postList: [PostCellByLocation] = []
     let postStatus = ["temporary", "available", "reserved", "shared"]
     @Environment(\.presentationMode) var presentation
+    @State private var isPresentedLocationPostList = false
 
     var body: some View {
         NavigationView {
@@ -34,9 +35,24 @@ struct MyPostView: View {
                     getMyPostAPI(status: postStatus[idx])
                 }
                 
-                showPostList()
-                
-                Spacer()
+                ScrollView {
+                    VStack {
+                        ForEach(postList, id: \.itemId) { postcell in
+
+                            let post = Post(title: postcell.title, image: [postcell.mainItemImageUrl], category: postcell.categoryName, location: postcell.locationName)
+
+                            // modal로 띄우기
+                            Button {
+                                isPresentedLocationPostList = true
+                            } label: {
+                                PostListCell(post: .constant(post))
+                            }
+                            .fullScreenCover(isPresented: $isPresentedLocationPostList) {
+                                PostDetailView(itemId: postcell.itemId)
+                            }
+                        }
+                    }
+                }
             }
             .navigationBarTitle("나의 나눔", displayMode: .inline)
             .navigationBarItems(
@@ -55,16 +71,6 @@ struct MyPostView: View {
         let userId = UserDefaults.standard.integer(forKey: "userId")
         PostService().getMyPost(memberId: userId, status: status) { postListByLocation in
             self.postList = postListByLocation.memberItemOutlineDtoList
-        }
-    }
-    
-    @ViewBuilder
-    func showPostList() -> some View {
-        List {
-            ForEach(postList, id: \.itemId) { post in
-                let post = Post(title: post.title, image: [post.mainItemImageUrl], category: post.categoryName, location: post.locationName)
-                PostListCell(post: .constant(post))
-            }
         }
     }
 }
