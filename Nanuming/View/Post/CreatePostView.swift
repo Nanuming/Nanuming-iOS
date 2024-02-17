@@ -14,10 +14,9 @@ struct CreatePostView: View {
     @Environment(\.presentationMode) var presentation
     @State var postImageDatas: [Data?] = []
     @State private var showPostDetailModal = false
-    @State private var itemId: Int = 0
     let category: [String] = ["장난감", "도서", "의류", "육아용품", "기타"]
     @State var categoryId: Int = 0
-
+    @State var itemId: PostID?
     
     var body: some View {
         NavigationView {
@@ -78,8 +77,8 @@ struct CreatePostView: View {
                     PostService().writePost(title: title, categoryId: categoryId + 1, description: contents, imageList: postImageDatas) { id in
                         DispatchQueue.main.async {
                             print("write post sucess/ postId: ", id)
-                            self.itemId = id
-                            print("itemId in createPostView: \(self.itemId)")
+                            self.itemId = PostID(id: id)
+//                            print("itemId in createPostView: \(self.itemId)")
                             // 창 닫기
                             //                        presentation.wrappedValue.isPresented
                             showPostDetailModal = true
@@ -94,8 +93,8 @@ struct CreatePostView: View {
                                 .foregroundColor(.white)
                         )
                 }
-                .sheet(isPresented: $showPostDetailModal) {
-                    PostDetailView(itemId: itemId)
+                .sheet(item: $itemId) { itemId in
+                    PostDetailView(itemId: itemId.id)
                 }
             }
             .frame(width: screenWidth * 0.85)

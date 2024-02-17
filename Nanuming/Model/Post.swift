@@ -38,3 +38,7 @@ struct PostDetail: Codable {
 struct ImageAuth: Codable {
     var confirmItemImageId: Int
 }
+
+struct PostID: Identifiable {
+    let id: Int
+}
