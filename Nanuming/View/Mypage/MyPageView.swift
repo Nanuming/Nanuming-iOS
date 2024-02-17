@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @State var showMyPostView: Bool = false
     var body: some View {
         VStack {
             HStack {
@@ -43,7 +44,9 @@ struct MyPageView: View {
     @ViewBuilder
     func buttonBuilder(imageName: String, text: String) -> some View {
         Button {
-            
+            if text == "나의 나눔" {
+                showMyPostView = true
+            }
         } label: {
             HStack(spacing: 15) {
                 Image(systemName: imageName)
@@ -54,6 +57,7 @@ struct MyPageView: View {
             }
             .foregroundColor(.textBlack)
         }
+        .fullScreenCover(isPresented: $showMyPostView) { MyPostView() }
     }
 }
 

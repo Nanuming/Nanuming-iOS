@@ -38,3 +38,7 @@ struct PlacePostList: Codable {
     let occupiedLockerCount: Int
     let itemOutlineDtoList: [PostCellByLocation]
 }
+
+struct MyPostList: Codable {
+    let memberItemOutlineDtoList: [PostCellByLocation]
+}
