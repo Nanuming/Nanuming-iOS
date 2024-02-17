@@ -13,7 +13,6 @@ struct CreatePostView: View {
     @State var contents: String = ""
     @Environment(\.presentationMode) var presentation
     @State var postImageDatas: [Data?] = []
-    @State private var showPostDetailModal = false
     let category: [String] = ["장난감", "도서", "의류", "육아용품", "기타"]
     @State var categoryId: Int = 0
     @State var itemId: PostID?
@@ -80,8 +79,7 @@ struct CreatePostView: View {
                             self.itemId = PostID(id: id)
 //                            print("itemId in createPostView: \(self.itemId)")
                             // 창 닫기
-                            //                        presentation.wrappedValue.isPresented
-                            showPostDetailModal = true
+//                            presentation.wrappedValue.dismiss()
                         }
                     }
                 } label: {
@@ -148,7 +146,7 @@ struct CreatePostView: View {
     }
     
     func checkAlbumPermission() {
-        PHPhotoLibrary.requestAuthorization() { status in
+        PHPhotoLibrary.requestAuthorization { status in
             switch status {
             case .authorized:
                 // 권한이 허용된 경우 처리할 로직
