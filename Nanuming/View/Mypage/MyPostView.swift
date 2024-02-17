@@ -18,22 +18,37 @@ struct MyPostView: View {
     @State private var selectedTab: Int = 0
     @State private var postList: [PostCellByLocation] = []
     let postStatus = ["temporary", "available", "reserved", "shared"]
+    @Environment(\.presentationMode) var presentation
 
     var body: some View {
-        Picker("my", selection: $selectedTab) {
-            ForEach(myPostTapInfo.allCases.indices, id: \.self) { index in
-                Text(myPostTapInfo.allCases[index].rawValue).tag(index)
+        NavigationView {
+            VStack {
+                Picker("my", selection: $selectedTab) {
+                    ForEach(myPostTapInfo.allCases.indices, id: \.self) { index in
+                        Text(myPostTapInfo.allCases[index].rawValue).tag(index)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding()
+                .onReceive([self.selectedTab].publisher.first()) { idx in
+                    getMyPostAPI(status: postStatus[idx])
+                }
+                
+                showPostList()
+                
+                Spacer()
             }
+            .navigationBarTitle("나의 나눔", displayMode: .inline)
+            .navigationBarItems(
+                leading: Button(action: {
+                    presentation.wrappedValue.dismiss()
+                }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.textBlack)
+                        .frame(width: 30, height: 30)
+                }
+            )
         }
-        .pickerStyle(.segmented)
-        .padding()
-        .onReceive([self.selectedTab].publisher.first()) { idx in
-            getMyPostAPI(status: postStatus[idx])
-        }
-        
-        showPostList()
-        
-        Spacer()
     }
     
     func getMyPostAPI(status: String) {
