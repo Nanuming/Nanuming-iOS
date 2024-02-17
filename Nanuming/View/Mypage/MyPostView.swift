@@ -8,10 +8,10 @@
 import SwiftUI
 
 enum myPostTapInfo: String, CaseIterable {
-    case beforeCreate = "등록 대기"
-    case waiting = "나눔 중"
-    case reserving = "예약 중"
-    case complete = "나눔 완료"
+    case temporary = "등록 대기"
+    case available = "나눔 중"
+    case reserved = "예약 중"
+    case shared = "나눔 완료"
 }
 
 struct MyPostView: View {
@@ -33,17 +33,6 @@ struct MyPostView: View {
         
         showPostList()
         
-//        switch selectedTab {
-//            case 0:
-//            showPostList(status: "")
-//                
-//            case 1:
-//                Text("2 번째 탭의 내용")
-//            case 2:
-//                Text("3 번째 탭의 내용")
-//            default:
-//                Text("4 번째 탭의 내용")
-//        }
         Spacer()
     }
     
