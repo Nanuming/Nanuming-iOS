@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var mapVM: MapViewModel = .init()
     @State private var isMapButtonClicked = false
     @State var searchText: String = ""
-    @State var post: Post
     @State private var isPresentedPostDetail = false
     @State private var isPresentedCreatePost = false
-    @State var relocateButtonTapped = false
-    @State var itemId: Int? = 0
+    @State var placeList: [PlaceLocation] = [PlaceLocation(locationId: 1, latitude: 37.566535, longitude: 126.967969), PlaceLocation(locationId: 2, latitude: 37.566535, longitude: 126.977969)]
+    @State var postList: [PostCellByLocation] = [PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate"), PostCellByLocation(itemId: 1, mainItemImageUrl: "", title: "gh", locationName: "sadfs", categoryName: "cate")]
     
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
+    @State var isPresentedPlacePostListModal = false
     
     var body: some View {
         VStack(spacing: 10) {
@@ -57,13 +58,13 @@ struct HomeView: View {
             // map
             if isMapButtonClicked {
                 ZStack(alignment: .top) {
-                    MapView(mapVM: MapViewModel())
+                    MapView(mapVM: mapVM, placeList: $placeList)
                     VStack(spacing: 5) {
                         categoryFilter()
                             .padding(.top, 5)
                         Button {
                             // 재검색
-                            self.relocateButtonTapped.toggle()
+                            getPostAPI()
                         } label: {
                             Text("이 지역 검색")
                                 .padding(EdgeInsets(top: 7, leading: 12, bottom: 7, trailing: 12))
@@ -72,6 +73,11 @@ struct HomeView: View {
                                 .background(.white)
                                 .cornerRadius(14)
                                 .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 4)
+                        }
+                        Spacer()
+                        if mapVM.isPresentedPlace {
+                            placeInfoView(placeName: mapVM.locationName, postNum: mapVM.occupiedLockerCount, emptyLockerNum: mapVM.emptyLockerCount, postList: mapVM.postList)
+                                .padding(.bottom, 80)
                         }
                     }
                 }
@@ -91,18 +97,23 @@ struct HomeView: View {
                     // post list
                     ScrollView {
                         VStack {
-                            // modal로 띄우기
-                            Button {
-                                isPresentedPostDetail = true
-                            } label: {
-                                PostListCell(post: $post)
+
+                            ForEach(postList, id: \.itemId) { postcell in
+                                
+                                let post = Post(title: postcell.title, image: [postcell.mainItemImageUrl], category: postcell.categoryName, location: postcell.locationName)
+                                
+                                // modal로 띄우기
+                                Button {
+                                    isPresentedPostDetail = true
+                                } label: {
+                                    PostListCell(post: .constant(post))
+                                }
+                                .fullScreenCover(isPresented: $isPresentedPostDetail) {
+                                    PostDetailView(itemId: postcell.itemId)
+                                }
                             }
-                            .fullScreenCover(isPresented: $isPresentedPostDetail) {
-                                PostDetailView(itemId: $itemId)
-                            }
-                            
-                            PostListCell(post: .constant(Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false)))
                         }
+                        .frame(width: screenWidth)
                     }
                     
                     // 게시물 생성 + 버튼
@@ -127,7 +138,18 @@ struct HomeView: View {
                 }
             }
         }
-        
+        .onAppear(
+            perform: {
+                getPostAPI()
+            }
+        )
+    }
+    
+    func getPostAPI() {
+        LocationService().getPostList(mapVM.userLocation.latitude, mapVM.userLocation.longitude, mapVM.deltaLocation.latitude, mapVM.deltaLocation.longitude) { postListByLocation in
+            self.placeList = postListByLocation.locationInfoDtoList
+            self.postList = postListByLocation.itemOutlineDtoList
+        }
     }
     
     @ViewBuilder
@@ -154,8 +176,40 @@ struct HomeView: View {
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
         }
     }
+    
+    @ViewBuilder
+    func placeInfoView(placeName: String, postNum: Int, emptyLockerNum: Int, postList: [PostCellByLocation]) -> some View {
+        HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(placeName)
+                    .font(.system(size: 18, weight: .semibold))
+                Spacer()
+                Text("나눔 중인 물품 수 : \(postNum)")
+                Text("빈 보관함 수 : \(emptyLockerNum)")
+            }
+            .font(.system(size: 14, weight: .medium))
+            .foregroundColor(.textBlack)
+            Spacer()
+            Button {
+                isPresentedPlacePostListModal = true
+            } label: {
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .frame(width: 13, height: 20)
+                    .foregroundColor(.textBlack)
+            }
+            .fullScreenCover(isPresented: $isPresentedPlacePostListModal) {
+                PostListView(placeName: placeName, postList: postList)
+            }
+        }
+        .padding()
+        .frame(width: screenWidth * 0.85, height: 120)
+        .background(.white)
+        .cornerRadius(10)
+        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+    }
 }
 
-#Preview {
-    HomeView(post: Post(publisher: "유가은", createdDate: "2024.01.31", title: "루피 인형 나눔", image: ["Logo", "Logo"], category: "장난감", location: "자양4동 어린이집", contents: "나눔나눔", isMyPost: false))
-}
+ #Preview {
+     HomeView()
+ }

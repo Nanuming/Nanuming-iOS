@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct PostListCell: View {
     @Binding var post: Post
@@ -14,11 +15,22 @@ struct PostListCell: View {
         VStack {
             HStack(spacing: 15) {
                 // 이미지
-                Image(post.image[0] ?? "")
-                    .resizable()
-                    .frame(width: 120, height: 120)
-                    .background(.gray100) // TODO: 추후에 삭제할 부분
-                    .cornerRadius(10)
+                if let imageURL = URL(string: post.image[0] ?? "") {
+                    URLImage(imageURL) { image in
+                        image
+                            .resizable()
+                            .frame(width: 120, height: 120)
+                            .cornerRadius(10)
+                    }
+                } else {
+                    // imageURL이 nil인 경우에 대한 처리
+                    Image("")
+                        .resizable()
+                        .background(.gray)
+                        .frame(width: 120, height: 120)
+                        .cornerRadius(10)
+                }
+                
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading, spacing: 3) {
                         // 카테고리
@@ -33,9 +45,9 @@ struct PostListCell: View {
                             .font(.system(size: 17, weight: .bold))
                             .foregroundColor(.textBlack)
                         // 찜 수
-                        Text(String(post.likeNum ?? 0)+"명이 찜하고 있어요")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.redMain)
+//                        Text(String(post.likeNum ?? 0)+"명이 찜하고 있어요")
+//                            .font(.system(size: 12, weight: .medium))
+//                            .foregroundColor(.redMain)
                     }
                     Spacer()
                     // 위치

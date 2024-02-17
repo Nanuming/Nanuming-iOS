@@ -17,7 +17,7 @@ class PostService {
     let userNickname = UserDefaults.standard.string(forKey: "userNickname")
 
     // 게시물 예비 등록
-    func writePost(title: String, description: String, imageList: [Data?], completion: @escaping (_ id: Int) -> Void) {
+    func writePost(title: String, categoryId: Int, description: String, imageList: [Data?], completion: @escaping (_ id: Int) -> Void) {
         let url = "\(baseUrl)/item/add"
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
@@ -26,7 +26,7 @@ class PostService {
         
         let body: [String: Any] = [
             "sharerId": userId,
-            "categoryId": 1, // TODO: 바꿔야함
+            "categoryId": categoryId, 
             "title": title,
             "description": description
         ]
@@ -96,6 +96,7 @@ class PostService {
             }
         }.resume()
     }
+
     func uploadImage(_ image: UIImage, itemId: Int, completion: @escaping (Bool, String) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 1) else {
             completion(false, "Invalid Image URL")
@@ -147,6 +148,31 @@ class PostService {
         }.resume()
     }
     
+}
+    // 본인 게시물 조회
+    func getMyPost(memberId: Int, status: String, completion: @escaping (_ postListByLocation: MyPostList) -> Void) {
+        let query = URLQueryItem(name: "itemStatus", value: status)
+        let url = "\(baseUrl)/profile/\(memberId)?\(query)"
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(keychain.get("accessToken") ?? "")"
+        ]
+        // Request 생성
+        let dataRequest = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers)
+        
+        // responseData를 호출하면서 데이터 통신 시작
+        dataRequest.responseDecodable(of: BaseResponse<MyPostList>.self) { response in
+            switch response.result {
+            case .success(let response): // 성공한 경우에
+                guard let result = response.data else { return }
+                
+                completion(result)
+                
+            case .failure(let error):
+                print("DEBUG(get my post list api) error: \(error)")
+            }
+        }
+    }
 }
 extension Data {
     mutating func append(_ string: String) {

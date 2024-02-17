@@ -15,6 +15,9 @@
 		2338DB062B6564B4009243AC /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2338DB052B6564B4009243AC /* EntryView.swift */; };
 		2342BC052B73761D008E0799 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC042B73761D008E0799 /* UserData.swift */; };
 		2342BC0A2B73E89E008E0799 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342BC092B73E89E008E0799 /* MapViewModel.swift */; };
+		2359365F2B80DD5300516C6B /* MyPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359365E2B80DD5300516C6B /* MyPostView.swift */; };
+		23825B332B7DDFF700424313 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23825B322B7DDFF700424313 /* LocationService.swift */; };
+		23825B352B7DE19600424313 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23825B342B7DE19600424313 /* Location.swift */; };
 		2382C87B2B7D05D9007882E0 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2382C87A2B7D05D9007882E0 /* PostService.swift */; };
 		2382C87E2B7D0604007882E0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2382C87D2B7D0604007882E0 /* Alamofire */; };
 		23A0FC2B2B7B498700D5DEA7 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */; };
@@ -32,6 +35,7 @@
 		23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC57B82B610BDA0013D6A5 /* PostListView.swift */; };
 		23DDF8542B6FAE6B0062F2F1 /* PostImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DDF8532B6FAE6B0062F2F1 /* PostImagePicker.swift */; };
 		23E1A5042B735E1800C59696 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1A5032B735E1800C59696 /* HomeView.swift */; };
+		23F1AFB42B7FF30A00C18CDD /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 23F1AFB32B7FF30A00C18CDD /* URLImage */; };
 		8827AE9D2B7D6003004F38F7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */; };
 		8827AE9F2B7F95DE004F38F7 /* PhotoAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827AE9E2B7F95DE004F38F7 /* PhotoAuthView.swift */; };
 		885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 885AC5362B7373820062AD2F /* GoogleSignIn */; };
@@ -51,6 +55,9 @@
 		2338DB052B6564B4009243AC /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		2342BC042B73761D008E0799 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2342BC092B73E89E008E0799 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		2359365E2B80DD5300516C6B /* MyPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostView.swift; sourceTree = "<group>"; };
+		23825B322B7DDFF700424313 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		23825B342B7DE19600424313 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		2382C87A2B7D05D9007882E0 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		23A9A92E2B67B0F1004BC5D3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		23A9A92F2B67B239004BC5D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -79,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				885AC5372B7373820062AD2F /* GoogleSignIn in Frameworks */,
+				23F1AFB42B7FF30A00C18CDD /* URLImage in Frameworks */,
 				2382C87E2B7D0604007882E0 /* Alamofire in Frameworks */,
 				23A9A9272B67ACB1004BC5D3 /* GoogleMaps in Frameworks */,
 				23A9A92B2B67ACB1004BC5D3 /* GoogleMapsCore in Frameworks */,
@@ -98,6 +106,7 @@
 				2342BC042B73761D008E0799 /* UserData.swift */,
 				230F899C2B6D07930007575E /* Post.swift */,
 				885AC5432B7B22AB0062AD2F /* Item.swift */,
+				23825B342B7DE19600424313 /* Location.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -109,6 +118,7 @@
 				885AC53F2B7A222A0062AD2F /* BluetoothManager.swift */,
 				232AFD7F2B79FA7800A04B64 /* AuthService.swift */,
 				2382C87A2B7D05D9007882E0 /* PostService.swift */,
+				23825B322B7DDFF700424313 /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -120,6 +130,15 @@
 				8827AE9C2B7D6003004F38F7 /* PostDetailViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2359365D2B80DD2A00516C6B /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				23AC57B62B610BB90013D6A5 /* MyPageView.swift */,
+				2359365E2B80DD5300516C6B /* MyPostView.swift */,
+			);
+			path = Mypage;
 			sourceTree = "<group>";
 		};
 		23AC57942B610B300013D6A5 = {
@@ -166,10 +185,10 @@
 		23AC57AE2B610B520013D6A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2359365D2B80DD2A00516C6B /* Mypage */,
 				885AC53E2B777B440062AD2F /* USER */,
 				23AC57AF2B610B630013D6A5 /* Post */,
 				23AC57B42B610B9F0013D6A5 /* MapView.swift */,
-				23AC57B62B610BB90013D6A5 /* MyPageView.swift */,
 				2338DB032B64FE59009243AC /* TabBarView.swift */,
 				23E1A5032B735E1800C59696 /* HomeView.swift */,
 			);
@@ -231,6 +250,7 @@
 				885AC5382B7373820062AD2F /* GoogleSignInSwift */,
 				23A0FC2A2B7B498700D5DEA7 /* KeychainSwift */,
 				2382C87D2B7D0604007882E0 /* Alamofire */,
+				23F1AFB32B7FF30A00C18CDD /* URLImage */,
 			);
 			productName = Nanuming;
 			productReference = 23AC579D2B610B300013D6A5 /* Nanuming.app */;
@@ -265,6 +285,7 @@
 				885AC5352B7373820062AD2F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				23A0FC292B7B498700D5DEA7 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				2382C87C2B7D0604007882E0 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				23F1AFB22B7FF30A00C18CDD /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 23AC579E2B610B300013D6A5 /* Products */;
 			projectDirPath = "";
@@ -300,6 +321,7 @@
 				23AC57B12B610B7C0013D6A5 /* PostDetailView.swift in Sources */,
 				8827AE9D2B7D6003004F38F7 /* PostDetailViewModel.swift in Sources */,
 				23DDF8542B6FAE6B0062F2F1 /* PostImagePicker.swift in Sources */,
+				23825B332B7DDFF700424313 /* LocationService.swift in Sources */,
 				2338DB042B64FE59009243AC /* TabBarView.swift in Sources */,
 				23AC57B52B610B9F0013D6A5 /* MapView.swift in Sources */,
 				23AC57A12B610B300013D6A5 /* NanumingApp.swift in Sources */,
@@ -307,8 +329,10 @@
 				23AC57B72B610BB90013D6A5 /* MyPageView.swift in Sources */,
 				230F899A2B6D060E0007575E /* PostListCell.swift in Sources */,
 				23AC57B92B610BDA0013D6A5 /* PostListView.swift in Sources */,
+				23825B352B7DE19600424313 /* Location.swift in Sources */,
 				23E1A5042B735E1800C59696 /* HomeView.swift in Sources */,
 				2342BC0A2B73E89E008E0799 /* MapViewModel.swift in Sources */,
+				2359365F2B80DD5300516C6B /* MyPostView.swift in Sources */,
 				2338DB062B6564B4009243AC /* EntryView.swift in Sources */,
 				2382C87B2B7D05D9007882E0 /* PostService.swift in Sources */,
 				232AFD802B79FA7800A04B64 /* AuthService.swift in Sources */,
@@ -449,10 +473,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Nanuming/Preview Content\"";
-				DEVELOPMENT_TEAM = 9KR47X6UHQ;
+				DEVELOPMENT_TEAM = 54A24WU799;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Nanuming/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 추적하고 근처 게시물 정보를 불러오기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -485,6 +512,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Nanuming/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 추적하고 근처 게시물 정보를 불러오기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -552,6 +582,14 @@
 				minimumVersion = 8.3.1;
 			};
 		};
+		23F1AFB22B7FF30A00C18CDD /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
 		885AC5352B7373820062AD2F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -592,6 +630,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 23A9A9252B67ACB1004BC5D3 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
 			productName = GoogleMapsM4B;
+		};
+		23F1AFB32B7FF30A00C18CDD /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23F1AFB22B7FF30A00C18CDD /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
 		};
 		885AC5362B7373820062AD2F /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

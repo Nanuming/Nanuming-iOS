@@ -3,6 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
+
 	<string></string>
 	<key>NSCameraUsageDescription</key>
 	<string></string>
@@ -10,14 +11,9 @@
 	<string></string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string></string>
+	<string>앨범에 접근하여 사진을 선택하기 위해 권한이 필요합니다.</string>
 	<key>BASE_URL</key>
 	<string>${BASE_URL}</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>사용자의 위치를 추적하고 근처 게시물 정보를 불러오기 위해 권한이 필요합니다.</string>
-	<key>GOOGLE_MAP_API_KEY</key>
-	<string>${GOOGLE_MAP_API_KEY}</string>
-	<key>GIDClientID</key>
-	<string>${GOOGLE_CLIENT_ID}</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -27,5 +23,9 @@
 			</array>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+	<string>${GOOGLE_CLIENT_ID}</string>
+	<key>GOOGLE_MAP_API_KEY</key>
+	<string>${GOOGLE_MAP_API_KEY}</string>
 </dict>
 </plist>
