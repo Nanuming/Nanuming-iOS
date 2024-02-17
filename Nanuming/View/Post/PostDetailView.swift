@@ -100,7 +100,7 @@ struct PostDetailView: View {
                 }
                 .sheet(isPresented: $showingConnectBoxView) {
                     // ConnectBoxView로 이동하면서 필요한 데이터를 전달합니다.
-                    ConnectBoxView(owner: postDetail.postDetail?.owner, itemId: "\(String(describing: itemId))")
+                    ConnectBoxView(isConnectedBluetooth: false, owner: postDetail.postDetail?.owner, itemId: "\(String(describing: itemId))")
                 }
             }
             .toolbar {

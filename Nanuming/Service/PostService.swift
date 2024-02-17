@@ -130,7 +130,7 @@ class PostService {
                 DispatchQueue.main.async {
                     if response.success, let ImageAuth = response.data {
                         completion(true, "Data fetch successful")
-                        PhotoAuthView().confirmItemImageId = ImageAuth.confirmItemImageId
+//                        PhotoAuthView().confirmItemImageId = ImageAuth.confirmItemImageId
                     } else {
                         completion(false, response.message)
                     }

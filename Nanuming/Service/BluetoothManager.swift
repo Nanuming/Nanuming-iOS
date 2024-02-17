@@ -15,6 +15,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     var centralManager: CBCentralManager!
     @Published var discoveredDevices: [CBPeripheral] = []
     @Published var receivedDataString: String? = nil
+    @Published var isClosedBox: Bool = false
 
     override init() {
         super.init()
@@ -42,11 +43,13 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             print("Discovered device: \(deviceName)")
-            if deviceName == "?" { // 디바이스 이름 확인
+            if deviceName == "nanuming" {
                 print("나누밍 상자와 연결 시도")
                 central.stopScan()
-                central.connect(peripheral, options: nil) // 바로 연결 시도
-                return // 추가 디바이스 검색 방지
+                // 바로 연결 시도
+                central.connect(peripheral, options: nil)
+                // 추가 디바이스 검색 방지
+                return
             }
         }
         
@@ -107,8 +110,12 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             let dataString = String(data: data, encoding: .utf8)
             print("Received data: \(dataString ?? "nil")")
             DispatchQueue.main.async {
-                        self.receivedDataString = dataString
-                    }
+                self.receivedDataString = dataString
+                if dataString == "closed" {
+                    self.isClosedBox = true
+                }
+            }
+
         }
     }
 
