@@ -16,6 +16,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
     @Published var isPresentedPlace: Bool = false
     @Published var locationId: Int = 0
     @Published var postList: [PostCellByLocation] = []
+    @Published var locationName: String = ""
+    @Published var emptyLockerCount: Int = 0
+    @Published var occupiedLockerCount: Int = 0
     
     override init() {
         super.init()
@@ -92,6 +95,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate, GMSMa
         
         // 특정 거점 물품 보기 api
         LocationService().getPlacePostList(locationId) { postListByLocation in
+            self.locationName = postListByLocation.locationName
+            self.emptyLockerCount = postListByLocation.emptyLockerCount
+            self.occupiedLockerCount = postListByLocation.occupiedLockerCount
             self.postList = postListByLocation.itemOutlineDtoList
         }
         
