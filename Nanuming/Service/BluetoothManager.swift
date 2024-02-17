@@ -133,7 +133,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         centralManager.stopScan()
     }
     func RequestNanumer(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/item/\(String(describing: itemId))/assign") else {
+        guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(String(describing: itemId))/assign") else {
             completion(false, "Invalid URL")
             return
         }

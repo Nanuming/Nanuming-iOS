@@ -56,7 +56,11 @@ class PostService {
             }
     }
     func showDetail(itemId: String, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
+//        guard let url = URL(string: "\(baseUrl)/item/\(itemId)") else {
+//            completion(false, "Invalid URL")
+//            return
+//        }
+        guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(itemId)") else {
             completion(false, "Invalid URL")
             return
         }
@@ -97,7 +101,7 @@ class PostService {
             completion(false, "Invalid Image URL")
             return
         }
-        guard let url = URL(string: "\(baseUrl)/item/\(itemId)/confirm") else {
+        guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(itemId)/confirm") else {
             completion(false, "Invalid URL")
             return
         }

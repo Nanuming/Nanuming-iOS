@@ -23,10 +23,10 @@ class PostDetailViewModel: ObservableObject {
                     let post = Post(
                         publisher: detail.nickname,  // UserDefaults에서 가져오는 대신 PostDetail의 nickname 사용
                         createdDate: detail.createAt,
-                        title: "루피 인형 나눔합니다",  // 예시로 고정된 값 사용
+                        title: detail.title,  // 예시로 고정된 값 사용
                         image: detail.itemImageUrlList,
                         category: detail.category,
-                        location: detail.location,
+                        location: detail.locationName,
                         contents: detail.description,
                         likeNum: 0,  // 예시로 고정된 값 사용
                         isMyPost: detail.owner

@@ -91,7 +91,7 @@ struct PostDetailView: View {
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
                            .frame(width: screenWidth * 0.9, height: 50)
-                           .foregroundColor(.blue) // 예시 색상 추가
+                           .foregroundColor(.greenMain) // 예시 색상 추가
                            .overlay(
                                Text(postDetail.postDetail?.owner ?? false ? "보관함 번호 입력하기" : "나눔받기")
                                    .font(.system(size: 16, weight: .bold))
@@ -129,7 +129,7 @@ struct PostDetailView: View {
         }
         .onAppear(perform: {
             print("\(String(describing: itemId))")
-            postDetail.fetchPostDetail(itemId: String(itemId ?? 0))
+            postDetail.fetchPostDetail(itemId:String(describing:itemId))
         })
 
     }
