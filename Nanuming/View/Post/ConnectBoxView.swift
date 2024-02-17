@@ -12,13 +12,13 @@ struct ConnectBoxView: View {
     
     @ObservedObject var bluetoothManager = BluetoothManager()
     @State private var identifyingNumber: String = ""
-    @State var isConnectedBluetooth: Bool
+    @State var isConnectedBluetooth: Bool = false
     @State var receivedData: String? = BluetoothManager().receivedDataString
     @State var isClosedBox: Bool = BluetoothManager().isClosedBox
     @State var shouldShowPhotoAuthView: Bool = false
     @State var showTabBarViewAsFullScreen: Bool = false
     var owner: Bool? = true
-    var itemId: String
+    var itemId: Int = 0
     var body: some View {
         NavigationStack {
             
@@ -99,7 +99,7 @@ struct ConnectBoxView: View {
             
         }
         .navigationDestination(isPresented: $isClosedBox, destination: {
-            let memberId = UserDefaults.standard.string(forKey: "userId") ?? ""
+            let memberId = UserDefaults.standard.integer(forKey: "userId")
             PhotoAuthView(itemId: itemId, memberId: memberId)
         })
 //        .fullScreenCover(isPresented: $showTabBarViewAsFullScreen, content: {
@@ -109,6 +109,6 @@ struct ConnectBoxView: View {
 }
 
 #Preview {
-    ConnectBoxView(isConnectedBluetooth: false, itemId: "1")
+    ConnectBoxView()
 }
 

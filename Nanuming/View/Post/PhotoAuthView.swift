@@ -47,8 +47,8 @@ struct PhotoAuthView: View {
     @State private var image: UIImage?
     @State private var showingImagePicker = false
     @State private var isConfirmed = false
-    var itemId: String
-    var memberId: String
+    var itemId: Int = 0
+    var memberId: Int = 0
     
     var body: some View {
         NavigationView {
@@ -86,7 +86,7 @@ struct PhotoAuthView: View {
                     }
                     
                     Button(action: {
-                        PostService().uploadImage(image!, itemId: 1) { success, message  in
+                        PostService().uploadImage(image!, itemId: itemId) { success, message  in
                             DispatchQueue.main.async {
                                 if success {
                                     print("success: \(success), message: \(message)")
@@ -117,6 +117,6 @@ struct PhotoAuthView: View {
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotoAuthView(itemId: "", memberId: "")
+        PhotoAuthView()
     }
 }

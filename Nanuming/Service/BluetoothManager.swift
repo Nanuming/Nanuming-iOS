@@ -132,8 +132,8 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func stopScanning() {
         centralManager.stopScan()
     }
-    func RequestNanumer(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/profile/\(String(describing: UserDefaults.standard.string(forKey: "userId")))/\(String(describing: itemId))/assign") else {
+    func RequestNanumer(requestData: [String: Any], itemId: Int, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(String(describing: itemId))/assign") else {
             completion(false, "Invalid URL")
             return
         }
@@ -168,7 +168,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             }
         }.resume()
     }
-    func RequestNanumee(requestData: [String: Any], itemId: String, completion: @escaping (Bool, String) -> Void) {
+    func RequestNanumee(requestData: [String: Any], itemId: Int, completion: @escaping (Bool, String) -> Void) {
         guard let url = URL(string: "\(baseUrl)/locker") else {
             completion(false, "Invalid URL")
             return
