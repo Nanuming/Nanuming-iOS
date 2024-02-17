@@ -17,6 +17,7 @@ struct ConnectBoxView: View {
     @State var isClosedBox: Bool = BluetoothManager().isClosedBox
     @State var shouldShowPhotoAuthView: Bool = false
     @State var showTabBarViewAsFullScreen: Bool = false
+    @State var test: Bool = false
     var owner: Bool? = true
     var itemId: Int = 0
     var body: some View {
@@ -55,6 +56,7 @@ struct ConnectBoxView: View {
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
                                         print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
+                                        test = true
                                         isConnectedBluetooth = true
                                     } else {
                                         
@@ -68,6 +70,7 @@ struct ConnectBoxView: View {
                                         self.bluetoothManager.startScanning()
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
+                                        test = true
                                         isConnectedBluetooth = true
                                     } else {
                                         print("success: \(success), message: \(message)")
@@ -98,13 +101,10 @@ struct ConnectBoxView: View {
             }
             
         }
-        .navigationDestination(isPresented: $isClosedBox, destination: {
+        .navigationDestination(isPresented: $test, destination: {
             let memberId = UserDefaults.standard.integer(forKey: "userId")
             PhotoAuthView(itemId: itemId, memberId: memberId)
         })
-//        .fullScreenCover(isPresented: $showTabBarViewAsFullScreen, content: {
-//            TabBarView()
-//        })
     }
 }
 
