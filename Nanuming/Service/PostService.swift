@@ -93,7 +93,7 @@ class PostService {
     }
 
     // 본인 게시물 조회
-    func getMyPost(_ memberId: Int, _ status: String, completion: @escaping (_ postListByLocation: MyPostList) -> Void) {
+    func getMyPost(memberId: Int, status: String, completion: @escaping (_ postListByLocation: MyPostList) -> Void) {
         let query = URLQueryItem(name: "itemStatus", value: status)
         let url = "\(baseUrl)/profile/\(memberId)?\(query)"
         let headers: HTTPHeaders = [
