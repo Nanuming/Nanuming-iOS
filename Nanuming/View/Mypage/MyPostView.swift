@@ -31,10 +31,7 @@ struct MyPostView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding()
-                .onReceive([self.selectedTab].publisher.first()) { idx in
-                    getMyPostAPI(status: postStatus[idx])
-                }
-                
+
                 ScrollView {
                     VStack {
                         ForEach(postList, id: \.itemId) { postcell in
@@ -54,6 +51,9 @@ struct MyPostView: View {
                     }
                 }
             }
+            .onChange(of: selectedTab, initial: true) { _, idx in
+                getMyPostAPI(status: postStatus[idx])
+            }
             .navigationBarTitle("나의 나눔", displayMode: .inline)
             .navigationBarItems(
                 leading: Button(action: {
@@ -66,7 +66,7 @@ struct MyPostView: View {
             )
         }
     }
-    
+
     func getMyPostAPI(status: String) {
         let userId = UserDefaults.standard.integer(forKey: "userId")
         PostService().getMyPost(memberId: userId, status: status) { postListByLocation in
