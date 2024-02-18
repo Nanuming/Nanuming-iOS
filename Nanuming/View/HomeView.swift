@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var mapVM: MapViewModel = .init()
-    @State var isOwner =  true
+    @State var isOwner =  false
     @State private var isMapButtonClicked = false
     @State var searchText: String = ""
     @State private var isPresentedPostDetail = false
