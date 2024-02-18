@@ -17,7 +17,8 @@ struct ConnectBoxView: View {
     @State var isClosedBox: Bool = BluetoothManager().isClosedBox
     @State var shouldShowPhotoAuthView: Bool = false
     @State var showTabBarViewAsFullScreen: Bool = false
-    @State var test: Bool = false
+    @State var testAuth: Bool = false
+    @State var testNormal: Bool = false
     var owner: Bool? = true
     var itemId: Int = 0
     var body: some View {
@@ -38,16 +39,6 @@ struct ConnectBoxView: View {
                         .padding()
                     })
                     .padding()
-                //                List(bluetoothManager.discoveredDevices, id: \.identifier) { device in
-                //                    HStack {
-                //                        Text(device.name ?? "Unknown")
-                //                        Spacer()
-                //                        Button("Connect") {
-                //                            // 해당 디바이스에 연결 시도
-                //                            bluetoothManager.connectDevice(device)
-                //                        }
-                //                    }
-                //                }
                 // 페어링 버튼
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: screenWidth * 0.85, height: 43)
@@ -66,9 +57,9 @@ struct ConnectBoxView: View {
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
                                         print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
-                                        test = true
-                                        //                                        isConnectedBluetooth = true
-                                        //                                        bluetoothManager.startScanning()
+                                        testAuth = true
+//                                        isConnectedBluetooth = true
+//                                        bluetoothManager.startScanning()
                                     } else {
                                         
                                         print("success: \(success), message: \(message)")
@@ -80,9 +71,9 @@ struct ConnectBoxView: View {
                                     if success {
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
-                                        test = true
-                                        isConnectedBluetooth = true
-                                        self.bluetoothManager.startScanning()
+                                        testNormal = true
+//                                        self.bluetoothManager.startScanning()
+//                                        isConnectedBluetooth = true
                                     } else {
                                         print("success: \(success), message: \(message)")
                                     }
@@ -101,7 +92,7 @@ struct ConnectBoxView: View {
                                 Text("취소")
                             })
                         }
-                        .sheet(isPresented: $test) {
+                        .sheet(isPresented: $testAuth) {
                             PhotoAuthView(itemId: itemId, memberId: UserDefaults.standard.integer(forKey: "userId"))
                         }
                         
@@ -110,15 +101,14 @@ struct ConnectBoxView: View {
                     .offset(y: screenHeight * 0.27)
                 
             }
+            .fullScreenCover(isPresented: $testNormal, content: {
+                TabBarView()
+            })
             .onDisappear {
                 bluetoothManager.stopScanning()
             }
             
         }
-        //        .navigationDestination(isPresented: $test, destination: {
-        //            let memberId = UserDefaults.standard.integer(forKey: "userId")
-        //            PhotoAuthView(itemId: itemId, memberId: memberId)
-        //        })
     }
 }
 
