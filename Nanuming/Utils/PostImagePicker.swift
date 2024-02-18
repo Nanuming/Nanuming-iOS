@@ -37,7 +37,7 @@ struct PostImagePicker: View {
                                 VStack(spacing: 3) {
                                     Image(systemName: "camera.fill")
                                         .frame(width: 25, height: 25)
-                                    Text(String(selectedPhotos.count) + "/10")
+                                    Text(String(selectedPhotos.count) + "/5")
                                         .font(.system(size: 12, weight: .medium))
                                 }
                                 .foregroundColor(.gray200)
