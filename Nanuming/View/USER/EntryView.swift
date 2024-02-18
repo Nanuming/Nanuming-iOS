@@ -63,21 +63,6 @@ struct EntryView: View {
                 .frame(width: screenWidth*0.85, height: 50, alignment: .center)
             }
         }
-//        .onAppear(perform: {
-//            // login 상태 체크
-//            
-//            AuthService().checkState() { isLoggedIn in
-//                if isLoggedIn {
-//                    print("User is logged in.")
-//                    isSignInSuccessful = isLoggedIn
-//                } else {
-//                    print("User is not logged in.")
-//                    isSignInSuccessful = isLoggedIn
-//                }
-//            }
-//            
-//
-//        })
         .alert(LocalizedStringKey("Failed Login"), isPresented: $isAlert) {
             Button(action: {
                 isAlert = false
