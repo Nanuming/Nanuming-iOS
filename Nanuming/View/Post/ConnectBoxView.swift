@@ -46,11 +46,11 @@ struct ConnectBoxView: View {
                     .foregroundColor(.greenMain)
                     .overlay(content: {
                         Button(action: {
-                            let lockerNum = ["lockerId":identifyingNumber]
+                            let lockerNum = ["lockerId":Int(identifyingNumber)!]
                             print("identifying number: \(identifyingNumber)")
                             print("Scan: \(bluetoothManager.centralManager.isScanning)")
                             if owner! {
-                                print("nanumee\(String(describing: owner)):\(lockerNum):\(itemId)")
+                                print("nanumer\(String(describing: owner)):\(lockerNum):\(itemId)")
                                 bluetoothManager.RequestNanumer(requestData: lockerNum, itemId: itemId) { success, message in
                                     if success {
                                         self.bluetoothManager.startScanning()
@@ -58,7 +58,8 @@ struct ConnectBoxView: View {
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
                                         print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
                                         test = true
-                                        isConnectedBluetooth = true
+//                                        isConnectedBluetooth = true
+//                                        bluetoothManager.startScanning()
                                     } else {
                                         
                                         print("success: \(success), message: \(message)")
@@ -66,13 +67,13 @@ struct ConnectBoxView: View {
                                 }
                             }
                             else {
-                                bluetoothManager.RequestNanumee(requestData: lockerNum, itemId: itemId) { success, message in
+                                bluetoothManager.RequestNanumee(requestData: lockerNum) { success, message in
                                     if success {
-                                        self.bluetoothManager.startScanning()
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
                                         test = true
                                         isConnectedBluetooth = true
+                                        self.bluetoothManager.startScanning()
                                     } else {
                                         print("success: \(success), message: \(message)")
                                     }
@@ -91,6 +92,9 @@ struct ConnectBoxView: View {
                                 Text("취소")
                             })
                         }
+                        .sheet(isPresented: $test) {
+                            PhotoAuthView(itemId: itemId, memberId: UserDefaults.standard.integer(forKey: "userId"))
+                        }
                         
                     })
                     .padding()
@@ -102,10 +106,10 @@ struct ConnectBoxView: View {
             }
             
         }
-        .navigationDestination(isPresented: $test, destination: {
-            let memberId = UserDefaults.standard.integer(forKey: "userId")
-            PhotoAuthView(itemId: itemId, memberId: memberId)
-        })
+//        .navigationDestination(isPresented: $test, destination: {
+//            let memberId = UserDefaults.standard.integer(forKey: "userId")
+//            PhotoAuthView(itemId: itemId, memberId: memberId)
+//        })
     }
 }
 

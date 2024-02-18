@@ -109,15 +109,15 @@ class PostService {
         var request = URLRequest(url: url)
         request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
+        
         let boundary = "Boundary-\(UUID().uuidString)"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         var body = Data()
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"confirmImage\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"confirmImage\"; filename=\"image\(itemId).jpg\"\r\n".data(using: .utf8)!)
         body.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
         body.append(imageData)
         body.append("\r\n".data(using: .utf8)!)
-        
         
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body

@@ -36,7 +36,7 @@ struct PostDetail: Codable {
     var owner: Bool?
 }
 struct ImageAuth: Codable {
-    var confirmItemImageId: Int
+    var confirmItemImageId: Int?
 }
 
 struct PostID: Identifiable {

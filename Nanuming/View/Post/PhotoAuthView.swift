@@ -47,6 +47,8 @@ struct PhotoAuthView: View {
     @State private var image: UIImage?
     @State private var showingImagePicker = false
     @State private var isConfirmed = false
+    @State var hasImage = false
+    @State var isAssignedPicture = false
     var itemId: Int = 0
     var memberId: Int = 0
     
@@ -86,14 +88,20 @@ struct PhotoAuthView: View {
                     }
                     
                     Button(action: {
-                        PostService().uploadImage(image!, itemId: itemId) { success, message  in
-                            DispatchQueue.main.async {
-                                if success {
-                                    print("success: \(success), message: \(message)")
-                                } else {
-                                    print("success: \(success), message: \(message)")
+                        if let safeImage = image {
+                            PostService().uploadImage(safeImage, itemId: itemId) { success, message  in
+                                DispatchQueue.main.async {
+                                    if success {
+                                        print("success: \(success), message: \(message)")
+                                        isAssignedPicture = true
+                                    } else {
+                                        print("success: \(success), message: \(message)")
+                                    }
                                 }
                             }
+                        }
+                        else {
+                            hasImage = true
                         }
                         
                     }) {
@@ -112,6 +120,18 @@ struct PhotoAuthView: View {
                 ImagePickerView(image: self.$image)
             }
         }
+        .alert(LocalizedStringKey("등록한 물품의 인증이 필요해요."), isPresented: $hasImage, actions: {
+            Button(action: {
+                hasImage = false
+            }, label: {
+                Text("확인")
+            })
+        }, message: {
+            Text("사진을 찍어 인증해주세요.")
+        })
+        .fullScreenCover(isPresented: $isAssignedPicture, content: {
+            TabBarView()
+        })
     }
 }
 

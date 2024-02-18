@@ -132,8 +132,8 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func stopScanning() {
         centralManager.stopScan()
     }
-    func RequestNanumer(requestData: [String: Any], itemId: Int, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId))/assign") else {
+    func RequestNanumer(requestData: [String: Int], itemId: Int, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId)/assign") else {
             completion(false, "Invalid URL")
             return
         }
@@ -142,6 +142,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        print("url: \(url) requestData: \(requestData)")
         guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {
             completion(false, "Invalid request data")
             return
@@ -168,7 +169,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             }
         }.resume()
     }
-    func RequestNanumee(requestData: [String: Any], itemId: Int, completion: @escaping (Bool, String) -> Void) {
+    func RequestNanumee(requestData: [String: Int], completion: @escaping (Bool, String) -> Void) {
         guard let url = URL(string: "\(baseUrl)/locker") else {
             completion(false, "Invalid URL")
             return

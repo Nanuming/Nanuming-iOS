@@ -8,6 +8,6 @@
 import Foundation
 
 struct Item: Codable {
-    var itemId: Int
-    var lockerId: Int
+    var itemId: Int?
+    var lockerId: Int?
 }
