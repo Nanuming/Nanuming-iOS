@@ -75,7 +75,9 @@ class PostService {
                 }
                 return
             }
-            
+            if let dataString = String(data: data, encoding: .utf8) {
+                print("Response: \(dataString)")
+            }
             do {
                 let response = try JSONDecoder().decode(BaseResponse<PostDetail>.self, from: data)
                 DispatchQueue.main.async {
