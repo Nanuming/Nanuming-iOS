@@ -27,7 +27,7 @@ struct PostImagePicker: View {
 
     var body: some View {
         HStack {
-            PhotosPicker(selection: $selectedPhotos, maxSelectionCount: 10, matching: .images) {
+            PhotosPicker(selection: $selectedPhotos, maxSelectionCount: 5, matching: .images) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
@@ -37,7 +37,7 @@ struct PostImagePicker: View {
                                 VStack(spacing: 3) {
                                     Image(systemName: "camera.fill")
                                         .frame(width: 25, height: 25)
-                                    Text(String(selectedPhotos.count) + "/10")
+                                    Text(String(selectedPhotos.count) + "/5")
                                         .font(.system(size: 12, weight: .medium))
                                 }
                                 .foregroundColor(.gray200)
