@@ -89,6 +89,18 @@ struct PostDetailView: View {
                 Button {
                     // 게시물 생성 페이지로 이동
                     showingConnectBoxView = true
+                    let lockerId :Int = postDetailContent?.lockerId ?? 0
+                    if !(postDetailContent?.owner ?? true){
+                        let lockerNum = ["lockerId": lockerId]
+                        PostService().reserveItem(requestData: lockerNum) { success, message in
+                            if success {
+                                print("success: \(success), message: \(message)")
+                                // TODO: 상자로부터 수신한 데이터 처리 필요
+                            } else {
+                                print("success: \(success), message: \(message)")
+                            }
+                        }
+                    }
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
                            .frame(width: screenWidth * 0.9, height: 50)
