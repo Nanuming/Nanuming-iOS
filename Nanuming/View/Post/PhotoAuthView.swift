@@ -51,7 +51,6 @@ struct PhotoAuthView: View {
     @State var isAssignedPicture = false
     var itemId: Int = 0
     var memberId: Int = 0
-    
     var body: some View {
         NavigationView {
             VStack {

@@ -8,6 +8,7 @@
 import SwiftUI
 import GoogleMaps
 import GoogleSignIn
+import CoreBluetooth
 
 @main
 struct NanumingApp: App {

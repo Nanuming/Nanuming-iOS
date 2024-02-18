@@ -38,7 +38,16 @@ struct ConnectBoxView: View {
                         .padding()
                     })
                     .padding()
-                
+                //                List(bluetoothManager.discoveredDevices, id: \.identifier) { device in
+                //                    HStack {
+                //                        Text(device.name ?? "Unknown")
+                //                        Spacer()
+                //                        Button("Connect") {
+                //                            // 해당 디바이스에 연결 시도
+                //                            bluetoothManager.connectDevice(device)
+                //                        }
+                //                    }
+                //                }
                 // 페어링 버튼
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: screenWidth * 0.85, height: 43)
@@ -58,8 +67,8 @@ struct ConnectBoxView: View {
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
                                         print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
                                         test = true
-//                                        isConnectedBluetooth = true
-//                                        bluetoothManager.startScanning()
+                                        //                                        isConnectedBluetooth = true
+                                        //                                        bluetoothManager.startScanning()
                                     } else {
                                         
                                         print("success: \(success), message: \(message)")
@@ -106,10 +115,10 @@ struct ConnectBoxView: View {
             }
             
         }
-//        .navigationDestination(isPresented: $test, destination: {
-//            let memberId = UserDefaults.standard.integer(forKey: "userId")
-//            PhotoAuthView(itemId: itemId, memberId: memberId)
-//        })
+        //        .navigationDestination(isPresented: $test, destination: {
+        //            let memberId = UserDefaults.standard.integer(forKey: "userId")
+        //            PhotoAuthView(itemId: itemId, memberId: memberId)
+        //        })
     }
 }
 

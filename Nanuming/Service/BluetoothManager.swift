@@ -13,7 +13,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     let keychain = KeychainSwift()
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     var centralManager: CBCentralManager!
-    @Published var discoveredDevices: [CBPeripheral] = []
+    @Published var discoveredDevices: [BluetoothDevice] = []
     @Published var receivedDataString: String? = nil
     @Published var isClosedBox: Bool = false
 
@@ -40,22 +40,30 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         }
     }
 
+//    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+//        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+//            print("Discovered device: \(deviceName)")
+//            if deviceName == "nanuming" {
+//                print("나누밍 상자와 연결 시도")
+//                central.stopScan()
+//                // 바로 연결 시도
+//                central.connect(peripheral, options: nil)
+//                // 추가 디바이스 검색 방지
+//                return
+//            }
+//        }
+//        
+//        if !discoveredDevices.contains(where: { $0.identifier == peripheral.identifier }) {
+//            DispatchQueue.main.async {
+//                self.discoveredDevices.append(peripheral)
+//            }
+//        }
+//    }
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            print("Discovered device: \(deviceName)")
-            if deviceName == "nanuming" {
-                print("나누밍 상자와 연결 시도")
-                central.stopScan()
-                // 바로 연결 시도
-                central.connect(peripheral, options: nil)
-                // 추가 디바이스 검색 방지
-                return
-            }
-        }
-        
-        if !discoveredDevices.contains(where: { $0.identifier == peripheral.identifier }) {
+        let device = BluetoothDevice(peripheral: peripheral)
+        if !self.discoveredDevices.contains(where: { $0.id == device.id }) {
             DispatchQueue.main.async {
-                self.discoveredDevices.append(peripheral)
+                self.discoveredDevices.append(device)
             }
         }
     }
@@ -204,5 +212,15 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
                 completion(false, "Failed to decode response: \(error.localizedDescription)")
             }
         }.resume()
+    }
+}
+
+struct BluetoothDevice: Identifiable {
+    let id: UUID
+    let name: String
+    
+    init(peripheral: CBPeripheral) {
+        self.id = peripheral.identifier
+        self.name = peripheral.name ?? "Unknown"
     }
 }

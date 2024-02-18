@@ -12,7 +12,6 @@ struct PostListView: View {
     @State var postList: [PostCellByLocation]
     @State private var isPresentedLocationPostList = false
     @Environment(\.presentationMode) var presentation
-    
     var body: some View {
         NavigationView {
             ScrollView {
