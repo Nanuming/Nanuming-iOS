@@ -13,11 +13,10 @@ struct CreatePostView: View {
     @State var contents: String = ""
     @Environment(\.presentationMode) var presentation
     @State var postImageDatas: [Data?] = []
-    @State private var showPostDetailModal = false
-    @State private var itemId: Int = 0
     let category: [String] = ["장난감", "도서", "의류", "육아용품", "기타"]
     @State var categoryId: Int = 0
-
+    @State var itemId: PostID?
+    @State var isOwner: Bool = true
     
     var body: some View {
         NavigationView {
@@ -78,11 +77,10 @@ struct CreatePostView: View {
                     PostService().writePost(title: title, categoryId: categoryId + 1, description: contents, imageList: postImageDatas) { id in
                         DispatchQueue.main.async {
                             print("write post sucess/ postId: ", id)
-                            self.itemId = id
-                            print("itemId in createPostView: \(self.itemId)")
+                            self.itemId = PostID(id: id)
+//                            print("itemId in createPostView: \(self.itemId)")
                             // 창 닫기
-                            //                        presentation.wrappedValue.isPresented
-                            showPostDetailModal = true
+//                            presentation.wrappedValue.dismiss()
                         }
                     }
                 } label: {
@@ -94,8 +92,8 @@ struct CreatePostView: View {
                                 .foregroundColor(.white)
                         )
                 }
-                .sheet(isPresented: $showPostDetailModal) {
-                    PostDetailView(itemId: itemId)
+                .sheet(item: $itemId) { itemId in
+                    PostDetailView(isOwner: $isOwner, itemId: itemId.id)
                 }
             }
             .frame(width: screenWidth * 0.85)
@@ -149,7 +147,7 @@ struct CreatePostView: View {
     }
     
     func checkAlbumPermission() {
-        PHPhotoLibrary.requestAuthorization() { status in
+        PHPhotoLibrary.requestAuthorization { status in
             switch status {
             case .authorized:
                 // 권한이 허용된 경우 처리할 로직

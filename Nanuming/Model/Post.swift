@@ -37,5 +37,9 @@ struct PostDetail: Codable {
     var lockerId: Int?
 }
 struct ImageAuth: Codable {
-    var confirmItemImageId: Int
+    var confirmItemImageId: Int?
+}
+
+struct PostID: Identifiable {
+    let id: Int
 }

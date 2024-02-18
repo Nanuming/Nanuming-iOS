@@ -12,7 +12,7 @@ struct PostListView: View {
     @State var postList: [PostCellByLocation]
     @State private var isPresentedLocationPostList = false
     @Environment(\.presentationMode) var presentation
-    
+    @State var isOwner = false
     var body: some View {
         NavigationView {
             ScrollView {
@@ -28,7 +28,7 @@ struct PostListView: View {
                             PostListCell(post: .constant(post))
                         }
                         .fullScreenCover(isPresented: $isPresentedLocationPostList) {
-                            PostDetailView(itemId: postcell.itemId)
+                            PostDetailView(isOwner: $isOwner, itemId: postcell.itemId)
                         }
                     }
                 }

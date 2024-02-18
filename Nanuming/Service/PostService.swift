@@ -56,8 +56,8 @@ class PostService {
             }
         }
     }
-    func showDetail(itemId: Int, completion: @escaping (Bool, PostDetail?, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId)") else {
+    func showDetail(endPoint: String, itemId: Int, completion: @escaping (Bool, PostDetail?, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/\(endPoint)/\(itemId)") else {
             completion(false, nil, "Invalid URL")
             return
         }
@@ -81,7 +81,7 @@ class PostService {
                 DispatchQueue.main.async {
                     if response.success {
                         self.postDetailContent = response.data
-                        print("\(self.postDetailContent?.itemId)")
+                        print("itemId in showDetail: \(String(describing: self.postDetailContent?.itemId))")
                         completion(true, self.postDetailContent, "Data fetch successful")
 
                     } else {
@@ -144,15 +144,15 @@ class PostService {
         var request = URLRequest(url: url)
         request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
+        
         let boundary = "Boundary-\(UUID().uuidString)"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         var body = Data()
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"confirmImage\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"confirmImage\"; filename=\"image\(itemId).jpg\"\r\n".data(using: .utf8)!)
         body.append("Content-Type: image/jpg\r\n\r\n".data(using: .utf8)!)
         body.append(imageData)
         body.append("\r\n".data(using: .utf8)!)
-        
         
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body

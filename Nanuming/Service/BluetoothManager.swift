@@ -13,7 +13,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     let keychain = KeychainSwift()
     let baseUrl = "http://\(Bundle.main.infoDictionary?["BASE_URL"] ?? "nil baseUrl")"
     var centralManager: CBCentralManager!
-    @Published var discoveredDevices: [CBPeripheral] = []
+    @Published var discoveredDevices: [BluetoothDevice] = []
     @Published var receivedDataString: String? = nil
     @Published var isClosedBox: Bool = false
 
@@ -40,22 +40,30 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         }
     }
 
+//    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+//        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+//            print("Discovered device: \(deviceName)")
+//            if deviceName == "nanuming" {
+//                print("나누밍 상자와 연결 시도")
+//                central.stopScan()
+//                // 바로 연결 시도
+//                central.connect(peripheral, options: nil)
+//                // 추가 디바이스 검색 방지
+//                return
+//            }
+//        }
+//        
+//        if !discoveredDevices.contains(where: { $0.identifier == peripheral.identifier }) {
+//            DispatchQueue.main.async {
+//                self.discoveredDevices.append(peripheral)
+//            }
+//        }
+//    }
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            print("Discovered device: \(deviceName)")
-            if deviceName == "nanuming" {
-                print("나누밍 상자와 연결 시도")
-                central.stopScan()
-                // 바로 연결 시도
-                central.connect(peripheral, options: nil)
-                // 추가 디바이스 검색 방지
-                return
-            }
-        }
-        
-        if !discoveredDevices.contains(where: { $0.identifier == peripheral.identifier }) {
+        let device = BluetoothDevice(peripheral: peripheral)
+        if !self.discoveredDevices.contains(where: { $0.id == device.id }) {
             DispatchQueue.main.async {
-                self.discoveredDevices.append(peripheral)
+                self.discoveredDevices.append(device)
             }
         }
     }
@@ -132,8 +140,8 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func stopScanning() {
         centralManager.stopScan()
     }
-    func RequestNanumer(requestData: [String: Any], itemId: Int, completion: @escaping (Bool, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId))/assign") else {
+    func RequestNanumer(requestData: [String: Int], itemId: Int, completion: @escaping (Bool, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId)/assign") else {
             completion(false, "Invalid URL")
             return
         }
@@ -142,6 +150,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        print("url: \(url) requestData: \(requestData)")
         guard let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: []) else {
             completion(false, "Invalid request data")
             return
@@ -168,7 +177,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
             }
         }.resume()
     }
-    func RequestNanumee(requestData: [String: Any], itemId: Int, completion: @escaping (Bool, String) -> Void) {
+    func RequestNanumee(requestData: [String: Int], completion: @escaping (Bool, String) -> Void) {
         guard let url = URL(string: "\(baseUrl)/locker") else {
             completion(false, "Invalid URL")
             return
@@ -203,5 +212,15 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
                 completion(false, "Failed to decode response: \(error.localizedDescription)")
             }
         }.resume()
+    }
+}
+
+struct BluetoothDevice: Identifiable {
+    let id: UUID
+    let name: String
+    
+    init(peripheral: CBPeripheral) {
+        self.id = peripheral.identifier
+        self.name = peripheral.name ?? "Unknown"
     }
 }

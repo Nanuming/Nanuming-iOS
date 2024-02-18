@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct PostDetailView: View {
+    @Binding var isOwner: Bool
     @State var itemId: Int = 0
-//    @StateObject var postDetail = PostDetailViewModel()
     @State var postDetailContent: PostDetail?
     @State private var showingConnectBoxView = false
     @State private var selection: Int? = nil
@@ -21,11 +22,21 @@ struct PostDetailView: View {
                     VStack(spacing: 0) {
                         // 이미지
                         TabView {
-                            
                             ForEach(postDetailContent?.itemImageUrlList ?? [""], id: \.self) { url in
-                                Image(url ?? "")
-                                    .resizable()
-                                    .background(.gray100)
+                                if let imageURL = URL(string: url ?? "") {
+                                    URLImage(imageURL) { image in
+                                        image
+                                            .resizable()
+                                            .frame(width: screenWidth, height: screenWidth*0.9)
+                                    }
+                                } else {
+                                    // imageURL이 nil인 경우에 대한 처리
+                                    Image("")
+                                        .resizable()
+                                        .background(.gray)
+                                        .frame(width: 120, height: 120)
+                                        .cornerRadius(10)
+                                }
                             }
                         }
                         .tabViewStyle(PageTabViewStyle())
@@ -112,8 +123,7 @@ struct PostDetailView: View {
                            )
                 }
                 .sheet(isPresented: $showingConnectBoxView) {
-                    // ConnectBoxView로 이동하면서 필요한 데이터를 전달합니다.
-                    ConnectBoxView(isConnectedBluetooth: false, owner: postDetailContent?.owner, itemId: itemId)
+                    ConnectBoxView(owner: postDetailContent?.owner, itemId: itemId)
                 }
             }
             .toolbar {
@@ -141,20 +151,36 @@ struct PostDetailView: View {
             
         }
         .onAppear(perform: {
-            print("postDetail.itemId: \(itemId)")
-            PostService().showDetail(itemId: itemId) { success, data, message in
-            if success {
-                postDetailContent = data
-                print("success: \(success), message: \(message)")
-            } else {
-                print("success: \(success), message: \(message)")
+            print("postDetail.itemId: \(itemId) isOwner: \(isOwner)")
+            if isOwner {
+                // 해당 게시물의 주인일 경우 상세보기 요청
+                print("자신의 게시물 상세보기 요청")
+                PostService().showDetail(endPoint: "profile/\(UserDefaults.standard.integer(forKey: "userId"))", itemId: itemId) { success, data, message in
+                    if success {
+                        postDetailContent = data
+                        print("success: \(success), message: \(message)")
+                    } else {
+                        print("success: \(success), message: \(message)")
+                    }
+                }
             }
-        }
+            else {
+                // 해당 게시물의 주인이 아닐 경우 상세보기 요청
+                print("리스트에서 상세보기 요청")
+                PostService().showDetail(endPoint: "item", itemId: itemId) { success, data, message in
+                    if success {
+                        postDetailContent = data
+                        print("success: \(success), message: \(message)")
+                    } else {
+                        print("success: \(success), message: \(message)")
+                    }
+                }
+            }
         })
 
     }
 }
 
 #Preview {
-    PostDetailView()
+    PostDetailView(isOwner: .constant(true))
 }
