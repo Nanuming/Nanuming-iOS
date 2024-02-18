@@ -20,7 +20,7 @@ struct MyPostView: View {
     let postStatus = ["temporary", "available", "reserved", "shared"]
     @Environment(\.presentationMode) var presentation
     @State private var isPresentedLocationPostList = false
-
+    @State var isOwner = true
     var body: some View {
         NavigationView {
             VStack {
@@ -48,7 +48,7 @@ struct MyPostView: View {
                                 PostListCell(post: .constant(post))
                             }
                             .fullScreenCover(isPresented: $isPresentedLocationPostList) {
-                                PostDetailView(itemId: postcell.itemId)
+                                PostDetailView(isOwner: $isOwner, itemId: postcell.itemId)
                             }
                         }
                     }

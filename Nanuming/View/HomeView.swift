@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var mapVM: MapViewModel = .init()
+    @State var isOwner =  true
     @State private var isMapButtonClicked = false
     @State var searchText: String = ""
     @State private var isPresentedPostDetail = false
@@ -109,7 +110,7 @@ struct HomeView: View {
                                     PostListCell(post: .constant(post))
                                 }
                                 .fullScreenCover(isPresented: $isPresentedPostDetail) {
-                                    PostDetailView(itemId: postcell.itemId)
+                                    PostDetailView(isOwner: $isOwner, itemId: postcell.itemId)
                                 }
                             }
                         }

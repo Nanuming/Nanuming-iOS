@@ -16,6 +16,7 @@ struct CreatePostView: View {
     let category: [String] = ["장난감", "도서", "의류", "육아용품", "기타"]
     @State var categoryId: Int = 0
     @State var itemId: PostID?
+    @State var isOwner: Bool = true
     
     var body: some View {
         NavigationView {
@@ -92,7 +93,7 @@ struct CreatePostView: View {
                         )
                 }
                 .sheet(item: $itemId) { itemId in
-                    PostDetailView(itemId: itemId.id)
+                    PostDetailView(isOwner: $isOwner, itemId: itemId.id)
                 }
             }
             .frame(width: screenWidth * 0.85)

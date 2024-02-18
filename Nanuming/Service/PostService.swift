@@ -56,8 +56,8 @@ class PostService {
             }
         }
     }
-    func showDetail(itemId: Int, completion: @escaping (Bool, PostDetail?, String) -> Void) {
-        guard let url = URL(string: "\(baseUrl)/profile/\(UserDefaults.standard.integer(forKey: "userId"))/\(itemId)") else {
+    func showDetail(endPoint: String, itemId: Int, completion: @escaping (Bool, PostDetail?, String) -> Void) {
+        guard let url = URL(string: "\(baseUrl)/\(endPoint)/\(itemId)") else {
             completion(false, nil, "Invalid URL")
             return
         }
@@ -81,7 +81,7 @@ class PostService {
                 DispatchQueue.main.async {
                     if response.success {
                         self.postDetailContent = response.data
-                        print("\(self.postDetailContent?.itemId)")
+                        print("itemId in showDetail: \(String(describing: self.postDetailContent?.itemId))")
                         completion(true, self.postDetailContent, "Data fetch successful")
 
                     } else {
