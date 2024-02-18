@@ -27,7 +27,7 @@ struct PostImagePicker: View {
 
     var body: some View {
         HStack {
-            PhotosPicker(selection: $selectedPhotos, maxSelectionCount: 10, matching: .images) {
+            PhotosPicker(selection: $selectedPhotos, maxSelectionCount: 5, matching: .images) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
