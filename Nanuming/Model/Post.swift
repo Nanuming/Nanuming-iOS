@@ -34,6 +34,7 @@ struct PostDetail: Codable {
     var createAt: String?
     var updateAt: String?
     var owner: Bool?
+    var lockerId: Int?
 }
 struct ImageAuth: Codable {
     var confirmItemImageId: Int?
