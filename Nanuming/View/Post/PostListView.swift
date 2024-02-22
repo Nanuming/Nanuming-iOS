@@ -13,6 +13,8 @@ struct PostListView: View {
     @State private var isPresentedLocationPostList = false
     @Environment(\.presentationMode) var presentation
     @State var isOwner = false
+    @State var selectedItem: PostID?
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -23,27 +25,28 @@ struct PostListView: View {
 
                         // modal로 띄우기
                         Button {
+                            selectedItem = PostID(id: postcell.itemId)
                             isPresentedLocationPostList = true
                         } label: {
                             PostListCell(post: .constant(post))
                         }
-                        .fullScreenCover(isPresented: $isPresentedLocationPostList) {
-                            PostDetailView(isOwner: $isOwner, itemId: postcell.itemId)
+                        .fullScreenCover(item: $selectedItem) { itemId in
+                            PostDetailView(isOwner: $isOwner, itemId: itemId.id)
                         }
                     }
                 }
             }
-            .navigationBarTitle("\(placeName)에 있는 물품", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button(action: {
-                    presentation.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "chevron.backward")
-                        .foregroundColor(.textBlack)
-                        .frame(width: 30, height: 30)
-                }
-            )
         }
+        .navigationBarTitle("\(placeName)에 있는 물품", displayMode: .inline)
+        .navigationBarItems(
+            leading: Button(action: {
+                presentation.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "chevron.backward")
+                    .foregroundColor(.textBlack)
+                    .frame(width: 30, height: 30)
+            }
+        )
     }
 }
 

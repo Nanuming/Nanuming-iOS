@@ -21,6 +21,8 @@ struct MyPostView: View {
     @Environment(\.presentationMode) var presentation
     @State private var isPresentedLocationPostList = false
     @State var isOwner = true
+    @State var selectedItem: PostID?
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -40,12 +42,13 @@ struct MyPostView: View {
 
                             // modal로 띄우기
                             Button {
+                                selectedItem = PostID(id: postcell.itemId)
                                 isPresentedLocationPostList = true
                             } label: {
                                 PostListCell(post: .constant(post))
                             }
-                            .fullScreenCover(isPresented: $isPresentedLocationPostList) {
-                                PostDetailView(isOwner: $isOwner, itemId: postcell.itemId)
+                            .fullScreenCover(item: $selectedItem) { itemId in
+                                PostDetailView(isOwner: $isOwner, itemId: itemId.id)
                             }
                         }
                     }

@@ -20,6 +20,7 @@ struct HomeView: View {
     let category: [String] = ["전체", "장난감", "도서", "의류", "육아용품", "기타"]
     @State var selectedCategoryId: Int = 0
     @State var isPresentedPlacePostListModal = false
+    @State var selectedItem: PostID?
     
     var body: some View {
         VStack(spacing: 10) {
@@ -105,12 +106,13 @@ struct HomeView: View {
                                 
                                 // modal로 띄우기
                                 Button {
+                                    selectedItem = PostID(id: postcell.itemId)
                                     isPresentedPostDetail = true
                                 } label: {
                                     PostListCell(post: .constant(post))
                                 }
-                                .fullScreenCover(isPresented: $isPresentedPostDetail) {
-                                    PostDetailView(isOwner: $isOwner, itemId: postcell.itemId)
+                                .fullScreenCover(item: $selectedItem) { itemId in
+                                    PostDetailView(isOwner: $isOwner, itemId: itemId.id)
                                 }
                             }
                         }
