@@ -57,9 +57,9 @@ struct ConnectBoxView: View {
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
                                         print("\(self.bluetoothManager.receivedDataString ?? "not recieved")")
-//                                        testAuth = true
-                                        isConnectedBluetooth = true
-                                        bluetoothManager.startScanning()
+                                        testAuth = true
+//                                        isConnectedBluetooth = true
+//                                        bluetoothManager.startScanning()
                                     } else {
                                         
                                         print("success: \(success), message: \(message)")
@@ -71,9 +71,9 @@ struct ConnectBoxView: View {
                                     if success {
                                         print("success: \(success), message: \(message)")
                                         // TODO: 상자로부터 수신한 데이터 처리 필요
-//                                        testNormal = true
-                                        self.bluetoothManager.startScanning()
-                                        isConnectedBluetooth = true
+                                        testNormal = true
+//                                        self.bluetoothManager.startScanning()
+//                                        isConnectedBluetooth = true
                                     } else {
                                         print("success: \(success), message: \(message)")
                                     }
