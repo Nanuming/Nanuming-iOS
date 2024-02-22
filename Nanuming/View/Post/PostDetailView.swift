@@ -86,6 +86,9 @@ struct PostDetailView: View {
                                     }
                                 }
                             }
+                            Text("보관함 번호 : \(postDetailContent?.lockerId ?? 0)")
+                                                            .font(.system(size: 16, weight: .medium))
+                                                            .foregroundStyle(.textBlack)
                             Divider()
                             // 내용
                             Text(postDetailContent?.description ?? "")
